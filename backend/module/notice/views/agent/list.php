@@ -119,13 +119,13 @@ use yii\helpers\Url;
         </div>
         <div class="row wrapper border-bottom white-bg page-heading">
             <div class="col-lg-10">
-                <h2><?php echo $title; ?></h2>
+                <h2>代理后台</h2>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
                         <a href="index.html">主页</a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a><?php echo $title; ?></a>
+                        <a>代理后台</a>
                     </li>
                 </ol>
             </div>
@@ -139,9 +139,9 @@ use yii\helpers\Url;
                 <div class="col-lg-12">
                     <div class="ibox ">
                         <div class="ibox-title">
-                            <h5><?php echo $title; ?></h5>
+                            <h5>代理后台</h5>
                             <div class="ibox-tools">
-                                <a class="btn-sm" href="<?php echo Url::toRoute(['/notice/default/create','type'=>$type]); ?>">新增</a>
+                                <a class="btn-sm" href="<?php echo Url::toRoute(['/notice/agent/create']); ?>">新增</a>
                             </div>
                         </div>
                         <div class="ibox-content">
@@ -152,8 +152,8 @@ use yii\helpers\Url;
                                         <th>序号</th>
                                         <th>标题</th>
                                         <th>内容</th>
-                                        <th>创建时间</th>
                                         <th>状态</th>
+                                        <th>创建时间</th>
                                         <th>操作</th>
                                     </tr>
                                     </thead>
@@ -171,17 +171,30 @@ use yii\helpers\Url;
 
                                             <td class="center">
 
-                                                <button class="btn btn-sm btn-primary m-t-n-xs" type="button" >
-                                                    <a href="<?php echo Url::toRoute(['/notice/default/edit','id'=>$v['id'],'type' => $type]); ?>">编辑</a>
+                                                <button class="btn btn-sm btn-primary m-t-n-xs" type="button"
+                                                        onclick="goEdit(<?php echo $v['id'] ?>)" >
+                                                    <strong href="<?php echo Url::toRoute(['/notice/agent/edit','id'=>$v['id']]); ?>">编辑</strong>
                                                 </button>
 
-                                                <button class="btn btn-sm btn-primary m-t-n-xs" type="button" onclick="gostop();">
-                                                    <strong>停用</strong>
+                                                <?php
+                                                    if($v['status'] == 1) {
+                                                ?>
+                                                <button class="btn btn-sm btn-primary m-t-n-xs" type="button"
+                                                        onclick="goStop(<?php echo $v['id'] ?>);"
+                                                <strong>停用</strong>
                                                 </button>
+                                                <?php } else { ?>
+                                                <button class="btn btn-sm btn-primary m-t-n-xs" type="button"
+                                                        onclick="goOn(<?php echo $v['id'] ?>);"
+                                                <strong>恢复</strong>
+                                                </button>
+                                                <?php } ?>
 
-                                                <button class="btn btn-sm btn-primary m-t-n-xs" type="button">
+                                                <button class="btn btn-sm btn-primary m-t-n-xs" type="button"
+                                                        onclick="goDelete(<?php echo $v['id'] ?>);">
                                                     <strong>删除</strong>
                                                 </button>
+
                                             </td>
                                         </tr>
                                     <?php
@@ -193,7 +206,8 @@ use yii\helpers\Url;
                                         <th>序号</th>
                                         <th>标题</th>
                                         <th>内容</th>
-                                        <th>时间</th>
+                                        <th>状态</th>
+                                        <th>创建时间</th>
                                         <th>操作</th>
                                     </tr>
                                     </tfoot>
@@ -220,16 +234,74 @@ use yii\helpers\Url;
 
 <script>
 
-    var type = <?php echo $type; ?>;
+    function goEdit(id) {
+        window.location.href="/notice/agent/edit?id="+id;
+    }
 
-    //function goEdit(id) {
-    //    location.href="<?php //echo Url::toRoute(['notice/default/edit','id'=>id]); ?>//"
-    //}
-
-
-    function gostop()
+    function goStop(id)
     {
-        location.href="<?php echo Url::toRoute(['/notice/default/delete']); ?>"
+        $.ajax({
+            url:"<?php echo Url::toRoute(['/notice/agent/stop']); ?>",
+            type:"post",
+            data:{
+                id:id
+            },
+            dataType: 'json',
+            success:function(data){
+                if(data.result=="success"){
+                    //禁用提交按钮。防止点击起来没完
+                    $('#formSubmit').attr('disabled',true);
+                    window.location.href = "<?php echo Url::toRoute(['/notice/agent/list']); ?>";
+                }else{
+                    //禁用提交按钮。防止点击起来没完
+                    $('#formSubmit').attr('disabled',true);
+                }
+            }
+        });
+    }
+
+    function goOn(id)
+    {
+        $.ajax({
+            url:"<?php echo Url::toRoute(['/notice/agent/recovery']); ?>",
+            type:"post",
+            data:{
+                id:id
+            },
+            dataType: 'json',
+            success:function(data){
+                if(data.result=="success"){
+                    //禁用提交按钮。防止点击起来没完
+                    $('#formSubmit').attr('disabled',true);
+                    window.location.href = "<?php echo Url::toRoute(['/notice/agent/list']); ?>";
+                }else{
+                    //禁用提交按钮。防止点击起来没完
+                    $('#formSubmit').attr('disabled',true);
+                }
+            }
+        });
+    }
+
+    function goDelete(id)
+    {
+        $.ajax({
+            url:"<?php echo Url::toRoute(['/notice/agent/delete']); ?>",
+            type:"post",
+            data:{
+                id:id
+            },
+            dataType: 'json',
+            success:function(data){
+                if(data.result=="success"){
+                    //禁用提交按钮。防止点击起来没完
+                    $('#formSubmit').attr('disabled',true);
+                    window.location.href = "<?php echo Url::toRoute(['/notice/agent/list']); ?>";
+                }else{
+                    //禁用提交按钮。防止点击起来没完
+                    $('#formSubmit').attr('disabled',true);
+                }
+            }
+        });
     }
 
     $(document).ready(function(){

@@ -123,13 +123,13 @@ use yii\helpers\Url;
         </div>
         <div class="row wrapper border-bottom white-bg page-heading">
             <div class="col-lg-10">
-                <h2><?php echo $title; ?></h2>
+                <h2>会员后台</h2>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
                         <a href="index.html">主页</a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a><?php echo $title; ?></a>
+                        <a>会员后台</a>
                     </li>
                     <li class="breadcrumb-item active">
                         <strong>编辑</strong>
@@ -204,14 +204,11 @@ use yii\helpers\Url;
 <script src="/js/plugins/iCheck/icheck.min.js"></script>
 <script>
 
-    var type = <?php echo $type ?>;
 
-    var postUrl =
     $(function(){
         $("#btn_save").click(function(){
-
             $.ajax({
-                url:"<?php echo Url::toRoute(['/notice/default/edit']); ?>",
+                url:"<?php echo Url::toRoute(['/notice/system/edit']); ?>",
                 type:"post",
                 data:$("#saveForm").serialize(),
                 dataType: 'json',
@@ -219,7 +216,7 @@ use yii\helpers\Url;
                     if(data.result=="success"){
                         //禁用提交按钮。防止点击起来没完
                         $('#formSubmit').attr('disabled',true);
-                        window.location.href = "<?php echo Url::toRoute(['/notice/default/index','type' => $type]); ?>";
+                        window.location.href = "<?php echo Url::toRoute(['/notice/system/list']); ?>";
                     }else{
                         //禁用提交按钮。防止点击起来没完
                         $('#formSubmit').attr('disabled',true);

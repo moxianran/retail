@@ -57,9 +57,9 @@ AppAsset::register($this);
                     </a>
                     <ul class="nav nav-second-level collapse">
                         <li><a href="<?php echo Url::toRoute(['/notice/website/list']); ?>">网站公告</a></li>
-                        <li><a href="<?php echo Url::toRoute(['/notice/default/index','type' => 2]); ?>">会员后台</a></li>
-                        <li><a href="<?php echo Url::toRoute(['/notice/default/index','type' => 3]); ?>">游戏大厅</a></li>
-                        <li><a href="<?php echo Url::toRoute(['/notice/default/index','type' => 4]); ?>">代理后台</a></li>
+                        <li><a href="<?php echo Url::toRoute(['/notice/system/list']); ?>">会员后台</a></li>
+                        <li><a href="<?php echo Url::toRoute(['/notice/game/list']); ?>">游戏大厅</a></li>
+                        <li><a href="<?php echo Url::toRoute(['/notice/agent/list']); ?>">代理后台</a></li>
                     </ul>
                 </li>
 

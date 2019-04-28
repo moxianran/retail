@@ -3,105 +3,191 @@
 namespace backend\module\notice\controllers;
 
 use yii\web\Controller;
-use backend\services\Notice;
+use app\models\RNoticeAgent;
 
-/**
- * Default controller for the `notice` module
- */
-class DefaultController extends Controller
+class AgentController extends Controller
 {
     public $enableCsrfValidation = false;
 
-    public $allTitle = [
-        '1' => '网站公告',
-        '2' => '会员后台',
-        '3' => '游戏大厅',
-        '4' => '代理后台',
-    ];
-
     /**
-     * 通知板块
+     * 列表
      * @return string
      */
-    public function actionIndex()
+    public function actionList()
     {
-        $type = $request = \Yii::$app->request->get('type', 1);
-        $list = Notice::getList($type);
+        $list = RNoticeAgent::find()->where([
+            'status'=> [1,2],
+        ])->asArray()->all();
 
-
-        $title = $this->allTitle[$type];
-        return $this->render('index', [
+        return $this->render('list', [
             'list' => $list,
-            'type' => $type,
-            'title' => $title
         ]);
     }
 
+    /**
+     * 新增
+     * @return string|\yii\web\Response
+     * @throws \Throwable
+     */
     public function actionCreate()
     {
         if(\Yii::$app->request->isPost) {
-
             $post = \Yii::$app->request->post();
-            $res = Notice::create($post);
+
+            $notice = new RNoticeAgent();
+            $notice->title = $post['title'];
+            $notice->content = $post['content'];
+            $notice->create_time = time();
+            $notice->create_person = 1;
+            $notice->update_time = time();
+            $notice->update_person = 1;
+            $notice->status = $post['status'];
+            $res =  $notice->insert();
+
             if($res) {
-                return $this->asJson([
+                $json = [
                     'result' => 'success',
                     'info' => '操作成功'
-                ]);
+                ];
             } else {
-                return $this->asJson([
+                $json = [
                     'result' => 'fail',
                     'info' => '操作失败'
-                ]);
+                ];
             }
+            return $this->asJson($json);
         }
 
-        $type = $request = \Yii::$app->request->get('type');
-        $title = $this->allTitle[$type];
-        return $this->render('create', [
-            'type' => $type,
-            'title' => $title
-        ]);
+        return $this->render('create');
     }
 
+    /**
+     * 编辑
+     * @return string|\yii\web\Response
+     */
     public function actionEdit()
     {
-
         if(\Yii::$app->request->isPost) {
-
             $post = \Yii::$app->request->post();
-            $res = Notice::edit($post);
+            $update_data = [
+                'title' => $post['title'],
+                'content' => $post['content'],
+                'status' => $post['status'],
+                'update_time' => time(),
+                'update_person' => 1,
+            ];
+            $res = RNoticeAgent::updateAll($update_data,'id = '.$post['id']);
             if($res) {
-                return $this->asJson([
+                $json = [
                     'result' => 'success',
                     'info' => '操作成功'
-                ]);
+                ];
             } else {
-                return $this->asJson([
+                $json = [
                     'result' => 'fail',
                     'info' => '操作失败'
-                ]);
+                ];
             }
+            return $this->asJson($json);
         }
-        $type = $request = \Yii::$app->request->get('type', 1);
-        $data = Notice::getOne($type);
+        $id = $request = \Yii::$app->request->get('id');
 
-        $title = $this->allTitle[$type];
+        $data = RNoticeAgent::find()
+            ->where([
+                'id'=> $id,
+            ])->asArray()->one();
+
 
         return $this->render('edit', [
             'data' => $data,
-            'type' => $type,
-            'title' => $title
         ]);
     }
 
+    /**
+     * 禁用
+     * @return \yii\web\Response
+     */
+    public function actionStop()
+    {
+        if(\Yii::$app->request->isPost) {
+            $post = \Yii::$app->request->post();
+            $update_data = [
+                'status' => 2,
+                'update_time' => time(),
+                'update_person' => 1,
+            ];
+            $res = RNoticeAgent::updateAll($update_data,'id = '.$post['id']);
+            if($res) {
+                $json = [
+                    'result' => 'success',
+                    'info' => '操作成功'
+                ];
+            } else {
+                $json = [
+                    'result' => 'fail',
+                    'info' => '操作失败'
+                ];
+            }
+            return $this->asJson($json);
+        }
+    }
 
+    /**
+     * 恢复正常
+     * @return \yii\web\Response
+     */
+    public function actionRecovery()
+    {
+        if(\Yii::$app->request->isPost) {
+            $post = \Yii::$app->request->post();
+            $update_data = [
+                'status' => 1,
+                'update_time' => time(),
+                'update_person' => 1,
+            ];
+            $res = RNoticeAgent::updateAll($update_data,'id = '.$post['id']);
+            if($res) {
+                $json = [
+                    'result' => 'success',
+                    'info' => '操作成功'
+                ];
+            } else {
+                $json = [
+                    'result' => 'fail',
+                    'info' => '操作失败'
+                ];
+            }
+            return $this->asJson($json);
+        }
+    }
+
+    /**
+     * 删除
+     * @return \yii\web\Response
+     */
     public function actionDelete()
     {
-        return $this->asJson([
-            'result' => 'success',
-            'info' => '添加成功'
-        ]);
+        if(\Yii::$app->request->isPost) {
+            $post = \Yii::$app->request->post();
+            $update_data = [
+                'status' => 3,
+                'update_time' => time(),
+                'update_person' => 1,
+            ];
+            $res = RNoticeAgent::updateAll($update_data,'id = '.$post['id']);
+            if($res) {
+                $json = [
+                    'result' => 'success',
+                    'info' => '操作成功'
+                ];
+            } else {
+                $json = [
+                    'result' => 'fail',
+                    'info' => '操作失败'
+                ];
+            }
+            return $this->asJson($json);
+        }
     }
 
 

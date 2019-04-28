@@ -123,13 +123,13 @@ use yii\helpers\Url;
         </div>
         <div class="row wrapper border-bottom white-bg page-heading">
             <div class="col-lg-10">
-                <h2><?php echo $title; ?></h2>
+                <h2>代理后台</h2>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
                         <a href="index.html">主页</a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a><?php echo $title; ?></a>
+                        <a>代理后台</a>
                     </li>
                     <li class="breadcrumb-item active">
                         <strong>创建</strong>
@@ -151,7 +151,6 @@ use yii\helpers\Url;
                         </div>
                         <div class="ibox-content">
                             <form id="saveForm" action="post">
-                                <input type="hidden" name="type" value="<?php echo $type ;?>" />
                                 <div class="form-group  row"><label class="col-sm-2 col-form-label">标题</label>
                                     <div class="col-sm-10"><input type="text" class="form-control" name="title"
                                                                   value=""></div>
@@ -205,13 +204,12 @@ use yii\helpers\Url;
 <script src="/js/plugins/iCheck/icheck.min.js"></script>
 <script>
 
-    var type = <?php echo $type ?>;
 
     $(function(){
         $("#btn_save").click(function(){
 
             $.ajax({
-                url:"<?php echo Url::toRoute(['/notice/default/create']); ?>",
+                url:"<?php echo Url::toRoute(['/notice/agent/create']); ?>",
                 type:"post",
                 data:$("#saveForm").serialize(),
                 dataType: 'json',
@@ -219,7 +217,7 @@ use yii\helpers\Url;
                     if(data.result=="success"){
                         //禁用提交按钮。防止点击起来没完
                         $('#formSubmit').attr('disabled',true);
-                        window.location.href = "<?php echo Url::toRoute(['/notice/default/index','type' => $type]); ?>";
+                        window.location.href = "<?php echo Url::toRoute(['/notice/agent/list']); ?>";
                     }else{
                         //禁用提交按钮。防止点击起来没完
                         $('#formSubmit').attr('disabled',true);

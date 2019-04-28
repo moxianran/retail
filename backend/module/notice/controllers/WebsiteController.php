@@ -10,7 +10,7 @@ class WebsiteController extends Controller
     public $enableCsrfValidation = false;
 
     /**
-     * 网站公告列表
+     * 列表
      * @return string
      */
     public function actionList()
