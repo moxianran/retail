@@ -49,17 +49,25 @@ AppAsset::register($this);
                     </div>
                 </li>
 
-                <li>
+                <li <?php if($this->context->module->id == 'notice') { echo ' class="active"';} ?>>
                     <a href="">
                         <i class="fa fa-th-large"></i>
                         <span class="nav-label">通知板块</span>
                         <span class="fa arrow"></span>
                     </a>
-                    <ul class="nav nav-second-level collapse">
-                        <li><a href="<?php echo Url::toRoute(['/notice/website/list']); ?>">网站公告</a></li>
-                        <li><a href="<?php echo Url::toRoute(['/notice/system/list']); ?>">会员后台</a></li>
-                        <li><a href="<?php echo Url::toRoute(['/notice/game/list']); ?>">游戏大厅</a></li>
-                        <li><a href="<?php echo Url::toRoute(['/notice/agent/list']); ?>">代理后台</a></li>
+                    <ul class="nav nav-second-level collapse ">
+                        <li <?php if($this->context->id == 'website') { echo ' class="active"';} ?>>
+                            <a href="<?php echo Url::toRoute(['/notice/website/list']); ?>">网站公告</a>
+                        </li>
+                        <li <?php if($this->context->id == 'system') { echo ' class="active"';} ?>>
+                            <a href="<?php echo Url::toRoute(['/notice/system/list']); ?>">会员后台</a>
+                        </li>
+                        <li <?php if($this->context->id == 'game') { echo ' class="active"';} ?>>
+                            <a href="<?php echo Url::toRoute(['/notice/game/list']); ?>">游戏大厅</a>
+                        </li>
+                        <li <?php if($this->context->id == 'agent') { echo ' class="active"';} ?>>
+                            <a href="<?php echo Url::toRoute(['/notice/agent/list']); ?>">代理后台</a>
+                        </li>
                     </ul>
                 </li>
 
