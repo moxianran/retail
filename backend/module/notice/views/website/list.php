@@ -152,8 +152,8 @@ use yii\helpers\Url;
                                         <th>序号</th>
                                         <th>标题</th>
                                         <th>内容</th>
-                                        <th>创建时间</th>
                                         <th>状态</th>
+                                        <th>创建时间</th>
                                         <th>操作</th>
                                     </tr>
                                     </thead>
@@ -171,17 +171,30 @@ use yii\helpers\Url;
 
                                             <td class="center">
 
-                                                <button class="btn btn-sm btn-primary m-t-n-xs" type="button" >
-                                                    <a href="<?php echo Url::toRoute(['/notice/website/edit','id'=>$v['id']]); ?>">编辑</a>
+                                                <button class="btn btn-sm btn-primary m-t-n-xs" type="button"
+                                                        onclick="goEdit(<?php echo $v['id'] ?>)" >
+                                                    <strong href="<?php echo Url::toRoute(['/notice/website/edit','id'=>$v['id']]); ?>">编辑</strong>
                                                 </button>
 
-                                                <button class="btn btn-sm btn-primary m-t-n-xs" type="button" onclick="goStop(<?php echo $v['id'] ?>);"
-                                                    <strong>停用</strong>
+                                                <?php
+                                                    if($v['status'] == 1) {
+                                                ?>
+                                                <button class="btn btn-sm btn-primary m-t-n-xs" type="button"
+                                                        onclick="goStop(<?php echo $v['id'] ?>);"
+                                                <strong>停用</strong>
                                                 </button>
+                                                <?php } else { ?>
+                                                <button class="btn btn-sm btn-primary m-t-n-xs" type="button"
+                                                        onclick="goOn(<?php echo $v['id'] ?>);"
+                                                <strong>恢复</strong>
+                                                </button>
+                                                <?php } ?>
 
-                                                <button class="btn btn-sm btn-primary m-t-n-xs" type="button" onclick="goDelete(<?php echo $v['id'] ?>);">
+                                                <button class="btn btn-sm btn-primary m-t-n-xs" type="button"
+                                                        onclick="goDelete(<?php echo $v['id'] ?>);">
                                                     <strong>删除</strong>
                                                 </button>
+
                                             </td>
                                         </tr>
                                     <?php
@@ -193,7 +206,8 @@ use yii\helpers\Url;
                                         <th>序号</th>
                                         <th>标题</th>
                                         <th>内容</th>
-                                        <th>时间</th>
+                                        <th>状态</th>
+                                        <th>创建时间</th>
                                         <th>操作</th>
                                     </tr>
                                     </tfoot>
@@ -220,10 +234,36 @@ use yii\helpers\Url;
 
 <script>
 
+    function goEdit(id) {
+        window.location.href="/notice/website/edit?id="+id;
+    }
+
     function goStop(id)
     {
         $.ajax({
             url:"<?php echo Url::toRoute(['/notice/website/stop']); ?>",
+            type:"post",
+            data:{
+                id:id
+            },
+            dataType: 'json',
+            success:function(data){
+                if(data.result=="success"){
+                    //禁用提交按钮。防止点击起来没完
+                    $('#formSubmit').attr('disabled',true);
+                    window.location.href = "<?php echo Url::toRoute(['/notice/website/list']); ?>";
+                }else{
+                    //禁用提交按钮。防止点击起来没完
+                    $('#formSubmit').attr('disabled',true);
+                }
+            }
+        });
+    }
+
+    function goOn(id)
+    {
+        $.ajax({
+            url:"<?php echo Url::toRoute(['/notice/website/recovery']); ?>",
             type:"post",
             data:{
                 id:id

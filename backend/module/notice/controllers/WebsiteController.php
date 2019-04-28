@@ -103,6 +103,10 @@ class WebsiteController extends Controller
         ]);
     }
 
+    /**
+     * 禁用
+     * @return \yii\web\Response
+     */
     public function actionStop()
     {
         if(\Yii::$app->request->isPost) {
@@ -128,6 +132,39 @@ class WebsiteController extends Controller
         }
     }
 
+    /**
+     * 恢复正常
+     * @return \yii\web\Response
+     */
+    public function actionRecovery()
+    {
+        if(\Yii::$app->request->isPost) {
+            $post = \Yii::$app->request->post();
+            $update_data = [
+                'status' => 1,
+                'update_time' => time(),
+                'update_person' => 1,
+            ];
+            $res = RNoticeWebsite::updateAll($update_data,'id = '.$post['id']);
+            if($res) {
+                $json = [
+                    'result' => 'success',
+                    'info' => '操作成功'
+                ];
+            } else {
+                $json = [
+                    'result' => 'fail',
+                    'info' => '操作失败'
+                ];
+            }
+            return $this->asJson($json);
+        }
+    }
+
+    /**
+     * 删除
+     * @return \yii\web\Response
+     */
     public function actionDelete()
     {
         if(\Yii::$app->request->isPost) {
