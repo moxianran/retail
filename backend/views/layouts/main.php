@@ -71,18 +71,24 @@ AppAsset::register($this);
                     </ul>
                 </li>
 
-                <li>
-                    <a href="index.html"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboards</span> <span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level collapse">
-                        <li><a href="index.html">Dashboard v.1</a></li>
-                        <li><a href="dashboard_2.html">Dashboard v.2</a></li>
-                        <li><a href="dashboard_3.html">Dashboard v.3</a></li>
-                        <li><a href="dashboard_4_1.html">Dashboard v.4</a></li>
-                        <li><a href="dashboard_5.html">Dashboard v.5 </a></li>
+                <li <?php if($this->context->module->id == 'user') { echo ' class="active"';} ?>>
+                    <a href="">
+                        <i class="fa fa-th-large"></i>
+                        <span class="nav-label">会员管理</span>
+                        <span class="fa arrow"></span>
+                    </a>
+                    <ul class="nav nav-second-level collapse ">
+                        <li <?php if($this->context->module->id == 'user' && $this->context->action->id == 'list') { echo ' class="active"';} ?>>
+                            <a href="<?php echo Url::toRoute(['/user/default/list']); ?>">会员列表</a>
+                        </li>
+                        <li <?php if($this->context->module->id == 'user' && $this->context->action->id == 'examine') { echo ' class="active"';} ?>>
+                            <a href="<?php echo Url::toRoute(['/user/default/examine']); ?>">会员审核</a>
+                        </li>
+                        <li <?php if($this->context->module->id == 'user' && $this->context->action->id == 'online') { echo ' class="active"';} ?>>
+                            <a href="<?php echo Url::toRoute(['/user/default/online']); ?>">会员在线</a>
+                        </li>
+
                     </ul>
-                </li>
-                <li>
-                    <a href="layouts.html"><i class="fa fa-diamond"></i> <span class="nav-label">Layouts</span></a>
                 </li>
 
             </ul>
