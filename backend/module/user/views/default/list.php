@@ -160,6 +160,7 @@ use yii\helpers\Url;
                                     <th>注册域名</th>
                                     <th>注册时间</th>
                                     <th>注册区域IP</th>
+                                    <th>状态</th>
                                     <th>操作</th>
                                 </tr>
                                 </thead>
@@ -180,17 +181,30 @@ use yii\helpers\Url;
                                             <td><?php echo $v['register_domain'] ?></td>
                                             <td><?php echo date("Y-m-d H:i:s",$v['register_time']) ?></td>
                                             <td><?php echo $v['register_ip'] ?></td>
+                                            <td><?php if($v['is_stop'] == 1) { echo "正常";} else { echo "已停用";}  ?></td>
+
                                             <td class="center">
+                                                <?php
+                                                    if($v['is_stop'] == 1) {
+                                                ?>
+                                                <button class="btn btn-sm btn-primary m-t-n-xs" type="button"
+                                                        onclick="changeStop(<?php echo $v['id'] ?>,2)">
+                                                    <strong>停用</strong>
+                                                </button>
+                                                <?php
+                                                    } else {
+                                                ?>
+                                                <button class="btn btn-sm btn-primary m-t-n-xs" type="button"
+                                                        onclick="changeStop(<?php echo $v['id'] ?>,1)">
+                                                    <strong>恢复正常</strong>
+                                                </button>
+                                                <?php
+                                                    }
+                                                ?>
                                                 <button class="btn btn-sm btn-primary m-t-n-xs" type="button"
                                                         onclick="goEdit(<?php echo $v['id'] ?>)" >
-                                                    <strong href="<?php echo Url::toRoute(['/user/default/edit','id'=>$v['id']]); ?>">编辑</strong>
+                                                    <strong>编辑</strong>
                                                 </button>
-
-                                                <button class="btn btn-sm btn-primary m-t-n-xs" type="button"
-                                                        onclick="goDelete(<?php echo $v['id'] ?>);">
-                                                    <strong>删除</strong>
-                                                </button>
-
                                             </td>
                                         </tr>
                                         <?php
@@ -237,67 +251,25 @@ use yii\helpers\Url;
 <script>
 
     function goEdit(id) {
-        window.location.href="/user/game/edit?id="+id;
+        window.location.href="/user/default/edit?id="+id;
     }
 
-    function goStop(id)
+
+    function changeStop(id,isStop)
     {
         $.ajax({
-            url:"<?php echo Url::toRoute(['/user/game/stop']); ?>",
+            url:"<?php echo Url::toRoute(['/user/default/change-stop']); ?>",
             type:"post",
             data:{
-                id:id
+                id:id,
+                isStop:isStop,
             },
             dataType: 'json',
             success:function(data){
                 if(data.result=="success"){
                     //禁用提交按钮。防止点击起来没完
                     $('#formSubmit').attr('disabled',true);
-                    window.location.href = "<?php echo Url::toRoute(['/user/game/list']); ?>";
-                }else{
-                    //禁用提交按钮。防止点击起来没完
-                    $('#formSubmit').attr('disabled',true);
-                }
-            }
-        });
-    }
-
-    function goOn(id)
-    {
-        $.ajax({
-            url:"<?php echo Url::toRoute(['/user/game/recovery']); ?>",
-            type:"post",
-            data:{
-                id:id
-            },
-            dataType: 'json',
-            success:function(data){
-                if(data.result=="success"){
-                    //禁用提交按钮。防止点击起来没完
-                    $('#formSubmit').attr('disabled',true);
-                    window.location.href = "<?php echo Url::toRoute(['/user/game/list']); ?>";
-                }else{
-                    //禁用提交按钮。防止点击起来没完
-                    $('#formSubmit').attr('disabled',true);
-                }
-            }
-        });
-    }
-
-    function goDelete(id)
-    {
-        $.ajax({
-            url:"<?php echo Url::toRoute(['/user/game/delete']); ?>",
-            type:"post",
-            data:{
-                id:id
-            },
-            dataType: 'json',
-            success:function(data){
-                if(data.result=="success"){
-                    //禁用提交按钮。防止点击起来没完
-                    $('#formSubmit').attr('disabled',true);
-                    window.location.href = "<?php echo Url::toRoute(['/user/game/list']); ?>";
+                    window.location.href = "<?php echo Url::toRoute(['/user/default/list']); ?>";
                 }else{
                     //禁用提交按钮。防止点击起来没完
                     $('#formSubmit').attr('disabled',true);

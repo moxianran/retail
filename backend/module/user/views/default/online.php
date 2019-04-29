@@ -119,13 +119,13 @@ use yii\helpers\Url;
     </div>
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
-            <h2>会员审核</h2>
+            <h2>会员列表</h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
                     <a href="index.html">主页</a>
                 </li>
                 <li class="breadcrumb-item">
-                    <a>会员审核</a>
+                    <a>会员在线列表</a>
                 </li>
             </ol>
         </div>
@@ -139,7 +139,7 @@ use yii\helpers\Url;
             <div class="col-lg-12">
                 <div class="ibox ">
                     <div class="ibox-title">
-                        <h5>会员审核</h5>
+                        <h5>会员在线列表</h5>
                         <div class="ibox-tools">
                             <a class="btn-sm" href="<?php echo Url::toRoute(['/user/default/create']); ?>">新增</a>
                         </div>
@@ -152,13 +152,8 @@ use yii\helpers\Url;
                                     <th>序号</th>
                                     <th>会员帐号</th>
                                     <th>真实姓名</th>
-                                    <th>手机号码</th>
-                                    <th>电子邮箱</th>
-                                    <th>qq</th>
-                                    <th>微信</th>
-                                    <th>注册域名</th>
-                                    <th>注册时间</th>
-                                    <th>注册区域IP</th>
+                                    <th>登录时间</th>
+                                    <th>登录区域</th>
                                     <th>操作</th>
                                 </tr>
                                 </thead>
@@ -171,24 +166,13 @@ use yii\helpers\Url;
                                             <td><?php echo $v['id'] ?></td>
                                             <td><?php echo $v['account'] ?></td>
                                             <td><?php echo $v['real_name'] ?></td>
-                                            <td><?php echo $v['phone'] ?></td>
-                                            <td><?php echo $v['email'] ?></td>
-                                            <td><?php echo $v['qq'] ?></td>
-                                            <td><?php echo $v['wechat'] ?></td>
-                                            <td><?php echo $v['register_domain'] ?></td>
-                                            <td><?php echo date("Y-m-d H:i:s",$v['register_time']) ?></td>
-                                            <td><?php echo $v['register_ip'] ?></td>
+                                            <td><?php echo date("Y-m-d H:i:s",$v['login_time']) ?></td>
+                                            <td><?php echo $v['login_ip'] ?></td>
                                             <td class="center">
                                                 <button class="btn btn-sm btn-primary m-t-n-xs" type="button"
-                                                        onclick="changeStatus(<?php echo $v['id'] ?>,2)" >
-                                                    <strong>通过</strong>
+                                                        onclick="kickOut(<?php echo $v['id'] ?>)" >
+                                                    <strong>踢出</strong>
                                                 </button>
-
-                                                <button class="btn btn-sm btn-primary m-t-n-xs" type="button"
-                                                        onclick="changeStatus(<?php echo $v['id'] ?>,3)" >
-                                                    <strong>拒绝</strong>
-                                                </button>
-
                                             </td>
                                         </tr>
                                         <?php
@@ -200,13 +184,8 @@ use yii\helpers\Url;
                                     <th>序号</th>
                                     <th>会员帐号</th>
                                     <th>真实姓名</th>
-                                    <th>手机号码</th>
-                                    <th>电子邮箱</th>
-                                    <th>qq</th>
-                                    <th>微信</th>
-                                    <th>注册域名</th>
-                                    <th>注册时间</th>
-                                    <th>注册区域IP</th>
+                                    <th>登录时间</th>
+                                    <th>登录区域</th>
                                     <th>操作</th>
                                 </tr>
                                 </tfoot>
@@ -234,22 +213,20 @@ use yii\helpers\Url;
 <script>
 
 
-
-    function changeStatus(id,status)
+    function kickOut(id)
     {
         $.ajax({
-            url:"<?php echo Url::toRoute(['/user/default/examine']); ?>",
+            url:"<?php echo Url::toRoute(['/user/default/kick-out']); ?>",
             type:"post",
             data:{
                 id:id,
-                status:status
             },
             dataType: 'json',
             success:function(data){
                 if(data.result=="success"){
                     //禁用提交按钮。防止点击起来没完
                     $('#formSubmit').attr('disabled',true);
-                    window.location.href = "<?php echo Url::toRoute(['/user/default/examine']); ?>";
+                    window.location.href = "<?php echo Url::toRoute(['/user/default/online']); ?>";
                 }else{
                     //禁用提交按钮。防止点击起来没完
                     $('#formSubmit').attr('disabled',true);
@@ -280,8 +257,11 @@ use yii\helpers\Url;
                     }
                 }
             ]
+
         });
+
     });
+
 </script>
 </body>
 </html>
