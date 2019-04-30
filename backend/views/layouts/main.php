@@ -108,6 +108,19 @@ AppAsset::register($this);
                     </ul>
                 </li>
 
+                <li <?php if($this->context->module->id == 'admin' && $this->context->id == 'customer') { echo ' class="active"';} ?>>
+                    <a href="">
+                        <i class="fa fa-th-large"></i>
+                        <span class="nav-label">客服管理</span>
+                        <span class="fa arrow"></span>
+                    </a>
+                    <ul class="nav nav-second-level collapse ">
+                        <li <?php if($this->context->id == 'customer') { echo ' class="active"';} ?>>
+                            <a href="<?php echo Url::toRoute(['/admin/customer/list']); ?>">客服列表</a>
+                        </li>
+                    </ul>
+                </li>
+
 
             </ul>
 
