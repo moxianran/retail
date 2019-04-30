@@ -3,10 +3,12 @@
 namespace backend\module\report\controllers;
 
 use app\models\RAdmin;
+use app\models\RRechargeRecord;
 use app\models\RUser;
 use yii\web\Controller;
 use yii\data\Pagination;
 use backend\services\BetService;
+use backend\services\RechargeService;
 
 class ReportController extends Controller
 {
@@ -106,31 +108,21 @@ class ReportController extends Controller
      */
     public function actionRechargeRecord()
     {
-        $page = $request = \Yii::$app->request->get('page', 1);
-        $type = $request = \Yii::$app->request->get('type', 1);
+        $get = \Yii::$app->request->get();
+        $data = RechargeService::getlist($get);
 
-        //获取分页条件
-        $offset = ($page - 1) * $this->pageSize;
+        //获取全部用户
+        $user = RUser::find('id,real_name')->where(['status' => 2])->asArray()->all();
 
-        //获取时间
-        $cond = $this->getCond($type);
+        $pagination = new Pagination(['totalCount' => $data['count'],'pageSize' =>$data['pageSize'] ]);
 
-        $query = RAdmin::find();
-        if($cond) {
-            foreach($cond as $k => $v) {
-                $query->andWhere($v);
-            }
-        }
-
-        $count = $query->count();
-        $list = $query->offset($offset)->limit($this->pageSize)->asArray()->all();
-
-        $pagination = new Pagination(['totalCount' => $count,'pageSize' => $this->pageSize]);
-
-        return $this->render('betRecord', [
-            'list' => $list,
+        return $this->render('rechargeRecord', [
+            'list' => $data['list'],
             'pagination' => $pagination,
-            'type' => $type,
+            'start' => $data['start'],
+            'end' => $data['end'],
+            'get' => $get,
+            'user' => $user,
         ]);
     }
 
