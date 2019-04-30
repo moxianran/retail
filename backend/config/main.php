@@ -21,6 +21,10 @@ return [
         'user' => [
             'class' => 'backend\module\user\user',
         ],
+        'report' => [
+            'class' => 'backend\module\report\report',
+        ],
+
     ],
     'components' => [
         'request' => [

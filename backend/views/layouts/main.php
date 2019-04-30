@@ -134,8 +134,32 @@ AppAsset::register($this);
                     </ul>
                 </li>
 
-            </ul>
 
+                <li <?php if($this->context->module->id == 'report') { echo ' class="active"';} ?>>
+                    <a href="">
+                        <i class="fa fa-th-large"></i>
+                        <span class="nav-label">报表管理</span>
+                        <span class="fa arrow"></span>
+                    </a>
+                    <ul class="nav nav-second-level collapse ">
+                        <li <?php if($this->context->module->id == 'report' && $this->context->action->id == 'user-add-record') { echo ' class="active"';} ?>>
+                            <a href="<?php echo Url::toRoute(['/report/report/user-add-record']); ?>">会员新增记录</a>
+                        </li>
+                        <li <?php if($this->context->module->id == 'report' && $this->context->action->id == 'agent-add-record') { echo ' class="active"';} ?>>
+                            <a href="<?php echo Url::toRoute(['/report/report/agent-add-record']); ?>">代理新增记录</a>
+                        </li>
+                        <li <?php if($this->context->module->id == 'report' && $this->context->action->id == 'bet') { echo ' class="active"';} ?>>
+                            <a href="<?php echo Url::toRoute(['/report/report/bet']); ?>">投注记录</a>
+                        </li>
+                        <li <?php if($this->context->module->id == 'report' && $this->context->action->id == 'recharge') { echo ' class="active"';} ?>>
+                            <a href="<?php echo Url::toRoute(['/report/report/recharge']); ?>">充值记录</a>
+                        </li>
+                        <li <?php if($this->context->module->id == 'report' && $this->context->action->id == 'result') { echo ' class="active"';} ?>>
+                            <a href="<?php echo Url::toRoute(['/report/report/result']); ?>">输赢报表</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
         </div>
     </nav>
 <?= $content ?>
@@ -151,7 +175,6 @@ AppAsset::register($this);
 <script src="/js/plugins/dataTables/datatables.min.js"></script>
 <script src="/js/plugins/dataTables/dataTables.bootstrap4.min.js"></script>
 
-<!-- Custom and plugin javascript -->
 <script src="/js/inspinia.js"></script>
 <script src="/js/plugins/pace/pace.min.js"></script>
 </body>
