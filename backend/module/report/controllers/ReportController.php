@@ -6,6 +6,7 @@ use app\models\RAdmin;
 use app\models\RUser;
 use yii\web\Controller;
 use yii\data\Pagination;
+use backend\services\BetService;
 
 class ReportController extends Controller
 {
@@ -65,7 +66,6 @@ class ReportController extends Controller
                 $query->andWhere($v);
             }
         }
-
         $count = $query->count();
         $list = $query->offset($offset)->limit($this->pageSize)->asArray()->all();
 
@@ -78,10 +78,94 @@ class ReportController extends Controller
         ]);
     }
 
+    /**
+     * 投注记录
+     */
+    public function actionBetRecord()
+    {
+        $get = \Yii::$app->request->get();
+        $data = BetService::getlist($get);
 
+        //获取全部用户
+        $user = RUser::find('id,real_name')->where(['status' => 2])->asArray()->all();
 
+        $pagination = new Pagination(['totalCount' => $data['count'],'pageSize' =>$data['pageSize'] ]);
 
+        return $this->render('betRecord', [
+            'list' => $data['list'],
+            'pagination' => $pagination,
+            'start' => $data['start'],
+            'end' => $data['end'],
+            'get' => $get,
+            'user' => $user,
+        ]);
+    }
 
+    /**
+     * 充值记录
+     */
+    public function actionRechargeRecord()
+    {
+        $page = $request = \Yii::$app->request->get('page', 1);
+        $type = $request = \Yii::$app->request->get('type', 1);
+
+        //获取分页条件
+        $offset = ($page - 1) * $this->pageSize;
+
+        //获取时间
+        $cond = $this->getCond($type);
+
+        $query = RAdmin::find();
+        if($cond) {
+            foreach($cond as $k => $v) {
+                $query->andWhere($v);
+            }
+        }
+
+        $count = $query->count();
+        $list = $query->offset($offset)->limit($this->pageSize)->asArray()->all();
+
+        $pagination = new Pagination(['totalCount' => $count,'pageSize' => $this->pageSize]);
+
+        return $this->render('betRecord', [
+            'list' => $list,
+            'pagination' => $pagination,
+            'type' => $type,
+        ]);
+    }
+
+    /**
+     * 输赢记录
+     */
+    public function actionResultRecord()
+    {
+        $page = $request = \Yii::$app->request->get('page', 1);
+        $type = $request = \Yii::$app->request->get('type', 1);
+
+        //获取分页条件
+        $offset = ($page - 1) * $this->pageSize;
+
+        //获取时间
+        $cond = $this->getCond($type);
+
+        $query = RAdmin::find();
+        if($cond) {
+            foreach($cond as $k => $v) {
+                $query->andWhere($v);
+            }
+        }
+
+        $count = $query->count();
+        $list = $query->offset($offset)->limit($this->pageSize)->asArray()->all();
+
+        $pagination = new Pagination(['totalCount' => $count,'pageSize' => $this->pageSize]);
+
+        return $this->render('betRecord', [
+            'list' => $list,
+            'pagination' => $pagination,
+            'type' => $type,
+        ]);
+    }
 
     /**
      * 获取开始时间
@@ -104,14 +188,18 @@ class ReportController extends Controller
                 $cond[] = ['<', 'create_time', $end];
                 break;
             case 3 ://本周
-                $start = strtotime(date("Y-m-d"));
-                $end = strtotime(date("Y-m-d")) + 86399;
+                $startDate =  date('Y-m-d', (time() - ((date('w') == 0 ? 7 : date('w')) - 1) * 24 * 3600));
+                $start = strtotime($startDate);
+                $endDate = date('Y-m-d', (time() + (7 - (date('w') == 0 ? 7 : date('w'))) * 24 * 3600));
+                $end = strtotime($endDate) + 86399;
                 $cond[] = ['>', 'create_time', $start];
                 $cond[] = ['<', 'create_time', $end];
                 break;
             case 4 ://上周
-                $start = strtotime(date("Y-m-d"));
-                $end = strtotime(date("Y-m-d")) + 86399;
+                $startDate =  date('Y-m-d', strtotime('-1 monday', time()));
+                $start = strtotime($startDate);
+                $endDate = date('Y-m-d', strtotime('-1 sunday', time()));
+                $end = strtotime($endDate) + 86399;
                 $cond[] = ['>', 'create_time', $start];
                 $cond[] = ['<', 'create_time', $end];
                 break;

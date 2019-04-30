@@ -22,6 +22,8 @@ AppAsset::register($this);
     <link href="/css/plugins/dataTables/datatables.min.css" rel="stylesheet">
     <link href="/css/animate.css" rel="stylesheet">
     <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
+
 </head>
 
 <?php $this->beginBody() ?>
@@ -148,14 +150,14 @@ AppAsset::register($this);
                         <li <?php if($this->context->module->id == 'report' && $this->context->action->id == 'agent-add-record') { echo ' class="active"';} ?>>
                             <a href="<?php echo Url::toRoute(['/report/report/agent-add-record']); ?>">代理新增记录</a>
                         </li>
-                        <li <?php if($this->context->module->id == 'report' && $this->context->action->id == 'bet') { echo ' class="active"';} ?>>
-                            <a href="<?php echo Url::toRoute(['/report/report/bet']); ?>">投注记录</a>
+                        <li <?php if($this->context->module->id == 'report' && $this->context->action->id == 'bet-record') { echo ' class="active"';} ?>>
+                            <a href="<?php echo Url::toRoute(['/report/report/bet-record']); ?>">投注记录</a>
                         </li>
-                        <li <?php if($this->context->module->id == 'report' && $this->context->action->id == 'recharge') { echo ' class="active"';} ?>>
-                            <a href="<?php echo Url::toRoute(['/report/report/recharge']); ?>">充值记录</a>
+                        <li <?php if($this->context->module->id == 'report' && $this->context->action->id == 'recharge-record') { echo ' class="active"';} ?>>
+                            <a href="<?php echo Url::toRoute(['/report/report/recharge-record']); ?>">充值记录</a>
                         </li>
-                        <li <?php if($this->context->module->id == 'report' && $this->context->action->id == 'result') { echo ' class="active"';} ?>>
-                            <a href="<?php echo Url::toRoute(['/report/report/result']); ?>">输赢报表</a>
+                        <li <?php if($this->context->module->id == 'report' && $this->context->action->id == 'result-record') { echo ' class="active"';} ?>>
+                            <a href="<?php echo Url::toRoute(['/report/report/result-record']); ?>">输赢报表</a>
                         </li>
                     </ul>
                 </li>
