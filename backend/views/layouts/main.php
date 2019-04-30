@@ -91,6 +91,24 @@ AppAsset::register($this);
                     </ul>
                 </li>
 
+                <li <?php if($this->context->module->id == 'admin' && $this->context->id == 'agent') { echo ' class="active"';} ?>>
+                    <a href="">
+                        <i class="fa fa-th-large"></i>
+                        <span class="nav-label">代理管理</span>
+                        <span class="fa arrow"></span>
+                    </a>
+                    <ul class="nav nav-second-level collapse ">
+                        <li <?php if($this->context->action->id == 'list') { echo ' class="active"';} ?>>
+                            <a href="<?php echo Url::toRoute(['/admin/agent/list']); ?>">代理列表</a>
+                        </li>
+                        <li <?php if($this->context->action->id == 'examine') { echo ' class="active"';} ?>>
+                            <a href="<?php echo Url::toRoute(['/admin/agent/examine']); ?>">代理审核</a>
+                        </li>
+
+                    </ul>
+                </li>
+
+
             </ul>
 
         </div>

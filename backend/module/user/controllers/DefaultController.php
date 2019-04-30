@@ -210,6 +210,9 @@ class DefaultController extends Controller
         ]);
     }
 
+    /**
+     * 踢出登录
+     */
     public function actionKickOut()
     {
         if (\Yii::$app->request->isPost) {
