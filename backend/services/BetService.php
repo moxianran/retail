@@ -14,8 +14,8 @@ class BetService {
     {
         $pageSize= 10;
 
-        if(isset($prams['page']) && !empty($prams['page'])) {
-            $page = (int) $prams['page'];
+        if(isset($params['page']) && !empty($params['page'])) {
+            $page = (int) $params['page'];
         } else {
             $page = 1;
         }

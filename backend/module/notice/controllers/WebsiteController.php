@@ -4,33 +4,52 @@ namespace backend\module\notice\controllers;
 
 use yii\web\Controller;
 use app\models\RNoticeWebsite;
+use backend\services\NoticeService;
+use yii\data\Pagination;
 
 class WebsiteController extends Controller
 {
     public $enableCsrfValidation = false;
+    public $moduleTitle = "通知管理";
+    public $adminInfo = [];
+
+    public function init()
+    {
+        parent::init();
+        //判断是否登录
+        $session = \Yii::$app->session;
+        $this->adminInfo = $session->get('adminInfo');
+        if(!$this->adminInfo) {
+            return $this->redirect(['/login/login/login']);
+        }
+    }
 
     /**
      * 列表
-     * @return string
      */
     public function actionList()
     {
-        $list = RNoticeWebsite::find()->where([
-            'status'=> [1,2],
-        ])->asArray()->all();
+        $title = "网站公告";
+
+        $get = \Yii::$app->request->get();
+        $data = NoticeService::getList($get,1);
+        $pagination = new Pagination(['totalCount' => $data['count'],'pageSize' =>$data['pageSize'] ]);
 
         return $this->render('list', [
-            'list' => $list,
+            'list' => $data['list'],
+            'pagination' => $pagination,
+            'title' => $title,
+            'moduleTitle' => $this->moduleTitle,
         ]);
     }
 
     /**
      * 新增
-     * @return string|\yii\web\Response
-     * @throws \Throwable
      */
     public function actionCreate()
     {
+        $title = "新增公告";
+
         if(\Yii::$app->request->isPost) {
             $post = \Yii::$app->request->post();
 
@@ -58,7 +77,10 @@ class WebsiteController extends Controller
             return $this->asJson($json);
         }
 
-        return $this->render('create');
+        return $this->render('create',[
+            'title' => $title,
+            'moduleTitle' => $this->moduleTitle,
+        ]);
     }
 
     /**
@@ -67,6 +89,8 @@ class WebsiteController extends Controller
      */
     public function actionEdit()
     {
+        $title = "编辑公告";
+
         if(\Yii::$app->request->isPost) {
             $post = \Yii::$app->request->post();
             $update_data = [
@@ -100,6 +124,8 @@ class WebsiteController extends Controller
 
         return $this->render('edit', [
             'data' => $data,
+            'title' => $title,
+            'moduleTitle' => $this->moduleTitle,
         ]);
     }
 

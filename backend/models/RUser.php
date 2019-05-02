@@ -30,7 +30,7 @@ use Yii;
  * @property int $register_time
  * @property string $register_domain
  * @property int $status 状态 1 待审核 2通过 3拒绝
- * @property int $is_stop 是否停用 1是 2否
+ * @property int $is_stop 是否禁用 1是 2否
  * @property int $is_login 是否登录 1是 2否
  */
 class RUser extends \yii\db\ActiveRecord

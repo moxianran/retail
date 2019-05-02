@@ -27,6 +27,10 @@ AppAsset::register($this);
 </head>
 
 <?php $this->beginBody() ?>
+
+<?php
+$adminInfo = Yii::$app->session->get('adminInfo');
+?>
 <div id="wrapper">
     <nav class="navbar-default navbar-static-side" role="navigation">
         <div class="sidebar-collapse">
@@ -35,16 +39,9 @@ AppAsset::register($this);
                     <div class="dropdown profile-element">
                         <img alt="image" class="rounded-circle" src="/img/profile_small.jpg"/>
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                            <span class="block m-t-xs font-bold">张三</span>
-                            <span class="text-muted text-xs block">销售<b class="caret"></b></span>
+                            <span class="block m-t-xs font-bold"><?php echo $adminInfo['real_name']; ?></span>
+                            <span class="text-muted text-xs block"><?php echo $adminInfo['positionName']; ?></span>
                         </a>
-                        <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                            <li><a class="dropdown-item" href="profile.html">Profile</a></li>
-                            <li><a class="dropdown-item" href="contacts.html">Contacts</a></li>
-                            <li><a class="dropdown-item" href="mailbox.html">Mailbox</a></li>
-                            <li class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="login.html">Logout</a></li>
-                        </ul>
                     </div>
                     <div class="logo-element">
                         IN+
@@ -54,7 +51,7 @@ AppAsset::register($this);
                 <li <?php if($this->context->module->id == 'notice') { echo ' class="active"';} ?>>
                     <a href="">
                         <i class="fa fa-th-large"></i>
-                        <span class="nav-label">通知板块</span>
+                        <span class="nav-label">通知管理</span>
                         <span class="fa arrow"></span>
                     </a>
                     <ul class="nav nav-second-level collapse ">
@@ -164,7 +161,27 @@ AppAsset::register($this);
             </ul>
         </div>
     </nav>
+
+    <div id="page-wrapper" class="gray-bg">
+
+        <div class="row border-bottom">
+            <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+                <div class="navbar-header"></div>
+                <ul class="nav navbar-top-links navbar-right">
+                    <li>
+                        <a href="<?php echo Url::toRoute(['/login/login/logout']); ?>">
+                            <i class="fa fa-sign-out"></i> 退出登录
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
 <?= $content ?>
+
+    </div>
+</div>
+
 </div>
 
 <?php $this->endBody() ?>

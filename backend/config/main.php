@@ -24,6 +24,9 @@ return [
         'report' => [
             'class' => 'backend\module\report\report',
         ],
+        'login' => [
+            'class' => 'backend\module\login\login',
+        ],
 
     ],
     'components' => [

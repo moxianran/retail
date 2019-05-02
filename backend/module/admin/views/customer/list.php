@@ -175,7 +175,7 @@ use yii\helpers\Url;
                                             <td><?php echo $v['wechat'] ?></td>
                                             <td><?php echo date("Y-m-d H:i:s",$v['register_time']) ?></td>
                                             <td><?php echo $v['register_ip'] ?></td>
-                                            <td><?php if($v['status'] == 1) { echo "正常";} else { echo "已停用";}  ?></td>
+                                            <td><?php if($v['status'] == 1) { echo "正常";} else { echo "已禁用";}  ?></td>
 
                                             <td class="center">
                                                 <?php
@@ -183,7 +183,7 @@ use yii\helpers\Url;
                                                 ?>
                                                 <button class="btn btn-sm btn-primary m-t-n-xs" type="button"
                                                         onclick="changeStatus(<?php echo $v['id'] ?>,2)">
-                                                    <strong>停用</strong>
+                                                    <strong>禁用</strong>
                                                 </button>
                                                 <?php
                                                     } else {

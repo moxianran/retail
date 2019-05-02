@@ -17,7 +17,7 @@ class AgentController extends Controller
     {
         $list = RNoticeAgent::find()->where([
             'status'=> [1,2],
-        ])->asArray()->all();
+        ])->orderBy('id desc')->asArray()->all();
 
         return $this->render('list', [
             'list' => $list,
