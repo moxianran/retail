@@ -9,7 +9,7 @@ class LoginController extends Controller
 {
     public $enableCsrfValidation = false;
     public $layout=false;
-
+    public $adminInfo = [];
 
     public function init()
     {
@@ -46,13 +46,19 @@ class LoginController extends Controller
             return $this->asJson($json);
         }
 
+        $session = \Yii::$app->session;
+        $this->adminInfo = $session->get('adminInfo');
+        if($this->adminInfo) {
+            return $this->redirect(['/notice/website/list']);
+        }
+
         return $this->render('login');
     }
 
     /**
      * 退出登录
      */
-    public function actionLouout()
+    public function actionLogout()
     {
         $session = \Yii::$app->session;
         $session->remove('adminInfo');

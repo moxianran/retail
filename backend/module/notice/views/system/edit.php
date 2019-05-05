@@ -5,16 +5,16 @@ use yii\helpers\Url;
 
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
-        <h2>会员后台</h2>
+        <h2><?php echo $title; ?></h2>
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
-                <a href="index.html">主页</a>
+                <a href="index.html">首页</a>
             </li>
             <li class="breadcrumb-item">
-                <a>会员后台</a>
+                <a><?php echo $moduleTitle; ?></a>
             </li>
             <li class="breadcrumb-item active">
-                <strong>编辑</strong>
+                <strong><?php echo $title; ?></strong>
             </li>
         </ol>
     </div>
@@ -67,7 +67,6 @@ use yii\helpers\Url;
         </div>
     </div>
 </div>
-
 
 <!-- Mainly scripts -->
 <script src="/js/jquery-3.1.1.min.js"></script>

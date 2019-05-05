@@ -20,18 +20,16 @@ use Yii;
  * @property string $wechat 微信
  * @property string $bank_id 银行账号
  * @property int $agent_id 上级代理
+ * @property string $create_ip 注册ip
  * @property int $create_time
  * @property int $update_time
  * @property int $create_person
  * @property int $update_person
- * @property string $login_ip
- * @property int $login_time
- * @property string $register_ip
- * @property int $register_time
- * @property string $register_domain
+ * @property string $login_ip 登录ip
+ * @property int $login_time 最后登录时间
+ * @property string $domain 域名
  * @property int $status 状态 1 待审核 2通过 3拒绝
- * @property int $is_stop 是否禁用 1是 2否
- * @property int $is_login 是否登录 1是 2否
+ * @property int $is_stop 是否停用 1是 2否
  */
 class RUser extends \yii\db\ActiveRecord
 {
@@ -49,9 +47,9 @@ class RUser extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['account', 'bank_id'], 'required'],
-            [['agent_id', 'create_time', 'update_time', 'create_person', 'update_person', 'login_time', 'register_time', 'status', 'is_stop', 'is_login'], 'integer'],
-            [['account', 'pwd', 'game_account', 'game_pwd', 'money_pwd', 'real_name', 'phone', 'email', 'qq', 'wechat', 'bank_id', 'login_ip', 'register_ip', 'register_domain'], 'string', 'max' => 255],
+            [['account'], 'required'],
+            [['agent_id', 'create_time', 'update_time', 'create_person', 'update_person', 'login_time', 'status', 'is_stop'], 'integer'],
+            [['account', 'pwd', 'game_account', 'game_pwd', 'money_pwd', 'real_name', 'phone', 'email', 'qq', 'wechat', 'bank_id', 'create_ip', 'login_ip', 'domain'], 'string', 'max' => 255],
         ];
     }
 
@@ -74,18 +72,16 @@ class RUser extends \yii\db\ActiveRecord
             'wechat' => 'Wechat',
             'bank_id' => 'Bank ID',
             'agent_id' => 'Agent ID',
+            'create_ip' => 'Create Ip',
             'create_time' => 'Create Time',
             'update_time' => 'Update Time',
             'create_person' => 'Create Person',
             'update_person' => 'Update Person',
             'login_ip' => 'Login Ip',
             'login_time' => 'Login Time',
-            'register_ip' => 'Register Ip',
-            'register_time' => 'Register Time',
-            'register_domain' => 'Register Domain',
+            'domain' => 'Domain',
             'status' => 'Status',
             'is_stop' => 'Is Stop',
-            'is_login' => 'Is Login',
         ];
     }
 }

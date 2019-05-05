@@ -2,10 +2,9 @@
 
 namespace backend\module\notice\controllers;
 
-use yii\web\Controller;
-use app\models\RNoticeWebsite;
-use backend\services\NoticeService;
+use backend\services\NoticeWebsiteService;
 use yii\data\Pagination;
+use yii\web\Controller;
 
 class WebsiteController extends Controller
 {
@@ -32,7 +31,7 @@ class WebsiteController extends Controller
         $title = "网站公告";
 
         $get = \Yii::$app->request->get();
-        $data = NoticeService::getList($get,1);
+        $data = NoticeWebsiteService::getList($get);
         $pagination = new Pagination(['totalCount' => $data['count'],'pageSize' =>$data['pageSize'] ]);
 
         return $this->render('list', [
@@ -48,22 +47,13 @@ class WebsiteController extends Controller
      */
     public function actionCreate()
     {
-        $title = "新增公告";
+        $title = "新增消息";
 
         if(\Yii::$app->request->isPost) {
             $post = \Yii::$app->request->post();
 
-            $notice = new RNoticeWebsite();
-            $notice->title = $post['title'];
-            $notice->content = $post['content'];
-            $notice->create_time = time();
-            $notice->create_person = 1;
-            $notice->update_time = time();
-            $notice->update_person = 1;
-            $notice->status = $post['status'];
-            $res =  $notice->insert();
-
-            if($res) {
+            $res = NoticeWebsiteService::createNotice($post);
+            if ($res['type'] == 'success') {
                 $json = [
                     'result' => 'success',
                     'info' => '操作成功'
@@ -85,7 +75,6 @@ class WebsiteController extends Controller
 
     /**
      * 编辑
-     * @return string|\yii\web\Response
      */
     public function actionEdit()
     {
@@ -93,15 +82,9 @@ class WebsiteController extends Controller
 
         if(\Yii::$app->request->isPost) {
             $post = \Yii::$app->request->post();
-            $update_data = [
-                'title' => $post['title'],
-                'content' => $post['content'],
-                'status' => $post['status'],
-                'update_time' => time(),
-                'update_person' => 1,
-            ];
-            $res = RNoticeWebsite::updateAll($update_data,'id = '.$post['id']);
-            if($res) {
+
+            $res = NoticeWebsiteService::editNotice($post);
+            if ($res['type'] == 'success') {
                 $json = [
                     'result' => 'success',
                     'info' => '操作成功'
@@ -114,13 +97,9 @@ class WebsiteController extends Controller
             }
             return $this->asJson($json);
         }
+
         $id = $request = \Yii::$app->request->get('id');
-
-        $data = RNoticeWebsite::find()
-            ->where([
-                'id'=> $id,
-            ])->asArray()->one();
-
+        $data = NoticeWebsiteService::getOne($id);
 
         return $this->render('edit', [
             'data' => $data,
@@ -130,19 +109,14 @@ class WebsiteController extends Controller
     }
 
     /**
-     * 禁用
-     * @return \yii\web\Response
+     * 修改状态
      */
-    public function actionStop()
+    public function actionChangeStatus()
     {
         if(\Yii::$app->request->isPost) {
             $post = \Yii::$app->request->post();
-            $update_data = [
-                'status' => 2,
-                'update_time' => time(),
-                'update_person' => 1,
-            ];
-            $res = RNoticeWebsite::updateAll($update_data,'id = '.$post['id']);
+
+            $res = NoticeWebsiteService::changeStatus($post);
             if($res) {
                 $json = [
                     'result' => 'success',
@@ -157,65 +131,4 @@ class WebsiteController extends Controller
             return $this->asJson($json);
         }
     }
-
-    /**
-     * 恢复正常
-     * @return \yii\web\Response
-     */
-    public function actionRecovery()
-    {
-        if(\Yii::$app->request->isPost) {
-            $post = \Yii::$app->request->post();
-            $update_data = [
-                'status' => 1,
-                'update_time' => time(),
-                'update_person' => 1,
-            ];
-            $res = RNoticeWebsite::updateAll($update_data,'id = '.$post['id']);
-            if($res) {
-                $json = [
-                    'result' => 'success',
-                    'info' => '操作成功'
-                ];
-            } else {
-                $json = [
-                    'result' => 'fail',
-                    'info' => '操作失败'
-                ];
-            }
-            return $this->asJson($json);
-        }
-    }
-
-    /**
-     * 删除
-     * @return \yii\web\Response
-     */
-    public function actionDelete()
-    {
-        if(\Yii::$app->request->isPost) {
-            $post = \Yii::$app->request->post();
-            $update_data = [
-                'status' => 3,
-                'update_time' => time(),
-                'update_person' => 1,
-            ];
-            $res = RNoticeWebsite::updateAll($update_data,'id = '.$post['id']);
-            if($res) {
-                $json = [
-                    'result' => 'success',
-                    'info' => '操作成功'
-                ];
-            } else {
-                $json = [
-                    'result' => 'fail',
-                    'info' => '操作失败'
-                ];
-            }
-            return $this->asJson($json);
-        }
-    }
-
-
-
 }

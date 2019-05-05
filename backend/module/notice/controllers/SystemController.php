@@ -2,49 +2,58 @@
 
 namespace backend\module\notice\controllers;
 
+use backend\services\NoticeSystemService;
+use yii\data\Pagination;
 use yii\web\Controller;
-use app\models\RNoticeSystem;
 
 class SystemController extends Controller
 {
     public $enableCsrfValidation = false;
+    public $moduleTitle = "通知管理";
+    public $adminInfo = [];
+
+    public function init()
+    {
+        parent::init();
+        //判断是否登录
+        $session = \Yii::$app->session;
+        $this->adminInfo = $session->get('adminInfo');
+        if(!$this->adminInfo) {
+            return $this->redirect(['/login/login/login']);
+        }
+    }
 
     /**
      * 列表
-     * @return string
      */
     public function actionList()
     {
-        $list = RNoticeSystem::find()->where([
-            'status'=> [1,2],
-        ])->asArray()->all();
+        $title = "会员后台";
+
+        $get = \Yii::$app->request->get();
+        $data = NoticeSystemService::getList($get);
+        $pagination = new Pagination(['totalCount' => $data['count'],'pageSize' =>$data['pageSize'] ]);
 
         return $this->render('list', [
-            'list' => $list,
+            'list' => $data['list'],
+            'pagination' => $pagination,
+            'title' => $title,
+            'moduleTitle' => $this->moduleTitle,
         ]);
     }
 
     /**
      * 新增
-     * @return string|\yii\web\Response
-     * @throws \Throwable
      */
     public function actionCreate()
     {
+        $title = "新增消息";
+
         if(\Yii::$app->request->isPost) {
             $post = \Yii::$app->request->post();
 
-            $notice = new RNoticeSystem();
-            $notice->title = $post['title'];
-            $notice->content = $post['content'];
-            $notice->create_time = time();
-            $notice->create_person = 1;
-            $notice->update_time = time();
-            $notice->update_person = 1;
-            $notice->status = $post['status'];
-            $res =  $notice->insert();
-
-            if($res) {
+            $res = NoticeSystemService::createNotice($post);
+            if ($res['type'] == 'success') {
                 $json = [
                     'result' => 'success',
                     'info' => '操作成功'
@@ -58,66 +67,24 @@ class SystemController extends Controller
             return $this->asJson($json);
         }
 
-        return $this->render('create');
-    }
-
-    /**
-     * 编辑
-     * @return string|\yii\web\Response
-     */
-    public function actionEdit()
-    {
-        if(\Yii::$app->request->isPost) {
-            $post = \Yii::$app->request->post();
-            $update_data = [
-                'title' => $post['title'],
-                'content' => $post['content'],
-                'status' => $post['status'],
-                'update_time' => time(),
-                'update_person' => 1,
-            ];
-            $res = RNoticeSystem::updateAll($update_data,'id = '.$post['id']);
-            if($res) {
-                $json = [
-                    'result' => 'success',
-                    'info' => '操作成功'
-                ];
-            } else {
-                $json = [
-                    'result' => 'fail',
-                    'info' => '操作失败'
-                ];
-            }
-            return $this->asJson($json);
-        }
-        $id = $request = \Yii::$app->request->get('id');
-
-        $data = RNoticeSystem::find()
-            ->where([
-                'id'=> $id,
-            ])->asArray()->one();
-
-
-        return $this->render('edit', [
-            'data' => $data,
+        return $this->render('create',[
+            'title' => $title,
+            'moduleTitle' => $this->moduleTitle,
         ]);
     }
 
     /**
-     * 禁用
-     * @return \yii\web\Response
+     * 编辑
      */
-    public function actionStop()
+    public function actionEdit()
     {
+        $title = "编辑消息";
+
         if(\Yii::$app->request->isPost) {
             $post = \Yii::$app->request->post();
-            $update_data = [
-                'status' => 2,
-                'update_time' => time(),
-                'update_person' => 1,
-            ];
-            $res = RNoticeSystem::updateAll($update_data,'id = '.$post['id']);
-            if($res) {
+
+            $res = NoticeSystemService::editNotice($post);
+            if ($res['type'] == 'success') {
                 $json = [
                     'result' => 'success',
                     'info' => '操作成功'
@@ -130,22 +97,26 @@ class SystemController extends Controller
             }
             return $this->asJson($json);
         }
+
+        $id = $request = \Yii::$app->request->get('id');
+        $data = NoticeSystemService::getOne($id);
+
+        return $this->render('edit', [
+            'data' => $data,
+            'title' => $title,
+            'moduleTitle' => $this->moduleTitle,
+        ]);
     }
 
     /**
-     * 恢复正常
-     * @return \yii\web\Response
+     * 修改状态
      */
-    public function actionRecovery()
+    public function actionChangeStatus()
     {
         if(\Yii::$app->request->isPost) {
             $post = \Yii::$app->request->post();
-            $update_data = [
-                'status' => 1,
-                'update_time' => time(),
-                'update_person' => 1,
-            ];
-            $res = RNoticeSystem::updateAll($update_data,'id = '.$post['id']);
+
+            $res = NoticeSystemService::changeStatus($post);
             if($res) {
                 $json = [
                     'result' => 'success',
@@ -160,36 +131,4 @@ class SystemController extends Controller
             return $this->asJson($json);
         }
     }
-
-    /**
-     * 删除
-     * @return \yii\web\Response
-     */
-    public function actionDelete()
-    {
-        if(\Yii::$app->request->isPost) {
-            $post = \Yii::$app->request->post();
-            $update_data = [
-                'status' => 3,
-                'update_time' => time(),
-                'update_person' => 1,
-            ];
-            $res = RNoticeSystem::updateAll($update_data,'id = '.$post['id']);
-            if($res) {
-                $json = [
-                    'result' => 'success',
-                    'info' => '操作成功'
-                ];
-            } else {
-                $json = [
-                    'result' => 'fail',
-                    'info' => '操作失败'
-                ];
-            }
-            return $this->asJson($json);
-        }
-    }
-
-
-
 }

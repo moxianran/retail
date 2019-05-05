@@ -28,7 +28,7 @@ use yii\helpers\Url;
                 <div class="ibox-title">
                     <h5><?php echo $title; ?></h5>
                     <div class="ibox-tools">
-                        <a class="btn-sm" href="<?php echo Url::toRoute(['/notice/website/create']); ?>">新增公告</a>
+                        <a class="btn-sm" href="<?php echo Url::toRoute(['/notice/website/create']); ?>">新增消息</a>
                     </div>
                 </div>
                 <div class="ibox-content">
@@ -67,18 +67,18 @@ use yii\helpers\Url;
                                             if ($v['status'] == 1) {
                                                 ?>
                                                 <button class="btn btn-sm btn-primary m-t-n-xs" type="button"
-                                                        onclick="goStop(<?php echo $v['id'] ?>);"
+                                                        onclick="changeStatus(<?php echo $v['id']; ?>,2);"
                                                 <strong>禁用</strong>
                                                 </button>
                                             <?php } else { ?>
                                                 <button class="btn btn-sm btn-primary m-t-n-xs" type="button"
-                                                        onclick="goOn(<?php echo $v['id'] ?>);"
+                                                        onclick="changeStatus(<?php echo $v['id'] ?>,1);"
                                                 <strong>恢复</strong>
                                                 </button>
                                             <?php } ?>
 
                                             <button class="btn btn-sm btn-primary m-t-n-xs" type="button"
-                                                    onclick="goDelete(<?php echo $v['id'] ?>);">
+                                                    onclick="changeStatus(<?php echo $v['id'] ?>,3);">
                                                 <strong>删除</strong>
                                             </button>
 
@@ -129,62 +129,18 @@ use yii\helpers\Url;
 
 <script>
 
-
     function goEdit(id) {
         window.location.href="/notice/website/edit?id="+id;
     }
 
-    function goStop(id)
+    function changeStatus(id,status)
     {
         $.ajax({
-            url:"<?php echo Url::toRoute(['/notice/website/stop']); ?>",
+            url:"<?php echo Url::toRoute(['/notice/website/change-status']); ?>",
             type:"post",
             data:{
-                id:id
-            },
-            dataType: 'json',
-            success:function(data){
-                if(data.result=="success"){
-                    //禁用提交按钮。防止点击起来没完
-                    $('#formSubmit').attr('disabled',true);
-                    location.reload()
-                }else{
-                    //禁用提交按钮。防止点击起来没完
-                    $('#formSubmit').attr('disabled',true);
-                }
-            }
-        });
-    }
-
-    function goOn(id)
-    {
-        $.ajax({
-            url:"<?php echo Url::toRoute(['/notice/website/recovery']); ?>",
-            type:"post",
-            data:{
-                id:id
-            },
-            dataType: 'json',
-            success:function(data){
-                if(data.result=="success"){
-                    //禁用提交按钮。防止点击起来没完
-                    $('#formSubmit').attr('disabled',true);
-                    location.reload()
-                }else{
-                    //禁用提交按钮。防止点击起来没完
-                    $('#formSubmit').attr('disabled',true);
-                }
-            }
-        });
-    }
-
-    function goDelete(id)
-    {
-        $.ajax({
-            url:"<?php echo Url::toRoute(['/notice/website/delete']); ?>",
-            type:"post",
-            data:{
-                id:id
+                id:id,
+                status:status
             },
             dataType: 'json',
             success:function(data){
