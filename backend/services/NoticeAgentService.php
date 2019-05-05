@@ -14,7 +14,7 @@ class NoticeAgentService
      */
     public static function getList($params)
     {
-        $pageSize= 2;
+        $pageSize= 10;
 
         if(isset($params['page']) && !empty($params['page'])) {
             $page = (int) $params['page'];
@@ -59,9 +59,9 @@ class NoticeAgentService
         $notice->status = $params['status'];
         $res = $notice->insert();
         if ($res) {
-            return ['type' => 'success'];
+            return ['type' => 'success', 'msg' => '操作成功'];
         } else {
-            return ['type' => 'fail'];
+            return ['type' => 'fail', 'msg' => '操作失败'];
         }
     }
 
@@ -84,10 +84,10 @@ class NoticeAgentService
         ];
         $res = RNoticeAgent::updateAll($update_data, 'id = ' . $params['id']);
 
-        if (!$res) {
-            return ['type' => 'fail'];
+        if ($res) {
+            return ['type' => 'success', 'msg' => '操作成功'];
         } else {
-            return ['type' => 'success'];
+            return ['type' => 'fail', 'msg' => '操作失败'];
         }
     }
 
@@ -116,11 +116,10 @@ class NoticeAgentService
             'update_person' => 1,
         ];
         $res = RNoticeAgent::updateAll($update_data,'id = '.$params['id']);
-
-        if($res) {
-            return ['type' => 'success'];
+        if ($res) {
+            return ['type' => 'success', 'msg' => '操作成功'];
         } else {
-            return ['type' => 'fail'];
+            return ['type' => 'fail', 'msg' => '操作失败'];
         }
     }
 

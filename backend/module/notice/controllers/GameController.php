@@ -53,17 +53,7 @@ class GameController extends Controller
             $post = \Yii::$app->request->post();
 
             $res = NoticeGameService::createNotice($post);
-            if ($res['type'] == 'success') {
-                $json = [
-                    'result' => 'success',
-                    'info' => '操作成功'
-                ];
-            } else {
-                $json = [
-                    'result' => 'fail',
-                    'info' => '操作失败'
-                ];
-            }
+            $json = ['result' => $res['type'],'info'=>$res['msg']];
             return $this->asJson($json);
         }
 
@@ -84,17 +74,7 @@ class GameController extends Controller
             $post = \Yii::$app->request->post();
 
             $res = NoticeGameService::editNotice($post);
-            if ($res['type'] == 'success') {
-                $json = [
-                    'result' => 'success',
-                    'info' => '操作成功'
-                ];
-            } else {
-                $json = [
-                    'result' => 'fail',
-                    'info' => '操作失败'
-                ];
-            }
+            $json = ['result' => $res['type'],'info'=>$res['msg']];
             return $this->asJson($json);
         }
 
@@ -117,17 +97,7 @@ class GameController extends Controller
             $post = \Yii::$app->request->post();
 
             $res = NoticeGameService::changeStatus($post);
-            if($res) {
-                $json = [
-                    'result' => 'success',
-                    'info' => '操作成功'
-                ];
-            } else {
-                $json = [
-                    'result' => 'fail',
-                    'info' => '操作失败'
-                ];
-            }
+            $json = ['result' => $res['type'],'info'=>$res['msg']];
             return $this->asJson($json);
         }
     }
