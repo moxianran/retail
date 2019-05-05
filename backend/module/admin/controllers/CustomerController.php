@@ -85,20 +85,6 @@ class CustomerController extends Controller
             $json = ['result' => $res['type'],'info'=>$res['msg']];
             return $this->asJson($json);
 
-
-
-            if ($res) {
-                $json = [
-                    'result' => 'success',
-                    'info' => '操作成功'
-                ];
-            } else {
-                $json = [
-                    'result' => 'fail',
-                    'info' => '操作失败'
-                ];
-            }
-            return $this->asJson($json);
         }
 
         return $this->render('create',[
