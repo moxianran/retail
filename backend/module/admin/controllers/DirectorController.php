@@ -78,8 +78,8 @@ class DirectorController extends Controller
             $admin->email = $post['email'];
             $admin->qq = $post['qq'];
             $admin->wechat = $post['wechat'];
-            $admin->register_ip = $post['register_ip'];
-            $admin->register_time = time();
+            $admin->create_ip = $post['create_ip'];
+            $admin->create_time = time();
             $admin->create_time = time();
             $admin->position_id = 5;
             $res = $admin->insert();
@@ -117,7 +117,7 @@ class DirectorController extends Controller
                 'email' => $post['email'],
                 'qq' => $post['qq'],
                 'wechat' => $post['wechat'],
-                'register_ip' => $post['register_ip'],
+                'create_ip' => $post['create_ip'],
                 'update_time' => time(),
             ];
             $res = RAdmin::updateAll($update_data,'id = '.$post['id']);

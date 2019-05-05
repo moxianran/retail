@@ -2,8 +2,10 @@
 
 namespace backend\module\admin\controllers;
 
+use backend\services\CustomerService;
 use yii\web\Controller;
 use app\models\RAdmin;
+use yii\data\Pagination;
 
 /**
  * Default controller for the `admin` module
@@ -11,6 +13,8 @@ use app\models\RAdmin;
 class CustomerController extends Controller
 {
     public $enableCsrfValidation = false;
+    public $moduleTitle = "客服管理";
+    public $adminInfo = [];
 
     /**
      * 客服列表
@@ -18,15 +22,19 @@ class CustomerController extends Controller
      */
     public function actionList()
     {
-        $list = RAdmin::find()->where([
-            'position_id'=> 4, //代理
-            'is_delete' => 2,   //未删除
-        ])->asArray()->all();
+        $title = '客服列表';
+        $get = \Yii::$app->request->get();
+
+        $data = CustomerService::getList($get);
+        $pagination = new Pagination(['totalCount' => $data['count'], 'pageSize' => $data['pageSize']]);
 
         return $this->render('list', [
-            'list' => $list,
+            'list' => $data['list'],
+            'pagination' => $pagination,
+            'title' => $title,
+            'moduleTitle' => $this->moduleTitle,
+            'get' => $get
         ]);
-        return $this->render('list');
     }
 
     /**
@@ -67,22 +75,18 @@ class CustomerController extends Controller
      */
     public function actionCreate()
     {
+        $title = '新增客服';
+
         if (\Yii::$app->request->isPost) {
             $post = \Yii::$app->request->post();
 
-            $admin = new RAdmin();
-            $admin->account = $post['account'];
-            $admin->pwd = $post['pwd'];
-            $admin->real_name = $post['real_name'];
-            $admin->phone = $post['phone'];
-            $admin->email = $post['email'];
-            $admin->qq = $post['qq'];
-            $admin->wechat = $post['wechat'];
-            $admin->register_ip = $post['register_ip'];
-            $admin->register_time = time();
-            $admin->create_time = time();
-            $admin->position_id = 4;
-            $res = $admin->insert();
+            $post['create_ip'] = $this->getRealIp();
+            $res = CustomerService::createCustomer($post);
+            $json = ['result' => $res['type'],'info'=>$res['msg']];
+            return $this->asJson($json);
+
+
+
             if ($res) {
                 $json = [
                     'result' => 'success',
@@ -97,7 +101,11 @@ class CustomerController extends Controller
             return $this->asJson($json);
         }
 
-        return $this->render('create');
+        return $this->render('create',[
+            'title' => $title,
+            'moduleTitle' => $this->moduleTitle,
+        ]);
+
     }
 
     /**
@@ -105,6 +113,9 @@ class CustomerController extends Controller
      */
     public function actionEdit()
     {
+        $title = '编辑客服';
+
+
         if (\Yii::$app->request->isPost) {
             $post = \Yii::$app->request->post();
 
@@ -117,7 +128,6 @@ class CustomerController extends Controller
                 'email' => $post['email'],
                 'qq' => $post['qq'],
                 'wechat' => $post['wechat'],
-                'register_ip' => $post['register_ip'],
                 'update_time' => time(),
             ];
             $res = RAdmin::updateAll($update_data,'id = '.$post['id']);
@@ -143,7 +153,31 @@ class CustomerController extends Controller
 
         return $this->render('edit', [
             'data' => $data,
+            'title' => $title,
+            'moduleTitle' => $this->moduleTitle,
         ]);
+    }
+
+
+    /**
+     * 获取ip
+     */
+    private function getRealIp(){
+        $ip=false;
+        if(!empty($_SERVER['HTTP_CLIENT_IP'])){
+            $ip=$_SERVER['HTTP_CLIENT_IP'];
+        }
+        if(!empty($_SERVER['HTTP_X_FORWARDED_FOR'])){
+            $ips=explode (', ', $_SERVER['HTTP_X_FORWARDED_FOR']);
+            if($ip){ array_unshift($ips, $ip); $ip=FALSE; }
+            for ($i=0; $i < count($ips); $i++){
+                if(!eregi ('^(10│172.16│192.168).', $ips[$i])){
+                    $ip=$ips[$i];
+                    break;
+                }
+            }
+        }
+        return ($ip ? $ip : $_SERVER['REMOTE_ADDR']);
     }
 
 }

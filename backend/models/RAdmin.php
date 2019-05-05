@@ -28,8 +28,7 @@ use Yii;
  * @property int $up_agent_id 上级代理
  * @property int $down_agent_id 下级代理
  * @property string $domain 域名
- * @property string $register_ip 注册ip
- * @property int $register_time 注册时间
+ * @property string $create_ip 注册ip
  * @property string $bank_id 银行卡号
  */
 class RAdmin extends \yii\db\ActiveRecord
@@ -48,8 +47,8 @@ class RAdmin extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['login_time', 'position_id', 'status', 'examine_status', 'is_delete', 'create_time', 'update_time', 'create_person', 'update_person', 'up_agent_id', 'down_agent_id', 'register_time'], 'integer'],
-            [['account', 'pwd', 'real_name', 'phone', 'email', 'qq', 'wechat', 'login_ip', 'domain', 'register_ip', 'bank_id'], 'string', 'max' => 255],
+            [['login_time', 'position_id', 'status', 'examine_status', 'is_delete', 'create_time', 'update_time', 'create_person', 'update_person', 'up_agent_id', 'down_agent_id'], 'integer'],
+            [['account', 'pwd', 'real_name', 'phone', 'email', 'qq', 'wechat', 'login_ip', 'domain', 'create_ip', 'bank_id'], 'string', 'max' => 255],
         ];
     }
 
@@ -80,8 +79,7 @@ class RAdmin extends \yii\db\ActiveRecord
             'up_agent_id' => 'Up Agent ID',
             'down_agent_id' => 'Down Agent ID',
             'domain' => 'Domain',
-            'register_ip' => 'Register Ip',
-            'register_time' => 'Register Time',
+            'create_ip' => 'Create Ip',
             'bank_id' => 'Bank ID',
         ];
     }

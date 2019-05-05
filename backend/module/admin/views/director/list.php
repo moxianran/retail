@@ -173,8 +173,8 @@ use yii\helpers\Url;
                                             <td><?php echo $v['email'] ?></td>
                                             <td><?php echo $v['qq'] ?></td>
                                             <td><?php echo $v['wechat'] ?></td>
-                                            <td><?php echo date("Y-m-d H:i:s",$v['register_time']) ?></td>
-                                            <td><?php echo $v['register_ip'] ?></td>
+                                            <td><?php echo date("Y-m-d H:i:s",$v['create_time']) ?></td>
+                                            <td><?php echo $v['create_ip'] ?></td>
                                             <td><?php if($v['status'] == 1) { echo "正常";} else { echo "已禁用";}  ?></td>
 
                                             <td class="center">

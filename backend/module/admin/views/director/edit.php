@@ -205,8 +205,8 @@ use yii\helpers\Url;
                                 <div class="hr-line-dashed"></div>
                                 <div class="form-group  row"><label class="col-sm-2 col-form-label">注册区域IP</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" name="register_ip"
-                                               value="<?php echo $data['register_ip']; ?>">
+                                        <input type="text" class="form-control" name="create_ip"
+                                               value="<?php echo $data['create_ip']; ?>">
                                     </div>
                                 </div>
 

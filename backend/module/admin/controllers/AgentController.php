@@ -4,6 +4,8 @@ namespace backend\module\admin\controllers;
 
 use yii\web\Controller;
 use app\models\RAdmin;
+use yii\data\Pagination;
+use backend\services\AgentService;
 
 /**
  * Default controller for the `admin` module
@@ -11,6 +13,8 @@ use app\models\RAdmin;
 class AgentController extends Controller
 {
     public $enableCsrfValidation = false;
+    public $moduleTitle = "代理管理";
+    public $adminInfo = [];
 
     /**
      * 代理列表
@@ -18,17 +22,20 @@ class AgentController extends Controller
      */
     public function actionList()
     {
-        $list = RAdmin::find()->where([
-            'position_id'=> 3, //代理
-            'examine_status' => 2,//审核通过
-            'is_delete' => 2,   //未删除
-        ])->asArray()->all();
+
+        $title = '代理列表';
+        $get = \Yii::$app->request->get();
+
+        $data = AgentService::getList($get);
+        $pagination = new Pagination(['totalCount' => $data['count'], 'pageSize' => $data['pageSize']]);
 
         return $this->render('list', [
-            'list' => $list,
+            'list' => $data['list'],
+            'pagination' => $pagination,
+            'title' => $title,
+            'moduleTitle' => $this->moduleTitle,
+            'get' => $get
         ]);
-
-        return $this->render('list');
     }
 
     /**
@@ -69,38 +76,27 @@ class AgentController extends Controller
      */
     public function actionCreate()
     {
+
+        $title = '新增代理';
+
         if (\Yii::$app->request->isPost) {
             $post = \Yii::$app->request->post();
 
-            $admin = new RAdmin();
-            $admin->account = $post['account'];
-            $admin->pwd = $post['pwd'];
-            $admin->real_name = $post['real_name'];
-            $admin->phone = $post['phone'];
-            $admin->email = $post['email'];
-            $admin->qq = $post['qq'];
-            $admin->wechat = $post['wechat'];
-            $admin->bank_id = $post['bank_id'];
-            $admin->up_agent_id = $post['up_agent_id'];
-            $admin->register_ip = $post['register_ip'];
-            $admin->register_time = time();
-            $admin->create_time = time();
-            $res = $admin->insert();
-            if ($res) {
-                $json = [
-                    'result' => 'success',
-                    'info' => '操作成功'
-                ];
-            } else {
-                $json = [
-                    'result' => 'fail',
-                    'info' => '操作失败'
-                ];
-            }
+            $post = \Yii::$app->request->post();
+            $post['create_ip'] = $this->getRealIp();
+            $res = AgentService::createAgent($post);
+            $json = ['result' => $res['type'],'info'=>$res['msg']];
             return $this->asJson($json);
         }
 
-        return $this->render('create');
+        //代理列表
+        $agentList = AgentService::getAgentList();
+
+        return $this->render('create',[
+            'title' => $title,
+            'moduleTitle' => $this->moduleTitle,
+            'agentList' => $agentList,
+        ]);
     }
 
     /**
@@ -108,6 +104,8 @@ class AgentController extends Controller
      */
     public function actionEdit()
     {
+        $title = '编辑代理';
+
         if (\Yii::$app->request->isPost) {
             $post = \Yii::$app->request->post();
 
@@ -140,6 +138,9 @@ class AgentController extends Controller
             return $this->asJson($json);
         }
 
+        //代理列表
+        $agentList = AgentService::getAgentList();
+
         $id = $request = \Yii::$app->request->get('id');
         $data = RAdmin::find()
             ->where([
@@ -148,6 +149,9 @@ class AgentController extends Controller
 
         return $this->render('edit', [
             'data' => $data,
+            'title' => $title,
+            'moduleTitle' => $this->moduleTitle,
+            'agentList' => $agentList,
         ]);
     }
 
@@ -183,12 +187,40 @@ class AgentController extends Controller
             return $this->asJson($json);
         }
 
-        $list = RAdmin::find()->where([
-            'examine_status'=> 1,
-        ])->asArray()->all();
+        $title = '代理审核';
+        $get = \Yii::$app->request->get();
+
+        $data = AgentService::getExamineList($get);
+        $pagination = new Pagination(['totalCount' => $data['count'], 'pageSize' => $data['pageSize']]);
 
         return $this->render('examine', [
-            'list' => $list,
+            'list' => $data['list'],
+            'pagination' => $pagination,
+            'title' => $title,
+            'moduleTitle' => $this->moduleTitle,
+            'get' => $get
         ]);
+    }
+
+
+    /**
+     * 获取ip
+     */
+    private function getRealIp(){
+        $ip=false;
+        if(!empty($_SERVER['HTTP_CLIENT_IP'])){
+            $ip=$_SERVER['HTTP_CLIENT_IP'];
+        }
+        if(!empty($_SERVER['HTTP_X_FORWARDED_FOR'])){
+            $ips=explode (', ', $_SERVER['HTTP_X_FORWARDED_FOR']);
+            if($ip){ array_unshift($ips, $ip); $ip=FALSE; }
+            for ($i=0; $i < count($ips); $i++){
+                if(!eregi ('^(10│172.16│192.168).', $ips[$i])){
+                    $ip=$ips[$i];
+                    break;
+                }
+            }
+        }
+        return ($ip ? $ip : $_SERVER['REMOTE_ADDR']);
     }
 }
