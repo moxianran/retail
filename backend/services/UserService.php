@@ -6,7 +6,7 @@ class UserService {
 
 
     /**
-     * 获取投注记录
+     * 会员列表
      * @param $params
      * @return array
      */
@@ -39,6 +39,108 @@ class UserService {
         $offset = ($page - 1) * $pageSize;
 
         $query = RUser::find()->where(['status'=>2]);
+        if($cond) {
+            foreach($cond as $k => $v) {
+                $query->andWhere($v);
+            }
+        }
+
+        $count = $query->count();
+        $list = $query->offset($offset)->limit($pageSize)->asArray()->all();
+
+
+        return [
+            'list' => $list,
+            'count' => $count,
+            'pageSize' => $pageSize,
+        ];
+    }
+
+    /**
+     * 会员列表
+     * @param $params
+     * @return array
+     */
+    public static function getExamineList($params)
+    {
+        $pageSize= 10;
+
+        if(isset($params['page']) && !empty($params['page'])) {
+            $page = (int) $params['page'];
+        } else {
+            $page = 1;
+        }
+
+        //删选数组
+        $cond = [];
+
+        //姓名
+        if(!empty($params['real_name'])) {
+            $cond[] = ['like', 'real_name', $params['real_name']];
+        }
+        //域名
+        if(!empty($params['domain'])) {
+            $cond[] = ['like', 'domain', $params['domain']];
+        }
+        //手机
+        if(!empty($params['phone'])) {
+            $cond[] = ['=', 'phone', $params['phone']];
+        }
+
+        $offset = ($page - 1) * $pageSize;
+
+        $query = RUser::find()->where(['status'=>1]);
+        if($cond) {
+            foreach($cond as $k => $v) {
+                $query->andWhere($v);
+            }
+        }
+
+        $count = $query->count();
+        $list = $query->offset($offset)->limit($pageSize)->asArray()->all();
+
+
+        return [
+            'list' => $list,
+            'count' => $count,
+            'pageSize' => $pageSize,
+        ];
+    }
+
+    /**
+     * 会员在线列表
+     * @param $params
+     * @return array
+     */
+    public static function getOnlineList($params)
+    {
+        $pageSize= 10;
+
+        if(isset($params['page']) && !empty($params['page'])) {
+            $page = (int) $params['page'];
+        } else {
+            $page = 1;
+        }
+
+        //删选数组
+        $cond = [];
+
+        //姓名
+        if(!empty($params['real_name'])) {
+            $cond[] = ['like', 'real_name', $params['real_name']];
+        }
+        //域名
+        if(!empty($params['domain'])) {
+            $cond[] = ['like', 'domain', $params['domain']];
+        }
+        //手机
+        if(!empty($params['phone'])) {
+            $cond[] = ['=', 'phone', $params['phone']];
+        }
+
+        $offset = ($page - 1) * $pageSize;
+
+        $query = RUser::find()->where(['status'=>1]);
         if($cond) {
             foreach($cond as $k => $v) {
                 $query->andWhere($v);
@@ -93,10 +195,55 @@ class UserService {
         $user->is_stop = 2;
         $res = $user->insert();
         if($res) {
-            return ['type'=>'success'];
+            return ['type'=>'success','msg' => '操作成功'];
         } else {
-            return ['type'=>'fail'];
+            return ['type'=>'fail','msg' => '操作失败'];
         }
+    }
+
+
+    /**
+     * 编辑会员
+     * @param $params
+     * @return array
+     */
+    public static function editUser($params)
+    {
+        $update_data = [
+            'account' => $params['account'],
+            'game_account' => $params['game_account'],
+            'pwd' => $params['pwd'],
+            'game_pwd' => $params['game_pwd'],
+            'money_pwd' => $params['money_pwd'],
+            'real_name' => $params['real_name'],
+            'phone' => $params['phone'],
+            'email' => $params['email'],
+            'qq' => $params['qq'],
+            'wechat' => $params['wechat'],
+            'bank_id' => $params['bank_id'],
+            'domain' => $params['domain'],
+            'update_time' => time(),
+        ];
+        $res = RUser::updateAll($update_data,'id = '.$params['id']);
+        if($res) {
+            return ['type'=>'success','msg' => '操作成功'];
+        } else {
+            return ['type'=>'fail','msg' => '操作失败'];
+        }
+    }
+
+    /**
+     * 获取单挑数据
+     * @param $id
+     * @return array|\yii\db\ActiveRecord|null
+     */
+    public static function getOne($id)
+    {
+        $data = RUser::find()
+            ->where([
+                'id'=> $id,
+            ])->asArray()->one();
+        return $data;
     }
 
 

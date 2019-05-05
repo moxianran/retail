@@ -6,6 +6,7 @@ use backend\services\UserService;
 use backend\services\AgentService;
 use yii\data\Pagination;
 use yii\web\Controller;
+use app\models\RUser;
 
 class DefaultController extends Controller
 {
@@ -45,9 +46,9 @@ class DefaultController extends Controller
             $post = \Yii::$app->request->post();
 
             $post['create_ip'] = $this->getRealIp();
-            
+
             $res = UserService::createUser($post);
-            $json = ['result' => $res['type'],'info'=>$res['mag']];
+            $json = ['result' => $res['type'],'info'=>$res['msg']];
             return $this->asJson($json);
         }
 
@@ -66,49 +67,26 @@ class DefaultController extends Controller
      */
     public function actionEdit()
     {
+        $title = '编辑会员';
+
         if (\Yii::$app->request->isPost) {
             $post = \Yii::$app->request->post();
-
-            $update_data = [
-                'account' => $post['account'],
-                'game_account' => $post['game_account'],
-                'pwd' => $post['pwd'],
-                'game_pwd' => $post['game_pwd'],
-                'money_pwd' => $post['money_pwd'],
-                'real_name' => $post['real_name'],
-                'phone' => $post['phone'],
-                'email' => $post['email'],
-                'qq' => $post['qq'],
-                'wechat' => $post['wechat'],
-                'bank_id' => $post['bank_id'],
-                'register_domain' => $post['register_domain'],
-                'register_ip' => 1,
-                'update_time' => time(),
-            ];
-            $res = RUser::updateAll($update_data,'id = '.$post['id']);
-            if($res) {
-                $json = [
-                    'result' => 'success',
-                    'info' => '操作成功'
-                ];
-            } else {
-                $json = [
-                    'result' => 'fail',
-                    'info' => '操作失败'
-                ];
-            }
+            $res = UserService::editUser($post);
+            $json = ['result' => $res['type'],'info'=>$res['msg']];
             return $this->asJson($json);
         }
 
 
         $id = $request = \Yii::$app->request->get('id');
-        $data = RUser::find()
-            ->where([
-                'id'=> $id,
-            ])->asArray()->one();
+        $data = UserService::getOne($id);
+
+        $agentList = AgentService::getAgentList();
 
         return $this->render('edit', [
             'data' => $data,
+            'title' => $title,
+            'moduleTitle' => $this->moduleTitle,
+            'agentList' => $agentList,
         ]);
     }
 
@@ -117,6 +95,8 @@ class DefaultController extends Controller
      */
     public function actionExamine()
     {
+        $title = '会员审核';
+
         if (\Yii::$app->request->isPost) {
             $post = \Yii::$app->request->post();
 
@@ -143,12 +123,18 @@ class DefaultController extends Controller
             return $this->asJson($json);
         }
 
-        $list = RUser::find()->where([
-            'status'=> 1,
-        ])->asArray()->all();
+
+        $get = \Yii::$app->request->get();
+
+        $data = UserService::getExamineList($get);
+        $pagination = new Pagination(['totalCount' => $data['count'], 'pageSize' => $data['pageSize']]);
 
         return $this->render('examine', [
-            'list' => $list,
+            'list' => $data['list'],
+            'pagination' => $pagination,
+            'title' => $title,
+            'moduleTitle' => $this->moduleTitle,
+            'get' => $get
         ]);
     }
 
@@ -187,17 +173,26 @@ class DefaultController extends Controller
 
 
     /**
-     * 会员在线列表
+     * 会员在线列表???
      * @return string
      */
     public function actionOnline()
     {
-        $list = RUser::find()->where([
-            'is_login'=> 1,
-        ])->asArray()->all();
+        $title = '会员在线列表';
+
+//        $adminInfo = \Yii::$app->session->get('adminInfo');
+
+        $get = \Yii::$app->request->get();
+
+        $data = UserService::getOnlineList($get);
+        $pagination = new Pagination(['totalCount' => $data['count'], 'pageSize' => $data['pageSize']]);
 
         return $this->render('online', [
-            'list' => $list,
+            'list' => $data['list'],
+            'pagination' => $pagination,
+            'title' => $title,
+            'moduleTitle' => $this->moduleTitle,
+            'get' => $get
         ]);
     }
 
@@ -212,7 +207,7 @@ class DefaultController extends Controller
             $id = $post['id'];
 
             $update_data = [
-                'is_login' => 2,
+//                'is_login' => 2,
                 'update_time' => time(),
                 'update_person' => 1,
             ];
@@ -230,9 +225,6 @@ class DefaultController extends Controller
             }
             return $this->asJson($json);
         }
-
-
-
     }
 
     /**

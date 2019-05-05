@@ -13,6 +13,7 @@ use Yii;
  * @property string $game_account 游戏账号
  * @property string $game_pwd 游戏密码
  * @property string $money_pwd 取款密码
+ * @property int $money 余额
  * @property string $real_name 真实姓名
  * @property string $phone 手机
  * @property string $email 邮箱
@@ -48,7 +49,7 @@ class RUser extends \yii\db\ActiveRecord
     {
         return [
             [['account'], 'required'],
-            [['agent_id', 'create_time', 'update_time', 'create_person', 'update_person', 'login_time', 'status', 'is_stop'], 'integer'],
+            [['money', 'agent_id', 'create_time', 'update_time', 'create_person', 'update_person', 'login_time', 'status', 'is_stop'], 'integer'],
             [['account', 'pwd', 'game_account', 'game_pwd', 'money_pwd', 'real_name', 'phone', 'email', 'qq', 'wechat', 'bank_id', 'create_ip', 'login_ip', 'domain'], 'string', 'max' => 255],
         ];
     }
@@ -65,6 +66,7 @@ class RUser extends \yii\db\ActiveRecord
             'game_account' => 'Game Account',
             'game_pwd' => 'Game Pwd',
             'money_pwd' => 'Money Pwd',
+            'money' => 'Money',
             'real_name' => 'Real Name',
             'phone' => 'Phone',
             'email' => 'Email',
