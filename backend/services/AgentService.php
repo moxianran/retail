@@ -4,7 +4,6 @@ use app\models\RAdmin;
 
 class AgentService {
 
-
     /**
      * 代理列表
      * @param $params
@@ -116,8 +115,6 @@ class AgentService {
         ];
     }
 
-
-
     /**
      * 新增代理
      * @param $params
@@ -152,16 +149,100 @@ class AgentService {
         }
     }
 
+    /**
+     * 禁用和恢复正常
+     * @param $params
+     * @return array
+     */
+    public static function changeStatus($params)
+    {
+        $id = $params['id'];
+        $status = $params['status'];
 
+        $update_data = [
+            'status' => $status,
+            'update_time' => time(),
+            'update_person' => 1,
+        ];
+        $res = RAdmin::updateAll($update_data, 'id = ' . $id);
+        if ($res) {
+            return ['type' => 'success', 'msg' => '操作成功'];
+        } else {
+            return ['type' => 'fail', 'msg' => '操作失败'];
+        }
+    }
+
+    /**
+     * 编辑代理
+     * @param $params
+     * @return array
+     */
+    public static function editAgent($params)
+    {
+        $update_data = [
+            'account' => $params['account'],
+            'pwd' => $params['pwd'],
+            'real_name' => $params['real_name'],
+            'phone' => $params['phone'],
+            'email' => $params['email'],
+            'qq' => $params['qq'],
+            'wechat' => $params['wechat'],
+            'bank_id' => $params['bank_id'],
+            'up_agent_id' => $params['up_agent_id'],
+            'domain' => $params['domain'],
+            'update_time' => time(),
+        ];
+        $res = RAdmin::updateAll($update_data, 'id = ' . $params['id']);
+        if ($res) {
+            return ['type' => 'success', 'msg' => '操作成功'];
+        } else {
+            return ['type' => 'fail', 'msg' => '操作失败'];
+        }
+    }
+
+    /**
+     * 获取单条记录
+     * @param $id
+     * @return array|\yii\db\ActiveRecord|null
+     */
+    public static function getOne($id)
+    {
+        $data = RAdmin::find()->where(['id' => $id,])->asArray()->one();
+        return $data;
+    }
+
+    /**
+     * 审核代理
+     * @param $params
+     * @return array
+     */
+    public static function examineAgent($params)
+    {
+        $id = $params['id'];
+        $status = $params['status'];
+
+        $update_data = [
+            'examine_status' => $status,
+            'update_time' => time(),
+            'update_person' => 1,
+        ];
+        $res = RAdmin::updateAll($update_data, 'id = ' . $id);
+        if ($res) {
+            return ['type' => 'success', 'msg' => '操作成功'];
+        } else {
+            return ['type' => 'fail', 'msg' => '操作失败'];
+        }
+    }
+
+    /**
+     * 获取代理列表
+     * @return array|\yii\db\ActiveRecord[]
+     */
     public static function getAgentList()
     {
         $list = RAdmin::find()->where(['position_id'=>3,'is_delete'=>2])->asArray()->all();
         return $list;
     }
-
-
-
-
 }
 
 

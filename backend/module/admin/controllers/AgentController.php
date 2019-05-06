@@ -2,14 +2,10 @@
 
 namespace backend\module\admin\controllers;
 
-use yii\web\Controller;
-use app\models\RAdmin;
-use yii\data\Pagination;
 use backend\services\AgentService;
+use yii\data\Pagination;
+use yii\web\Controller;
 
-/**
- * Default controller for the `admin` module
- */
 class AgentController extends Controller
 {
     public $enableCsrfValidation = false;
@@ -22,7 +18,6 @@ class AgentController extends Controller
      */
     public function actionList()
     {
-
         $title = '代理列表';
         $get = \Yii::$app->request->get();
 
@@ -46,27 +41,8 @@ class AgentController extends Controller
     {
         if (\Yii::$app->request->isPost) {
             $post = \Yii::$app->request->post();
-
-            $id = $post['id'];
-            $status = $post['status'];
-
-            $update_data = [
-                'status' => $status,
-                'update_time' => time(),
-                'update_person' => 1,
-            ];
-            $res = RAdmin::updateAll($update_data,'id = '.$id);
-            if($res) {
-                $json = [
-                    'result' => 'success',
-                    'info' => '操作成功'
-                ];
-            } else {
-                $json = [
-                    'result' => 'fail',
-                    'info' => '操作失败'
-                ];
-            }
+            $res = AgentService::changeStatus($post);
+            $json = ['result' => $res['type'], 'info' => $res['msg']];
             return $this->asJson($json);
         }
     }
@@ -76,12 +52,9 @@ class AgentController extends Controller
      */
     public function actionCreate()
     {
-
         $title = '新增代理';
 
         if (\Yii::$app->request->isPost) {
-            $post = \Yii::$app->request->post();
-
             $post = \Yii::$app->request->post();
             $post['create_ip'] = $this->getRealIp();
             $res = AgentService::createAgent($post);
@@ -108,33 +81,8 @@ class AgentController extends Controller
 
         if (\Yii::$app->request->isPost) {
             $post = \Yii::$app->request->post();
-
-
-            $update_data = [
-                'account' => $post['account'],
-                'pwd' => $post['pwd'],
-                'real_name' => $post['real_name'],
-                'phone' => $post['phone'],
-                'email' => $post['email'],
-                'qq' => $post['qq'],
-                'wechat' => $post['wechat'],
-                'bank_id' => $post['bank_id'],
-                'up_agent_id' => $post['up_agent_id'],
-                'domain' => $post['domain'],
-                'update_time' => time(),
-            ];
-            $res = RAdmin::updateAll($update_data,'id = '.$post['id']);
-            if($res) {
-                $json = [
-                    'result' => 'success',
-                    'info' => '操作成功'
-                ];
-            } else {
-                $json = [
-                    'result' => 'fail',
-                    'info' => '操作失败'
-                ];
-            }
+            $res = AgentService::editAgent($post);
+            $json = ['result' => $res['type'], 'info' => $res['msg']];
             return $this->asJson($json);
         }
 
@@ -142,10 +90,7 @@ class AgentController extends Controller
         $agentList = AgentService::getAgentList();
 
         $id = $request = \Yii::$app->request->get('id');
-        $data = RAdmin::find()
-            ->where([
-                'id'=> $id,
-            ])->asArray()->one();
+        $data = AgentService::getOne($id);
 
         return $this->render('edit', [
             'data' => $data,
@@ -155,7 +100,6 @@ class AgentController extends Controller
         ]);
     }
 
-
     /**
      * 审核
      */
@@ -163,27 +107,8 @@ class AgentController extends Controller
     {
         if (\Yii::$app->request->isPost) {
             $post = \Yii::$app->request->post();
-
-            $id = $post['id'];
-            $status = $post['status'];
-
-            $update_data = [
-                'examine_status' => $status,
-                'update_time' => time(),
-                'update_person' => 1,
-            ];
-            $res = RAdmin::updateAll($update_data,'id = '.$id);
-            if($res) {
-                $json = [
-                    'result' => 'success',
-                    'info' => '操作成功'
-                ];
-            } else {
-                $json = [
-                    'result' => 'fail',
-                    'info' => '操作失败'
-                ];
-            }
+            $res = AgentService::examineAgent($post);
+            $json = ['result' => $res['type'], 'info' => $res['msg']];
             return $this->asJson($json);
         }
 
@@ -201,7 +126,6 @@ class AgentController extends Controller
             'get' => $get
         ]);
     }
-
 
     /**
      * 获取ip
