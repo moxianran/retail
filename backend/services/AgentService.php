@@ -243,6 +243,59 @@ class AgentService {
         $list = RAdmin::find()->where(['position_id'=>3,'is_delete'=>2])->asArray()->all();
         return $list;
     }
+
+    /**
+     * 代理新增记录
+     * @param $params
+     * @return array
+     */
+    public static function getAgentAddRecord($params)
+    {
+        $pageSize= 10;
+
+        if(isset($params['page']) && !empty($params['page'])) {
+            $page = (int) $params['page'];
+        } else {
+            $page = 1;
+        }
+
+        //删选数组
+        $cond = [];
+
+        //姓名
+//        if(!empty($params['real_name'])) {
+//            $cond[] = ['like', 'real_name', $params['real_name']];
+//        }
+//        //域名
+//        if(!empty($params['domain'])) {
+//            $cond[] = ['like', 'domain', $params['domain']];
+//        }
+//        //手机
+//        if(!empty($params['phone'])) {
+//            $cond[] = ['=', 'phone', $params['phone']];
+//        }
+
+        $offset = ($page - 1) * $pageSize;
+
+        $where = [
+            'position_id' => 3 //代理
+        ];
+        $query = RAdmin::find()->where($where);
+        if($cond) {
+            foreach($cond as $k => $v) {
+                $query->andWhere($v);
+            }
+        }
+
+        $count = $query->count();
+        $list = $query->offset($offset)->limit($pageSize)->asArray()->all();
+
+        return [
+            'list' => $list,
+            'count' => $count,
+            'pageSize' => $pageSize,
+        ];
+    }
 }
 
 

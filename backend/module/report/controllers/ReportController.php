@@ -4,47 +4,49 @@ namespace backend\module\report\controllers;
 
 use app\models\RAdmin;
 use app\models\RUser;
+use backend\services\AgentService;
 use yii\web\Controller;
 use yii\data\Pagination;
 use backend\services\BetService;
 use backend\services\RechargeService;
 use backend\services\ResultService;
+use backend\services\UserService;
 
 class ReportController extends Controller
 {
 
     public $pageSize= 10;
+    public $enableCsrfValidation = false;
+    public $moduleTitle = "通知管理";
+    public $adminInfo = [];
+
+    public function init()
+    {
+        parent::init();
+        //判断是否登录
+        $session = \Yii::$app->session;
+        $this->adminInfo = $session->get('adminInfo');
+        if(!$this->adminInfo) {
+            return $this->redirect(['/login/login/login']);
+        }
+    }
 
     /**
      * 会员新增记录
      */
     public function actionUserAddRecord()
     {
-        $page = $request = \Yii::$app->request->get('page', 1);
-        $type = $request = \Yii::$app->request->get('type', 1);
-
-        //获取分页条件
-        $offset = ($page - 1) * $this->pageSize;
-
-        //获取时间
-        $cond = $this->getCond($type);
-
-        $query = RUser::find();
-        if($cond) {
-            foreach($cond as $k => $v) {
-                $query->andWhere($v);
-            }
-        }
-
-        $count = $query->count();
-        $list = $query->offset($offset)->limit($this->pageSize)->asArray()->all();
-
-        $pagination = new Pagination(['totalCount' => $count,'pageSize' => $this->pageSize]);
+        $title = "会员新增记录";
+        $get = \Yii::$app->request->get();
+        $data = UserService::getUserAddRecord($get);
+        $pagination = new Pagination(['totalCount' => $data['count'],'pageSize' =>$data['pageSize'] ]);
 
         return $this->render('userAddRecord', [
-            'list' => $list,
+            'list' => $data['list'],
             'pagination' => $pagination,
-            'type' => $type,
+            'get' => $get,
+            'title' => $title,
+            'moduleTitle' => $this->moduleTitle,
         ]);
     }
 
@@ -53,30 +55,17 @@ class ReportController extends Controller
      */
     public function actionAgentAddRecord()
     {
-        $page = $request = \Yii::$app->request->get('page', 1);
-        $type = $request = \Yii::$app->request->get('type', 1);
+        $title = "代理新增记录";
+        $get = \Yii::$app->request->get();
+        $data = AgentService::getAgentAddRecord($get);
+        $pagination = new Pagination(['totalCount' => $data['count'],'pageSize' =>$data['pageSize'] ]);
 
-        //获取分页条件
-        $offset = ($page - 1) * $this->pageSize;
-
-        //获取时间
-        $cond = $this->getCond($type);
-
-        $query = RAdmin::find();
-        if($cond) {
-            foreach($cond as $k => $v) {
-                $query->andWhere($v);
-            }
-        }
-        $count = $query->count();
-        $list = $query->offset($offset)->limit($this->pageSize)->asArray()->all();
-
-        $pagination = new Pagination(['totalCount' => $count,'pageSize' => $this->pageSize]);
-
-        return $this->render('agentAddRecord', [
-            'list' => $list,
+        return $this->render('userAddRecord', [
+            'list' => $data['list'],
             'pagination' => $pagination,
-            'type' => $type,
+            'get' => $get,
+            'title' => $title,
+            'moduleTitle' => $this->moduleTitle,
         ]);
     }
 
