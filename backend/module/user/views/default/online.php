@@ -24,9 +24,6 @@ use yii\helpers\Url;
             <div class="ibox ">
                 <div class="ibox-title">
                     <h5><?php echo $title; ?></h5>
-                    <div class="ibox-tools">
-                        <a class="btn-sm" href="<?php echo Url::toRoute(['/user/default/create']); ?>">新增</a>
-                    </div>
                 </div>
                 <div class="ibox-content">
                     <div class="table-responsive">

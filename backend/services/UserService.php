@@ -45,7 +45,7 @@ class UserService {
         }
 
         $count = $query->count();
-        $list = $query->offset($offset)->limit($pageSize)->asArray()->all();
+        $list = $query->orderBy('id desc')->offset($offset)->limit($pageSize)->asArray()->all();
 
 
         return [
@@ -56,7 +56,7 @@ class UserService {
     }
 
     /**
-     * 会员列表
+     * 会员审核列表
      * @param $params
      * @return array
      */
@@ -96,7 +96,7 @@ class UserService {
         }
 
         $count = $query->count();
-        $list = $query->offset($offset)->limit($pageSize)->asArray()->all();
+        $list = $query->orderBy('id desc')->offset($offset)->limit($pageSize)->asArray()->all();
 
 
         return [
@@ -147,7 +147,7 @@ class UserService {
         }
 
         $count = $query->count();
-        $list = $query->offset($offset)->limit($pageSize)->asArray()->all();
+        $list = $query->orderBy('id desc')->offset($offset)->limit($pageSize)->asArray()->all();
 
 
         return [
@@ -171,9 +171,9 @@ class UserService {
         $user = new RUser();
         $user->account = $params['account'];
         $user->game_account = $params['game_account'];
-        $user->pwd = $params['pwd'];
-        $user->game_pwd = $params['game_pwd'];
-        $user->money_pwd = $params['money_pwd'];
+        $user->pwd = base64_encode($params['pwd']);
+        $user->game_pwd = base64_encode($params['game_pwd']);
+        $user->money_pwd = base64_encode($params['money_pwd']);
         $user->real_name = $params['real_name'];
         $user->phone = $params['phone'];
         $user->email = $params['email'];
@@ -187,8 +187,6 @@ class UserService {
         $user->update_time = time();
         $user->create_person = $adminInfo['id'];
         $user->update_person = $adminInfo['id'];
-        $user->login_ip = 0;
-        $user->login_time = 0;
         $user->status = 1;
         $user->is_stop = 2;
         $res = $user->insert();
@@ -209,9 +207,9 @@ class UserService {
         $update_data = [
             'account' => $params['account'],
             'game_account' => $params['game_account'],
-            'pwd' => $params['pwd'],
-            'game_pwd' => $params['game_pwd'],
-            'money_pwd' => $params['money_pwd'],
+            'pwd' => base64_encode($params['pwd']),
+            'game_pwd' => base64_encode($params['game_pwd']),
+            'money_pwd' => base64_encode($params['money_pwd']),
             'real_name' => $params['real_name'],
             'phone' => $params['phone'],
             'email' => $params['email'],
@@ -282,10 +280,10 @@ class UserService {
      */
     public static function getOne($id)
     {
-        $data = RUser::find()
-            ->where([
-                'id'=> $id,
-            ])->asArray()->one();
+        $data = RUser::find()->where(['id'=> $id,])->asArray()->one();
+        $data['pwd'] = base64_decode($data['pwd']);
+        $data['game_pwd'] = base64_decode($data['game_pwd']);
+        $data['money_pwd'] = base64_decode($data['money_pwd']);
         return $data;
     }
 
