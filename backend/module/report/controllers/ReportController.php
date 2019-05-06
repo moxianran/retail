@@ -47,6 +47,7 @@ class ReportController extends Controller
             'get' => $get,
             'title' => $title,
             'moduleTitle' => $this->moduleTitle,
+            'type' => $data['type']
         ]);
     }
 
@@ -136,82 +137,5 @@ class ReportController extends Controller
             'get' => $get,
             'user' => $user,
         ]);
-    }
-
-    /**
-     * 获取开始时间
-     * @param $type
-     * @return array
-     */
-    private function getCond($type)
-    {
-        switch ($type) {
-            case 1 ://今日
-                $start = strtotime(date("Y-m-d"));
-                $end = strtotime(date("Y-m-d")) + 86399;
-                $cond[] = ['>', 'create_time', $start];
-                $cond[] = ['<', 'create_time', $end];
-                break;
-            case 2 ://昨日
-                $start = strtotime(date("Y-m-d")) - 86400;
-                $end = strtotime(date("Y-m-d")) + 86399;
-                $cond[] = ['>', 'create_time', $start];
-                $cond[] = ['<', 'create_time', $end];
-                break;
-            case 3 ://本周
-                $startDate =  date('Y-m-d', (time() - ((date('w') == 0 ? 7 : date('w')) - 1) * 24 * 3600));
-                $start = strtotime($startDate);
-                $endDate = date('Y-m-d', (time() + (7 - (date('w') == 0 ? 7 : date('w'))) * 24 * 3600));
-                $end = strtotime($endDate) + 86399;
-                $cond[] = ['>', 'create_time', $start];
-                $cond[] = ['<', 'create_time', $end];
-                break;
-            case 4 ://上周
-                $startDate =  date('Y-m-d', strtotime('-1 monday', time()));
-                $start = strtotime($startDate);
-                $endDate = date('Y-m-d', strtotime('-1 sunday', time()));
-                $end = strtotime($endDate) + 86399;
-                $cond[] = ['>', 'create_time', $start];
-                $cond[] = ['<', 'create_time', $end];
-                break;
-            case 5 ://本月
-                $start = strtotime(date("Y-m-01"));
-                $end = strtotime(date("Y-m-01",strtotime('+1 month'))) - 1;
-                $cond[] = ['>', 'create_time', $start];
-                $cond[] = ['<', 'create_time', $end];
-                break;
-            case 6 ://上月
-                $start = strtotime(date("Y-m-01",strtotime('-1 month')));
-                $end = strtotime(date("Y-m-01")) - 1;
-                $cond[] = ['>', 'create_time', $start];
-                $cond[] = ['<', 'create_time', $end];
-                break;
-            case 7 ://本季度
-                $season = ceil((date('n'))/3);//当月是第几季度
-                $startDate = date('Y-m-d H:i:s', mktime(0, 0, 0,$season*3-3+1,1,date('Y')));
-                $start = strtotime($startDate);
-                $endDate =  date('Y-m-d H:i:s', mktime(23,59,59,$season*3,date('t',mktime(0, 0 , 0,$season*3,1,date("Y"))),date('Y')));
-                $end = strtotime($endDate);
-                $cond[] = ['>', 'create_time', $start];
-                $cond[] = ['<', 'create_time', $end];
-                break;
-            case 8 ://上季度
-                $season = ceil((date('n'))/3)-1;
-                $startDate = date('Y-m-d H:i:s', mktime(0, 0, 0,$season*3-3+1,1,date('Y')));
-                $start = strtotime($startDate);
-                $endDate =  date('Y-m-d H:i:s', mktime(23,59,59,$season*3,date('t',mktime(0, 0 , 0,$season*3,1,date("Y"))),date('Y')));
-                $end = strtotime($endDate);
-                $cond[] = ['>', 'create_time', $start];
-                $cond[] = ['<', 'create_time', $end];
-                break;
-            default:
-                $start = strtotime(date("Y-m-d"));
-                $end = strtotime(date("Y-m-d")) + 86399;
-                $cond[] = ['>', 'create_time', $start];
-                $cond[] = ['<', 'create_time', $end];
-                break;
-        }
-        return $cond;
-
     }
 }

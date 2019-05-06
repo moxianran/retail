@@ -1,21 +1,21 @@
 
 <div class="row wrapper border-bottom white-bg page-heading">
-            <div class="col-lg-10">
-                <h2>投注记录</h2>
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item">
-                        <a href="index.html">首页</a>
-                    </li>
-                    <li class="breadcrumb-item">
-                        <a>报表管理</a>
-                    </li>
-                    <li class="breadcrumb-item active">
-                        <strong>投注记录</strong>
-                    </li>
-                </ol>
-            </div>
-            <div class="col-lg-2"></div>
-        </div>
+    <div class="col-lg-10">
+        <h2><?php echo $title; ?></h2>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="index.html">首页</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a><?php echo $moduleTitle; ?></a>
+            </li>
+            <li class="breadcrumb-item active">
+                <strong><?php echo $title; ?></strong>
+            </li>
+        </ol>
+    </div>
+    <div class="col-lg-2"></div>
+</div>
 <div class="wrapper wrapper-content animated fadeInRight">
 
             <div class="ibox-content m-b-sm border-bottom">
