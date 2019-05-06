@@ -2,11 +2,11 @@
 
 namespace backend\module\user\controllers;
 
-use backend\services\UserService;
+use app\models\RUser;
 use backend\services\AgentService;
+use backend\services\UserService;
 use yii\data\Pagination;
 use yii\web\Controller;
-use app\models\RUser;
 
 class DefaultController extends Controller
 {
@@ -44,9 +44,7 @@ class DefaultController extends Controller
 
         if (\Yii::$app->request->isPost) {
             $post = \Yii::$app->request->post();
-
             $post['create_ip'] = $this->getRealIp();
-
             $res = UserService::createUser($post);
             $json = ['result' => $res['type'],'info'=>$res['msg']];
             return $this->asJson($json);
@@ -63,7 +61,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * 编辑会员
+     * 编辑
      */
     public function actionEdit()
     {
@@ -76,10 +74,11 @@ class DefaultController extends Controller
             return $this->asJson($json);
         }
 
-
+        //获取会员信息
         $id = $request = \Yii::$app->request->get('id');
         $data = UserService::getOne($id);
 
+        //获取代理列表
         $agentList = AgentService::getAgentList();
 
         return $this->render('edit', [
@@ -99,27 +98,8 @@ class DefaultController extends Controller
 
         if (\Yii::$app->request->isPost) {
             $post = \Yii::$app->request->post();
-
-            $id = $post['id'];
-            $status = $post['status'];
-
-            $update_data = [
-                'status' => $status,
-                'update_time' => time(),
-                'update_person' => 1,
-            ];
-            $res = RUser::updateAll($update_data,'id = '.$id);
-            if($res) {
-                $json = [
-                    'result' => 'success',
-                    'info' => '操作成功'
-                ];
-            } else {
-                $json = [
-                    'result' => 'fail',
-                    'info' => '操作失败'
-                ];
-            }
+            $res = UserService::examineUser($post);
+            $json = ['result' => $res['type'],'info'=>$res['msg']];
             return $this->asJson($json);
         }
 
@@ -146,27 +126,8 @@ class DefaultController extends Controller
     {
         if (\Yii::$app->request->isPost) {
             $post = \Yii::$app->request->post();
-
-            $id = $post['id'];
-            $isStop = $post['isStop'];
-
-            $update_data = [
-                'is_stop' => $isStop,
-                'update_time' => time(),
-                'update_person' => 1,
-            ];
-            $res = RUser::updateAll($update_data,'id = '.$id);
-            if($res) {
-                $json = [
-                    'result' => 'success',
-                    'info' => '操作成功'
-                ];
-            } else {
-                $json = [
-                    'result' => 'fail',
-                    'info' => '操作失败'
-                ];
-            }
+            $res = UserService::changeStop($post);
+            $json = ['result' => $res['type'],'info'=>$res['msg']];
             return $this->asJson($json);
         }
     }

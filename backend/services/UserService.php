@@ -4,7 +4,6 @@ use app\models\RUser;
 
 class UserService {
 
-
     /**
      * 会员列表
      * @param $params
@@ -158,7 +157,6 @@ class UserService {
         ];
     }
 
-
     /**
      * 新增会员
      * @param $params
@@ -201,7 +199,6 @@ class UserService {
         }
     }
 
-
     /**
      * 编辑会员
      * @param $params
@@ -233,7 +230,53 @@ class UserService {
     }
 
     /**
-     * 获取单挑数据
+     * 审核会员
+     * @param $params
+     * @return array
+     */
+    public static function examineUser($params)
+    {
+        $id = $params['id'];
+        $status = $params['status'];
+
+        $update_data = [
+            'status' => $status,
+            'update_time' => time(),
+            'update_person' => 1,
+        ];
+        $res = RUser::updateAll($update_data,'id = '.$id);
+        if($res) {
+            return ['type'=>'success','msg' => '操作成功'];
+        } else {
+            return ['type'=>'fail','msg' => '操作失败'];
+        }
+    }
+
+    /**
+     * 禁用和恢复正常
+     * @param $params
+     * @return array
+     */
+    public static function changeStop($params)
+    {
+        $id = $params['id'];
+        $isStop = $params['isStop'];
+        
+        $update_data = [
+            'is_stop' => $isStop,
+            'update_time' => time(),
+            'update_person' => 1,
+        ];
+        $res = RUser::updateAll($update_data,'id = '.$id);
+        if($res) {
+            return ['type'=>'success','msg' => '操作成功'];
+        } else {
+            return ['type'=>'fail','msg' => '操作失败'];
+        }
+    }
+
+    /**
+     * 获取单条数据
      * @param $id
      * @return array|\yii\db\ActiveRecord|null
      */

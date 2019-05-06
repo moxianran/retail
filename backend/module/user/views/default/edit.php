@@ -2,19 +2,18 @@
 use yii\helpers\Url;
 
 ?>
-
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
-        <h2>会员列表</h2>
+        <h2><?php echo $title; ?></h2>
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
-                <a href="index.html">主页</a>
+                <a href="index.html">首页</a>
             </li>
             <li class="breadcrumb-item">
-                <a>会员列表</a>
+                <a><?php echo $moduleTitle; ?></a>
             </li>
             <li class="breadcrumb-item active">
-                <strong>编辑会员</strong>
+                <strong><?php echo $title; ?></strong>
             </li>
         </ol>
     </div>
