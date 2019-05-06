@@ -75,6 +75,8 @@ class ReportController extends Controller
      */
     public function actionBetRecord()
     {
+        $title = "投注记录";
+
         $get = \Yii::$app->request->get();
         $data = BetService::getlist($get);
 
@@ -90,6 +92,8 @@ class ReportController extends Controller
             'end' => $data['end'],
             'get' => $get,
             'user' => $user,
+            'title' => $title,
+            'moduleTitle' => $this->moduleTitle,
         ]);
     }
 

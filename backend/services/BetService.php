@@ -28,7 +28,7 @@ class BetService {
             $start = strtotime($params['start']);
             $end = strtotime($params['end']);
         } else {
-            $start = strtotime(date("Y-m-d H:i:s",strtotime("-1 month")));
+            $start = strtotime(date("Y-m-d H:i:s",strtotime("-1 year")));
             $end = strtotime(date("Y-m-d H:i:s"));
         }
 
@@ -66,7 +66,6 @@ class BetService {
 
         $count = $query->count();
         $list = $query->offset($offset)->limit($pageSize)->asArray()->all();
-
 
         return [
             'list' => $list,
