@@ -204,6 +204,9 @@ class UserService {
      */
     public static function editUser($params)
     {
+        $session = \Yii::$app->session;
+        $adminInfo = $session->get('adminInfo');
+
         $update_data = [
             'account' => $params['account'],
             'game_account' => $params['game_account'],
@@ -218,6 +221,7 @@ class UserService {
             'bank_id' => $params['bank_id'],
             'domain' => $params['domain'],
             'update_time' => time(),
+            'update_person' => $adminInfo['id'],
         ];
         $res = RUser::updateAll($update_data,'id = '.$params['id']);
         if($res) {
@@ -234,13 +238,16 @@ class UserService {
      */
     public static function examineUser($params)
     {
+        $session = \Yii::$app->session;
+        $adminInfo = $session->get('adminInfo');
+
         $id = $params['id'];
         $status = $params['status'];
 
         $update_data = [
             'status' => $status,
             'update_time' => time(),
-            'update_person' => 1,
+            'update_person' => $adminInfo['id'],
         ];
         $res = RUser::updateAll($update_data,'id = '.$id);
         if($res) {
@@ -257,13 +264,16 @@ class UserService {
      */
     public static function changeStop($params)
     {
+        $session = \Yii::$app->session;
+        $adminInfo = $session->get('adminInfo');
+
         $id = $params['id'];
         $isStop = $params['isStop'];
         
         $update_data = [
             'is_stop' => $isStop,
             'update_time' => time(),
-            'update_person' => 1,
+            'update_person' => $adminInfo['id'],
         ];
         $res = RUser::updateAll($update_data,'id = '.$id);
         if($res) {
