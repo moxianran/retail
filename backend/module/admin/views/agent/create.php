@@ -87,21 +87,16 @@ use yii\helpers\Url;
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
-                        <div class="form-group  row"><label class="col-sm-2 col-form-label">注册区域IP</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" name="create_ip">
-                            </div>
-                        </div>
 
                         <div class="form-group row"><label class="col-sm-2 col-form-label">上级代理</label>
                             <div class="col-sm-10">
                                 <select class="form-control m-b" name="up_agent_id">
+                                    <option value="0">暂无</option>
                                     <?php
                                     if (isset($agentList) && $agentList) {
                                         foreach ($agentList as $k => $v) {
                                             ?>
                                             <option value="<?php echo $v['id'] ?>"><?php echo $v['real_name'] ?></option>
-
                                             <?php
                                         }
                                     }
@@ -152,7 +147,7 @@ use yii\helpers\Url;
                     if(data.result=="success"){
                         //禁用提交按钮。防止点击起来没完
                         $('#formSubmit').attr('disabled',true);
-                        window.location.href = "<?php echo Url::toRoute(['/admin/agent/list']); ?>";
+                        window.location.href = "<?php echo Url::toRoute(['/admin/agent/examine']); ?>";
                     }else{
                         //禁用提交按钮。防止点击起来没完
                         $('#formSubmit').attr('disabled',true);

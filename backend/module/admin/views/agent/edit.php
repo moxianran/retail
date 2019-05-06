@@ -93,26 +93,24 @@ use yii\helpers\Url;
                         <div class="form-group  row"><label class="col-sm-2 col-form-label">注册域名</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" name="domain"
-                                       value="<?php echo $data['account']; ?>">
+                                       value="<?php echo $data['domain']; ?>">
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
-                        <div class="form-group  row"><label class="col-sm-2 col-form-label">注册区域IP</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" name="create_ip"
-                                       value="<?php echo $data['create_ip']; ?>">
-                            </div>
-                        </div>
 
                         <div class="form-group row"><label class="col-sm-2 col-form-label">上级代理</label>
                             <div class="col-sm-10">
                                 <select class="form-control m-b" name="up_agent_id">
-                                    <option value="0"
-                                        <?php if($data['up_agent_id'] == '0') { echo ' selected="selected"';} ?>>暂无</option>
-                                    <option value="1"
-                                        <?php if($data['up_agent_id'] == '1') { echo ' selected="selected"';} ?>>正常</option>
-                                    <option value="2"
-                                        <?php if($data['up_agent_id'] == '2') { echo ' selected="selected"';} ?>>禁用</option>
+                                    <option value="0">暂无</option>
+                                    <?php
+                                    if (isset($agentList) && $agentList) {
+                                        foreach ($agentList as $k => $v) {
+                                            ?>
+                                            <option value="<?php echo $v['id'] ?>"><?php echo $v['real_name'] ?></option>
+                                            <?php
+                                        }
+                                    }
+                                    ?>
                                 </select>
                             </div>
                         </div>
