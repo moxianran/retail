@@ -61,6 +61,12 @@ class DirectorService
         ];
     }
 
+    /**
+     * 新增主管
+     * @param $params
+     * @return array
+     * @throws
+     */
     public static function createDirector($params)
     {
         $admin = new RAdmin();
@@ -81,4 +87,65 @@ class DirectorService
             return ['type'=>'fail','msg' => '操作失败'];
         }
     }
+
+    /**
+     * 编辑主管
+     * @param $params
+     * @return array
+     */
+    public static function editDirector($params)
+    {
+        $update_data = [
+            'account' => $params['account'],
+            'pwd' => $params['pwd'],
+            'real_name' => $params['real_name'],
+            'phone' => $params['phone'],
+            'email' => $params['email'],
+            'qq' => $params['qq'],
+            'wechat' => $params['wechat'],
+            'update_time' => time(),
+        ];
+        $res = RAdmin::updateAll($update_data, 'id = ' . $params['id']);
+        if ($res) {
+            return ['type' => 'success', 'msg' => '操作成功'];
+        } else {
+            return ['type' => 'fail', 'msg' => '操作失败'];
+        }
+    }
+
+
+    /**
+     * 获取单条记录
+     * @param $id
+     * @return array|\yii\db\ActiveRecord|null
+     */
+    public static function getOne($id)
+    {
+        $data = RAdmin::find()->where(['id' => $id,])->asArray()->one();
+        return $data;
+    }
+
+    /**
+     * 禁用和恢复正常
+     * @param $params
+     * @return array
+     */
+    public static function changeStatus($params)
+    {
+        $id = $params['id'];
+        $status = $params['status'];
+
+        $update_data = [
+            'status' => $status,
+            'update_time' => time(),
+            'update_person' => 1,
+        ];
+        $res = RAdmin::updateAll($update_data, 'id = ' . $id);
+        if ($res) {
+            return ['type' => 'success', 'msg' => '操作成功'];
+        } else {
+            return ['type' => 'fail', 'msg' => '操作失败'];
+        }
+    }
+
 }

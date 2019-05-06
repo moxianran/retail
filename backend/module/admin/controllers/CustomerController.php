@@ -3,13 +3,9 @@
 namespace backend\module\admin\controllers;
 
 use backend\services\CustomerService;
-use yii\web\Controller;
-use app\models\RAdmin;
 use yii\data\Pagination;
+use yii\web\Controller;
 
-/**
- * Default controller for the `admin` module
- */
 class CustomerController extends Controller
 {
     public $enableCsrfValidation = false;
@@ -45,27 +41,8 @@ class CustomerController extends Controller
     {
         if (\Yii::$app->request->isPost) {
             $post = \Yii::$app->request->post();
-
-            $id = $post['id'];
-            $status = $post['status'];
-
-            $update_data = [
-                'status' => $status,
-                'update_time' => time(),
-                'update_person' => 1,
-            ];
-            $res = RAdmin::updateAll($update_data,'id = '.$id);
-            if($res) {
-                $json = [
-                    'result' => 'success',
-                    'info' => '操作成功'
-                ];
-            } else {
-                $json = [
-                    'result' => 'fail',
-                    'info' => '操作失败'
-                ];
-            }
+            $res = CustomerService::changeStatus($post);
+            $json = ['result' => $res['type'], 'info' => $res['msg']];
             return $this->asJson($json);
         }
     }
@@ -91,7 +68,6 @@ class CustomerController extends Controller
             'title' => $title,
             'moduleTitle' => $this->moduleTitle,
         ]);
-
     }
 
     /**
@@ -101,41 +77,15 @@ class CustomerController extends Controller
     {
         $title = '编辑客服';
 
-
         if (\Yii::$app->request->isPost) {
             $post = \Yii::$app->request->post();
-
-
-            $update_data = [
-                'account' => $post['account'],
-                'pwd' => $post['pwd'],
-                'real_name' => $post['real_name'],
-                'phone' => $post['phone'],
-                'email' => $post['email'],
-                'qq' => $post['qq'],
-                'wechat' => $post['wechat'],
-                'update_time' => time(),
-            ];
-            $res = RAdmin::updateAll($update_data,'id = '.$post['id']);
-            if($res) {
-                $json = [
-                    'result' => 'success',
-                    'info' => '操作成功'
-                ];
-            } else {
-                $json = [
-                    'result' => 'fail',
-                    'info' => '操作失败'
-                ];
-            }
+            $res = CustomerService::editCustomer($post);
+            $json = ['result' => $res['type'], 'info' => $res['msg']];
             return $this->asJson($json);
         }
 
         $id = $request = \Yii::$app->request->get('id');
-        $data = RAdmin::find()
-            ->where([
-                'id'=> $id,
-            ])->asArray()->one();
+        $data = CustomerService::getOne($id);
 
         return $this->render('edit', [
             'data' => $data,
@@ -143,7 +93,6 @@ class CustomerController extends Controller
             'moduleTitle' => $this->moduleTitle,
         ]);
     }
-
 
     /**
      * 获取ip
