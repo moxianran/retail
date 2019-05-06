@@ -157,13 +157,16 @@ class AgentService {
      */
     public static function changeStatus($params)
     {
+        $session = \Yii::$app->session;
+        $adminInfo = $session->get('adminInfo');
+
         $id = $params['id'];
         $status = $params['status'];
 
         $update_data = [
             'status' => $status,
             'update_time' => time(),
-            'update_person' => 1,
+            'update_person' => $adminInfo['id'],
         ];
         $res = RAdmin::updateAll($update_data, 'id = ' . $id);
         if ($res) {
@@ -180,6 +183,9 @@ class AgentService {
      */
     public static function editAgent($params)
     {
+        $session = \Yii::$app->session;
+        $adminInfo = $session->get('adminInfo');
+
         $update_data = [
             'account' => $params['account'],
             'pwd' => base64_encode($params['pwd']),
@@ -192,6 +198,7 @@ class AgentService {
             'up_agent_id' => $params['up_agent_id'],
             'domain' => $params['domain'],
             'update_time' => time(),
+            'update_person' => $adminInfo['id'],
         ];
         $res = RAdmin::updateAll($update_data, 'id = ' . $params['id']);
         if ($res) {
@@ -220,13 +227,15 @@ class AgentService {
      */
     public static function examineAgent($params)
     {
+        $session = \Yii::$app->session;
+        $adminInfo = $session->get('adminInfo');
         $id = $params['id'];
         $status = $params['status'];
 
         $update_data = [
             'examine_status' => $status,
             'update_time' => time(),
-            'update_person' => 1,
+            'update_person' => $adminInfo['id'],
         ];
         $res = RAdmin::updateAll($update_data, 'id = ' . $id);
         if ($res) {

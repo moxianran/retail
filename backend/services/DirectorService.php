@@ -51,7 +51,7 @@ class DirectorService
         }
 
         $count = $query->count();
-        $list = $query->offset($offset)->limit($pageSize)->asArray()->all();
+        $list = $query->orderBy('id desc')->offset($offset)->limit($pageSize)->asArray()->all();
 
 
         return [

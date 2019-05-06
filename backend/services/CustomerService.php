@@ -49,7 +49,7 @@ class CustomerService
         }
 
         $count = $query->count();
-        $list = $query->offset($offset)->limit($pageSize)->asArray()->all();
+        $list = $query->orderBy('id desc')->offset($offset)->limit($pageSize)->asArray()->all();
 
 
         return [
@@ -68,6 +68,9 @@ class CustomerService
      */
     public static function createCustomer($params)
     {
+        $session = \Yii::$app->session;
+        $adminInfo = $session->get('adminInfo');
+
         $admin = new RAdmin();
         $admin->account = $params['account'];
         $admin->pwd = base64_encode($params['pwd']);
@@ -79,6 +82,7 @@ class CustomerService
         $admin->create_ip = $params['create_ip'];
         $admin->create_time = time();
         $admin->position_id = 4;
+        $admin->create_person = $adminInfo['id'];
         $res = $admin->insert();
         if($res) {
             return ['type'=>'success','msg' => '操作成功'];
@@ -94,6 +98,9 @@ class CustomerService
      */
     public static function editCustomer($params)
     {
+        $session = \Yii::$app->session;
+        $adminInfo = $session->get('adminInfo');
+
         $update_data = [
             'account' => $params['account'],
             'pwd' => base64_encode($params['pwd']),
@@ -103,6 +110,7 @@ class CustomerService
             'qq' => $params['qq'],
             'wechat' => $params['wechat'],
             'update_time' => time(),
+            'update_person' => $adminInfo['id']
         ];
         $res = RAdmin::updateAll($update_data, 'id = ' . $params['id']);
         if ($res) {
@@ -131,13 +139,16 @@ class CustomerService
      */
     public static function changeStatus($params)
     {
+        $session = \Yii::$app->session;
+        $adminInfo = $session->get('adminInfo');
+
         $id = $params['id'];
         $status = $params['status'];
 
         $update_data = [
             'status' => $status,
             'update_time' => time(),
-            'update_person' => 1,
+            'update_person' => $adminInfo['id']
         ];
         $res = RAdmin::updateAll($update_data, 'id = ' . $id);
         if ($res) {
