@@ -61,7 +61,7 @@ class ReportController extends Controller
         $data = AgentService::getAgentAddRecord($get);
         $pagination = new Pagination(['totalCount' => $data['count'],'pageSize' =>$data['pageSize'] ]);
 
-        return $this->render('userAddRecord', [
+        return $this->render('agentAddRecord', [
             'list' => $data['list'],
             'pagination' => $pagination,
             'get' => $get,

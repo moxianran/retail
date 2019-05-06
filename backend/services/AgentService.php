@@ -262,6 +262,77 @@ class AgentService {
      */
     public static function getAgentAddRecord($params)
     {
+        if(isset($params['type']) && !empty($params['type'])) {
+            $type = (int) $params['type'];
+        } else {
+            $type = 0;
+        }
+        $cond = [];
+
+        switch ($type) {
+            case 1 ://今日
+                $start = strtotime(date("Y-m-d"));
+                $end = strtotime(date("Y-m-d")) + 86399;
+                $cond[] = ['>', 'create_time', $start];
+                $cond[] = ['<', 'create_time', $end];
+                break;
+            case 2 ://昨日
+                $start = strtotime(date("Y-m-d")) - 86400;
+                $end = strtotime(date("Y-m-d"));
+                $cond[] = ['>', 'create_time', $start];
+                $cond[] = ['<', 'create_time', $end];
+                break;
+            case 3 ://本周
+                $startDate =  date('Y-m-d', (time() - ((date('w') == 0 ? 7 : date('w')) - 1) * 24 * 3600));
+                $start = strtotime($startDate);
+                $endDate = date('Y-m-d', (time() + (7 - (date('w') == 0 ? 7 : date('w'))) * 24 * 3600));
+                $end = strtotime($endDate) + 86399;
+                $cond[] = ['>', 'create_time', $start];
+                $cond[] = ['<', 'create_time', $end];
+                break;
+            case 4 ://上周
+                $startDate =  date('Y-m-d', strtotime('-1 monday', time()));
+                $start = strtotime($startDate);
+                $endDate = date('Y-m-d', strtotime('-1 sunday', time()));
+                $end = strtotime($endDate) + 86399;
+                $cond[] = ['>', 'create_time', $start];
+                $cond[] = ['<', 'create_time', $end];
+                break;
+            case 5 ://本月
+                $start = strtotime(date("Y-m-01"));
+                $end = strtotime(date("Y-m-01",strtotime('+1 month'))) - 1;
+                $cond[] = ['>', 'create_time', $start];
+                $cond[] = ['<', 'create_time', $end];
+                break;
+            case 6 ://上月
+                $start = strtotime(date("Y-m-01",strtotime('-1 month')));
+                $end = strtotime(date("Y-m-01")) - 1;
+                $cond[] = ['>', 'create_time', $start];
+                $cond[] = ['<', 'create_time', $end];
+                break;
+            case 7 ://本季度
+                $season = ceil((date('n'))/3);//当月是第几季度
+                $startDate = date('Y-m-d H:i:s', mktime(0, 0, 0,$season*3-3+1,1,date('Y')));
+                $start = strtotime($startDate);
+                $endDate =  date('Y-m-d H:i:s', mktime(23,59,59,$season*3,date('t',mktime(0, 0 , 0,$season*3,1,date("Y"))),date('Y')));
+                $end = strtotime($endDate);
+                $cond[] = ['>', 'create_time', $start];
+                $cond[] = ['<', 'create_time', $end];
+                break;
+            case 8 ://上季度
+                $season = ceil((date('n'))/3)-1;
+                $startDate = date('Y-m-d H:i:s', mktime(0, 0, 0,$season*3-3+1,1,date('Y')));
+                $start = strtotime($startDate);
+                $endDate =  date('Y-m-d H:i:s', mktime(23,59,59,$season*3,date('t',mktime(0, 0 , 0,$season*3,1,date("Y"))),date('Y')));
+                $end = strtotime($endDate);
+                $cond[] = ['>', 'create_time', $start];
+                $cond[] = ['<', 'create_time', $end];
+                break;
+            default:
+                break;
+        }
+
+
         $pageSize= 10;
 
         if(isset($params['page']) && !empty($params['page'])) {
@@ -271,26 +342,10 @@ class AgentService {
         }
 
         //删选数组
-        $cond = [];
-
-        //姓名
-//        if(!empty($params['real_name'])) {
-//            $cond[] = ['like', 'real_name', $params['real_name']];
-//        }
-//        //域名
-//        if(!empty($params['domain'])) {
-//            $cond[] = ['like', 'domain', $params['domain']];
-//        }
-//        //手机
-//        if(!empty($params['phone'])) {
-//            $cond[] = ['=', 'phone', $params['phone']];
-//        }
 
         $offset = ($page - 1) * $pageSize;
 
-        $where = [
-            'position_id' => 3 //代理
-        ];
+        $where = ['position_id' => 3];
         $query = RAdmin::find()->where($where);
         if($cond) {
             foreach($cond as $k => $v) {
@@ -299,12 +354,12 @@ class AgentService {
         }
 
         $count = $query->count();
-        $list = $query->offset($offset)->limit($pageSize)->asArray()->all();
-
+        $list = $query->orderBy('id desc')->offset($offset)->limit($pageSize)->asArray()->all();
         return [
             'list' => $list,
             'count' => $count,
             'pageSize' => $pageSize,
+            'type' => $type,
         ];
     }
 }
