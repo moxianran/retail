@@ -70,7 +70,7 @@ class CustomerService
     {
         $admin = new RAdmin();
         $admin->account = $params['account'];
-        $admin->pwd = $params['pwd'];
+        $admin->pwd = base64_encode($params['pwd']);
         $admin->real_name = $params['real_name'];
         $admin->phone = $params['phone'];
         $admin->email = $params['email'];
@@ -96,7 +96,7 @@ class CustomerService
     {
         $update_data = [
             'account' => $params['account'],
-            'pwd' => $params['pwd'],
+            'pwd' => base64_encode($params['pwd']),
             'real_name' => $params['real_name'],
             'phone' => $params['phone'],
             'email' => $params['email'],
@@ -120,6 +120,7 @@ class CustomerService
     public static function getOne($id)
     {
         $data = RAdmin::find()->where(['id' => $id,])->asArray()->one();
+        $data['pwd'] = base64_decode($data['pwd']);
         return $data;
     }
 

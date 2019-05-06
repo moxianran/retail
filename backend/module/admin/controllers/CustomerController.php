@@ -56,7 +56,6 @@ class CustomerController extends Controller
 
         if (\Yii::$app->request->isPost) {
             $post = \Yii::$app->request->post();
-
             $post['create_ip'] = $this->getRealIp();
             $res = CustomerService::createCustomer($post);
             $json = ['result' => $res['type'],'info'=>$res['msg']];
