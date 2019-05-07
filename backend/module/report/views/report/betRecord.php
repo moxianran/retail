@@ -148,7 +148,7 @@
                                                 <td><?php echo $v['platform_id'] ?></td>
                                                 <td><?php echo $v['series_id'] ?></td>
                                                 <td><?php echo $v['game_id'] ?></td>
-                                                <td><?php echo $v['user_id'] ?></td>
+                                                <td><?php echo $v['userName'] ?></td>
                                                 <td><?php echo $v['bet_desc'] ?></td>
                                                 <td><?php echo date("Y-m-d H:i:s",$v['bet_time']); ?></td>
                                                 <td><?php echo $v['bet_money'] / 100 ?></td>

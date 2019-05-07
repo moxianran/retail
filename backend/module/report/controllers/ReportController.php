@@ -79,10 +79,6 @@ class ReportController extends Controller
 
         $get = \Yii::$app->request->get();
         $data = BetService::getlist($get);
-
-        //获取全部用户
-        $user = RUser::find('id,real_name')->where(['status' => 2])->asArray()->all();
-
         $pagination = new Pagination(['totalCount' => $data['count'],'pageSize' =>$data['pageSize'] ]);
 
         return $this->render('betRecord', [
@@ -91,7 +87,6 @@ class ReportController extends Controller
             'start' => $data['start'],
             'end' => $data['end'],
             'get' => $get,
-            'user' => $user,
             'title' => $title,
             'moduleTitle' => $this->moduleTitle,
         ]);

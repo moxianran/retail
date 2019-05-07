@@ -1,6 +1,7 @@
 <?php
 namespace backend\services;
 use app\models\RBet;
+use app\models\RUser;
 
 class BetService {
 
@@ -66,6 +67,25 @@ class BetService {
 
         $count = $query->count();
         $list = $query->offset($offset)->limit($pageSize)->asArray()->all();
+
+
+        if($list) {
+
+            $userIds = array_column($list,'user_id');
+            $user = RUser::find('id,real_name')->where(['id' => $userIds])->asArray()->all();
+            $user = array_column($user,'real_name','id');
+
+            foreach ($list as $k=>$v) {
+                $list[$k]['userName'] = $user[$v['user_id']] ?? '暂无';
+                if($v['bet_result'] == '0') {
+                    $list[$k]['bet_result'] = '平';
+                } else if($v['bet_result'] == '1'){
+                    $list[$k]['bet_result'] = '胜';
+                } else if($v['bet_result'] == '2'){
+                    $list[$k]['bet_result'] = '负';
+                }
+            }
+        }
 
         return [
             'list' => $list,
