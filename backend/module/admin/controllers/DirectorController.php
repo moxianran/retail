@@ -3,11 +3,13 @@
 namespace backend\module\admin\controllers;
 
 
+use backend\module\BaseController;
 use backend\services\DirectorService;
+use Faker\Provider\Base;
 use yii\data\Pagination;
 use yii\web\Controller;
 
-class DirectorController extends Controller
+class DirectorController extends BaseController
 {
     public $enableCsrfValidation = false;
     public $moduleTitle = "主管管理";

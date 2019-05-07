@@ -2,11 +2,12 @@
 
 namespace backend\module\admin\controllers;
 
+use backend\module\BaseController;
 use backend\services\AgentService;
 use yii\data\Pagination;
 use yii\web\Controller;
 
-class AgentController extends Controller
+class AgentController extends BaseController
 {
     public $enableCsrfValidation = false;
     public $moduleTitle = "代理管理";

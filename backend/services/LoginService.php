@@ -15,7 +15,7 @@ class LoginService
      */
     public static function login($account,$pwd,$ip)
     {
-        $admin = RAdmin::find()->where(['account' => $account,'is_delete' => 0])->asArray()->one();
+        $admin = RAdmin::find()->where(['account' => $account,'is_delete' => 2])->asArray()->one();
         //判断账号是否存在
         if(!$admin) {
             return ['type' => 'fail','msg' => '该账号不存在'];
@@ -38,7 +38,7 @@ class LoginService
         }
 
         //密码错误
-        if($admin['pwd'] != md5($pwd)) {
+        if($admin['pwd'] != base64_encode($pwd)) {
             return ['type' => 'fail','msg' => '密码错误'];
         }
 
@@ -59,6 +59,7 @@ class LoginService
         $adminInfo = [
             'id' => $admin['id'],
             'real_name' => $admin['real_name'],
+            'position_id' => $admin['position_id'],
             'positionName' => $positionData[$admin['position_id']] ?? '暂无',
         ];
 

@@ -3,6 +3,7 @@
 namespace backend\module\report\controllers;
 
 use app\models\RUser;
+use backend\module\BaseController;
 use backend\services\AgentService;
 use backend\services\BetService;
 use backend\services\RechargeService;
@@ -11,7 +12,7 @@ use backend\services\UserService;
 use yii\data\Pagination;
 use yii\web\Controller;
 
-class ReportController extends Controller
+class ReportController extends BaseController
 {
 
     public $pageSize= 10;

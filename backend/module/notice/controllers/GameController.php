@@ -2,11 +2,12 @@
 
 namespace backend\module\notice\controllers;
 
+use backend\module\BaseController;
 use backend\services\NoticeGameService;
 use yii\data\Pagination;
 use yii\web\Controller;
 
-class GameController extends Controller
+class GameController extends BaseController
 {
     public $enableCsrfValidation = false;
     public $moduleTitle = "通知管理";

@@ -3,12 +3,13 @@
 namespace backend\module\user\controllers;
 
 use app\models\RUser;
+use backend\module\BaseController;
 use backend\services\AgentService;
 use backend\services\UserService;
 use yii\data\Pagination;
 use yii\web\Controller;
 
-class DefaultController extends Controller
+class DefaultController extends BaseController
 {
     public $enableCsrfValidation = false;
     public $moduleTitle = "会员管理";

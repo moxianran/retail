@@ -2,11 +2,12 @@
 
 namespace backend\module\notice\controllers;
 
+use backend\module\BaseController;
 use backend\services\NoticeWebsiteService;
 use yii\data\Pagination;
 use yii\web\Controller;
 
-class WebsiteController extends Controller
+class WebsiteController extends BaseController
 {
     public $enableCsrfValidation = false;
     public $moduleTitle = "通知管理";

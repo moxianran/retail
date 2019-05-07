@@ -48,6 +48,50 @@ $adminInfo = Yii::$app->session->get('adminInfo');
                     </div>
                 </li>
 
+
+
+                <?php
+
+                    $list = $this->params['menu'] ;
+
+
+                foreach ($list as $k => $v) {
+                    if ($v['pid'] == 0) {
+                ?>
+                        <li>
+                            <a href="">
+                                <i class="fa fa-th-large"></i>
+                                <span class="nav-label"><?php echo $v['name'] ?></span>
+                                <span class="fa arrow"></span>
+                            </a>
+                            <ul class="nav nav-second-level collapse ">
+
+                <?php
+                        for ($i = 0; $i < count($list); $i++) {
+                            if ($v['id'] == $list[$i]['pid']) {
+?>
+
+                            <li>
+                                <a href="<?php echo Url::toRoute(['/notice/website/list']); ?>"><?php echo $list[$i]['name'] ;?></a>
+                            </li>
+
+                            <?php
+                        }}
+                            ?>
+
+
+                            </ul>
+                        </li>
+
+                <?php
+                }}
+                ?>
+
+
+
+
+
+
                 <li <?php if($this->context->module->id == 'notice') { echo ' class="active"';} ?>>
                     <a href="">
                         <i class="fa fa-th-large"></i>
@@ -132,7 +176,6 @@ $adminInfo = Yii::$app->session->get('adminInfo');
                         </li>
                     </ul>
                 </li>
-
 
                 <li <?php if($this->context->module->id == 'report') { echo ' class="active"';} ?>>
                     <a href="">

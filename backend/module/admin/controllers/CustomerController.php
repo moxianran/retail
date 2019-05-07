@@ -2,11 +2,12 @@
 
 namespace backend\module\admin\controllers;
 
+use backend\module\BaseController;
 use backend\services\CustomerService;
 use yii\data\Pagination;
 use yii\web\Controller;
 
-class CustomerController extends Controller
+class CustomerController extends BaseController
 {
     public $enableCsrfValidation = false;
     public $moduleTitle = "客服管理";

@@ -2,12 +2,13 @@
 
 namespace backend\module\super\controllers;
 
+use backend\module\BaseController;
 use backend\services\PowerService;
 use yii\data\Pagination;
 use yii\web\Controller;
 
 
-class PowerController extends Controller
+class PowerController extends BaseController
 {
     public $enableCsrfValidation = false;
     public $moduleTitle = "超级管理";
@@ -35,6 +36,10 @@ class PowerController extends Controller
         $data = PowerService::getPositionList($get);
         $pagination = new Pagination(['totalCount' => $data['count'], 'pageSize' => $data['pageSize']]);
 
+
+
+
+
         return $this->render('powerList', [
             'list' => $data['list'],
             'pagination' => $pagination,
@@ -53,7 +58,7 @@ class PowerController extends Controller
 
         $positionInfo = PowerService::getPositionName($position_id);
         $title = $positionInfo['name']."权限";
-        
+
         //获取职位权限
         $data = PowerService::getPositionPower($position_id);
         $data = array_column($data,'power_id');
