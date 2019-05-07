@@ -48,41 +48,42 @@ class PowerController extends Controller
      */
     public function actionPositionPower()
     {
-        $title = "权限";
 
         $position_id = $request = \Yii::$app->request->get('position_id');
+
+        $positionInfo = PowerService::getPositionName($position_id);
+        $title = $positionInfo['name']."权限";
+        
         //获取职位权限
         $data = PowerService::getPositionPower($position_id);
+        $data = array_column($data,'power_id');
 
         //获取权限列表
         $list = PowerService::getPowerList();
 
-        foreach ($list as $k => $v) {
-            if ($v['pid'] == 0) {
-                echo "<br />".$v['name'] . "<br />";
-                for ($i = 0; $i < count($list); $i++) {
-                    if($v['id'] == $list[$i]['pid']) {
-                        echo  "<br />".$list[$i]['name']. "-<br />";
-                        for ($ii = 0; $ii < count($list); $ii++) {
-                            if($list[$i]['id'] == $list[$ii]['pid']) {
-                                echo $list[$i]['id']."=".$list[$ii]['name']."<br />";
-                            }
-
-                        }
-                    }
-                }
-            }
-        }
-        die;
-
-        print_r($list);
-        die;
+//        foreach ($list as $k => $v) {
+//            if ($v['pid'] == 0) {
+//              //  echo "<br />".$v['name'] . "<br />";
+//                for ($i = 0; $i < count($list); $i++) {
+//                    if($v['id'] == $list[$i]['pid']) {
+//                        //echo  "<br />".$list[$i]['name']. "-<br />";
+//                        for ($ii = 0; $ii < count($list); $ii++) {
+//                            if($list[$i]['id'] == $list[$ii]['pid']) {
+//                            //    echo $list[$i]['id']."=".$list[$ii]['name']."<br />";
+//                            }
+//
+//                        }
+//                    }
+//                }
+//            }
+//        }
 
         return $this->render('positionPower', [
             'list' => $list,
             'data' => $data,
             'title' => $title,
             'moduleTitle' => $this->moduleTitle,
+            'position_id' => $position_id
         ]);
     }
 

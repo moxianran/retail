@@ -23,7 +23,7 @@ class PowerService {
 
         //删选数组
         $offset = ($page - 1) * $pageSize;
-        $where = [];
+        $where = ['!=','id',1];
         $query = RPosition::find()->where($where);
         $count = $query->count();
         $list = $query->orderBy('id desc')->offset($offset)->limit($pageSize)->asArray()->all();
@@ -60,11 +60,12 @@ class PowerService {
     /**
      * 保存权限
      * @param $params
+     * @return array
      */
     public static function savePower($params)
     {
         $position_id = $params['position_id'];
-        $power_ids = $params['power_ids'];
+        $power_ids = $params['power'];
 
         $model = new RPositionPower();
         $model->deleteAll(['position_id'=>$position_id]);
@@ -75,6 +76,12 @@ class PowerService {
             $model->power_id = $v;
             $model->save();
         }
+        return ['type' => 'success', 'msg' => '操作成功'];
+    }
+
+    public static function getPositionName($position_id)
+    {
+        return RPosition::find()->where(['id'=>$position_id])->asArray()->one();
     }
 
 }

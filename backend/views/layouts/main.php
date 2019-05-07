@@ -167,8 +167,8 @@ $adminInfo = Yii::$app->session->get('adminInfo');
                         <span class="fa arrow"></span>
                     </a>
                     <ul class="nav nav-second-level collapse ">
-                        <li <?php if($this->context->id == 'director') { echo ' class="active"';} ?>>
-                            <a href="<?php echo Url::toRoute(['/super/power/position-power']); ?>">权限列表</a>
+                        <li <?php if($this->context->id == 'power') { echo ' class="active"';} ?>>
+                            <a href="<?php echo Url::toRoute(['/super/power/power-list']); ?>">权限列表</a>
                         </li>
                     </ul>
                 </li>
