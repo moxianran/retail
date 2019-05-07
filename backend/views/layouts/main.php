@@ -158,6 +158,21 @@ $adminInfo = Yii::$app->session->get('adminInfo');
                         </li>
                     </ul>
                 </li>
+
+
+                <li <?php if($this->context->module->id == 'super' && $this->context->id == 'power') { echo ' class="active"';} ?>>
+                    <a href="">
+                        <i class="fa fa-th-large"></i>
+                        <span class="nav-label">超级管理</span>
+                        <span class="fa arrow"></span>
+                    </a>
+                    <ul class="nav nav-second-level collapse ">
+                        <li <?php if($this->context->id == 'director') { echo ' class="active"';} ?>>
+                            <a href="<?php echo Url::toRoute(['/super/power/position-power']); ?>">权限列表</a>
+                        </li>
+                    </ul>
+                </li>
+
             </ul>
         </div>
     </nav>

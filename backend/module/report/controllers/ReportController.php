@@ -2,15 +2,14 @@
 
 namespace backend\module\report\controllers;
 
-use app\models\RAdmin;
 use app\models\RUser;
 use backend\services\AgentService;
-use yii\web\Controller;
-use yii\data\Pagination;
 use backend\services\BetService;
 use backend\services\RechargeService;
 use backend\services\ResultService;
 use backend\services\UserService;
+use yii\data\Pagination;
+use yii\web\Controller;
 
 class ReportController extends Controller
 {

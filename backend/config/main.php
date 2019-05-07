@@ -27,6 +27,9 @@ return [
         'login' => [
             'class' => 'backend\module\login\login',
         ],
+        'super' => [
+            'class' => 'backend\module\super\super',
+        ],
 
     ],
     'components' => [
