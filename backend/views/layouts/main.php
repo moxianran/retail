@@ -48,44 +48,36 @@ $adminInfo = Yii::$app->session->get('adminInfo');
                     </div>
                 </li>
 
-
-
                 <?php
-
                     $list = $this->params['menu'] ;
-
-
-                foreach ($list as $k => $v) {
-                    if ($v['pid'] == 0) {
+                    foreach ($list as $k => $v) {
+                        if ($v['pid'] == 0) {
                 ?>
-                        <li>
+                        <li <?php if($this->context->module->id == $v['module']) { echo ' class="active"';} ?>>
                             <a href="">
                                 <i class="fa fa-th-large"></i>
                                 <span class="nav-label"><?php echo $v['name'] ?></span>
                                 <span class="fa arrow"></span>
                             </a>
                             <ul class="nav nav-second-level collapse ">
-
                 <?php
-                        for ($i = 0; $i < count($list); $i++) {
-                            if ($v['id'] == $list[$i]['pid']) {
-?>
-
-                            <li>
-                                <a href="<?php echo Url::toRoute(['/notice/website/list']); ?>"><?php echo $list[$i]['name'] ;?></a>
+                    for ($i = 0; $i < count($list); $i++) {
+                        if ($v['id'] == $list[$i]['pid']) {
+                ?>
+                            <li <?php if($this->context->id == $list[$i]['controller']) { echo ' class="active"';} ?>>
+                                <a href="<?php echo Url::toRoute(["/".$list[$i]['module']."/".$list[$i]['controller']."/".$list[$i]['action']]); ?>"><?php echo $list[$i]['name'] ;?></a>
                             </li>
-
-                            <?php
-                        }}
-                            ?>
-
-
+                <?php
+                    }}
+                ?>
                             </ul>
                         </li>
-
                 <?php
                 }}
                 ?>
+
+
+
 
 
 

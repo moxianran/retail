@@ -1,16 +1,16 @@
 <?php
 
-namespace backend\module\admin;
+namespace backend\module\agent;
 
 /**
- * admin module definition class
+ * agent module definition class
  */
-class admin extends \yii\base\Module
+class agent extends \yii\base\Module
 {
     /**
      * {@inheritdoc}
      */
-    public $controllerNamespace = 'backend\module\admin\controllers';
+    public $controllerNamespace = 'backend\module\agent\controllers';
 
     /**
      * {@inheritdoc}

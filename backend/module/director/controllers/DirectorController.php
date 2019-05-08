@@ -1,28 +1,34 @@
 <?php
 
-namespace backend\module\admin\controllers;
+namespace backend\module\director\controllers;
+
 
 use backend\module\BaseController;
-use backend\services\CustomerService;
+use backend\services\DirectorService;
 use yii\data\Pagination;
-use yii\web\Controller;
 
-class CustomerController extends BaseController
+class DirectorController extends BaseController
 {
     public $enableCsrfValidation = false;
-    public $moduleTitle = "客服管理";
+    public $moduleTitle = "主管管理";
     public $adminInfo = [];
 
+    public function init()
+    {
+        parent::init();
+    }
+
     /**
-     * 客服列表
+     * 主管列表
      * @return string
      */
     public function actionList()
     {
-        $title = '客服列表';
+
+        $title = '主管列表';
         $get = \Yii::$app->request->get();
 
-        $data = CustomerService::getList($get);
+        $data = DirectorService::getList($get);
         $pagination = new Pagination(['totalCount' => $data['count'], 'pageSize' => $data['pageSize']]);
 
         return $this->render('list', [
@@ -32,6 +38,7 @@ class CustomerController extends BaseController
             'moduleTitle' => $this->moduleTitle,
             'get' => $get
         ]);
+
     }
 
     /**
@@ -42,7 +49,7 @@ class CustomerController extends BaseController
     {
         if (\Yii::$app->request->isPost) {
             $post = \Yii::$app->request->post();
-            $res = CustomerService::changeStatus($post);
+            $res = DirectorService::changeStatus($post);
             $json = ['result' => $res['type'], 'info' => $res['msg']];
             return $this->asJson($json);
         }
@@ -53,15 +60,14 @@ class CustomerController extends BaseController
      */
     public function actionCreate()
     {
-        $title = '新增客服';
+        $title = '新增主管';
 
         if (\Yii::$app->request->isPost) {
             $post = \Yii::$app->request->post();
             $post['create_ip'] = $this->getRealIp();
-            $res = CustomerService::createCustomer($post);
+            $res = DirectorService::createDirector($post);
             $json = ['result' => $res['type'],'info'=>$res['msg']];
             return $this->asJson($json);
-
         }
 
         return $this->render('create',[
@@ -75,17 +81,17 @@ class CustomerController extends BaseController
      */
     public function actionEdit()
     {
-        $title = '编辑客服';
+        $title = '编辑主管';
 
         if (\Yii::$app->request->isPost) {
             $post = \Yii::$app->request->post();
-            $res = CustomerService::editCustomer($post);
+            $res = DirectorService::editDirector($post);
             $json = ['result' => $res['type'], 'info' => $res['msg']];
             return $this->asJson($json);
         }
 
         $id = $request = \Yii::$app->request->get('id');
-        $data = CustomerService::getOne($id);
+        $data = DirectorService::getOne($id);
 
         return $this->render('edit', [
             'data' => $data,

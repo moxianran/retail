@@ -15,11 +15,17 @@ return [
         'notice' => [
             'class' => 'backend\module\notice\notice',
         ],
-        'admin' => [
-            'class' => 'backend\module\admin\admin',
-        ],
         'user' => [
             'class' => 'backend\module\user\user',
+        ],
+        'agent' => [
+            'class' => 'backend\module\agent\agent',
+        ],
+        'customer' => [
+            'class' => 'backend\module\customer\customer',
+        ],
+        'director' => [
+            'class' => 'backend\module\director\director',
         ],
         'report' => [
             'class' => 'backend\module\report\report',

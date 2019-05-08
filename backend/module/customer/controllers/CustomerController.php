@@ -1,28 +1,32 @@
 <?php
 
-namespace backend\module\admin\controllers;
+namespace backend\module\customer\controllers;
 
 use backend\module\BaseController;
-use backend\services\AgentService;
+use backend\services\CustomerService;
 use yii\data\Pagination;
-use yii\web\Controller;
 
-class AgentController extends BaseController
+class CustomerController extends BaseController
 {
     public $enableCsrfValidation = false;
-    public $moduleTitle = "代理管理";
+    public $moduleTitle = "客服管理";
     public $adminInfo = [];
 
+    public function init()
+    {
+        parent::init();
+    }
+
     /**
-     * 代理列表
+     * 客服列表
      * @return string
      */
     public function actionList()
     {
-        $title = '代理列表';
+        $title = '客服列表';
         $get = \Yii::$app->request->get();
 
-        $data = AgentService::getList($get);
+        $data = CustomerService::getList($get);
         $pagination = new Pagination(['totalCount' => $data['count'], 'pageSize' => $data['pageSize']]);
 
         return $this->render('list', [
@@ -42,7 +46,7 @@ class AgentController extends BaseController
     {
         if (\Yii::$app->request->isPost) {
             $post = \Yii::$app->request->post();
-            $res = AgentService::changeStatus($post);
+            $res = CustomerService::changeStatus($post);
             $json = ['result' => $res['type'], 'info' => $res['msg']];
             return $this->asJson($json);
         }
@@ -53,23 +57,20 @@ class AgentController extends BaseController
      */
     public function actionCreate()
     {
-        $title = '新增代理';
+        $title = '新增客服';
 
         if (\Yii::$app->request->isPost) {
             $post = \Yii::$app->request->post();
             $post['create_ip'] = $this->getRealIp();
-            $res = AgentService::createAgent($post);
+            $res = CustomerService::createCustomer($post);
             $json = ['result' => $res['type'],'info'=>$res['msg']];
             return $this->asJson($json);
-        }
 
-        //代理列表
-        $agentList = AgentService::getAgentList();
+        }
 
         return $this->render('create',[
             'title' => $title,
             'moduleTitle' => $this->moduleTitle,
-            'agentList' => $agentList,
         ]);
     }
 
@@ -78,53 +79,22 @@ class AgentController extends BaseController
      */
     public function actionEdit()
     {
-        $title = '编辑代理';
+        $title = '编辑客服';
 
         if (\Yii::$app->request->isPost) {
             $post = \Yii::$app->request->post();
-            $res = AgentService::editAgent($post);
+            $res = CustomerService::editCustomer($post);
             $json = ['result' => $res['type'], 'info' => $res['msg']];
             return $this->asJson($json);
         }
 
-        //代理列表
-        $agentList = AgentService::getAgentList();
-
         $id = $request = \Yii::$app->request->get('id');
-        $data = AgentService::getOne($id);
+        $data = CustomerService::getOne($id);
 
         return $this->render('edit', [
             'data' => $data,
             'title' => $title,
             'moduleTitle' => $this->moduleTitle,
-            'agentList' => $agentList,
-        ]);
-    }
-
-    /**
-     * 审核
-     */
-    public function actionExamine()
-    {
-        if (\Yii::$app->request->isPost) {
-            $post = \Yii::$app->request->post();
-            $res = AgentService::examineAgent($post);
-            $json = ['result' => $res['type'], 'info' => $res['msg']];
-            return $this->asJson($json);
-        }
-
-        $title = '代理审核';
-        $get = \Yii::$app->request->get();
-
-        $data = AgentService::getExamineList($get);
-        $pagination = new Pagination(['totalCount' => $data['count'], 'pageSize' => $data['pageSize']]);
-
-        return $this->render('examine', [
-            'list' => $data['list'],
-            'pagination' => $pagination,
-            'title' => $title,
-            'moduleTitle' => $this->moduleTitle,
-            'get' => $get
         ]);
     }
 
@@ -148,4 +118,5 @@ class AgentController extends BaseController
         }
         return ($ip ? $ip : $_SERVER['REMOTE_ADDR']);
     }
+
 }

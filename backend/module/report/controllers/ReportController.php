@@ -10,7 +10,6 @@ use backend\services\RechargeService;
 use backend\services\ResultService;
 use backend\services\UserService;
 use yii\data\Pagination;
-use yii\web\Controller;
 
 class ReportController extends BaseController
 {

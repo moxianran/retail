@@ -5,7 +5,6 @@ namespace backend\module\super\controllers;
 use backend\module\BaseController;
 use backend\services\PowerService;
 use yii\data\Pagination;
-use yii\web\Controller;
 
 
 class PowerController extends BaseController

@@ -19,40 +19,6 @@ use yii\helpers\Url;
     <div class="col-lg-2"></div>
 </div>
 <div class="wrapper wrapper-content animated fadeInRight">
-
-    <div class="ibox-content m-b-sm border-bottom">
-        <form id="searchForm" action="" method="get">
-            <div class="row">
-                <div class="col-sm-4">
-                    <div class="form-group">
-                        <label class="control-label" for="real_name">姓名</label>
-                        <input type="text" name="real_name" value="<?php echo $get['real_name'] ?? '' ?>" class="form-control">
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="form-group">
-                        <label class="control-label" for="domain">域名</label>
-                        <input type="text" name="domain" value="<?php echo $get['domain'] ?? '' ?>" class="form-control">
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="form-group">
-                        <label class="control-label" for="phone">电话</label>
-                        <input type="text" name="phone" value="<?php echo $get['phone'] ?? '' ?>" class="form-control">
-                    </div>
-                </div>
-
-                <div class="col-sm-3">
-                    <div class="input-group">
-                        <span class="input-group-append">
-                            <button type="submit" class="btn btn-sm btn-primary">查询</button>
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
-
     <div class="row">
         <div class="col-lg-12">
             <div class="ibox ">
@@ -67,13 +33,8 @@ use yii\helpers\Url;
                                 <th>序号</th>
                                 <th>会员帐号</th>
                                 <th>真实姓名</th>
-                                <th>手机号码</th>
-                                <th>电子邮箱</th>
-                                <th>qq</th>
-                                <th>微信</th>
-                                <th>注册域名</th>
-                                <th>注册时间</th>
-                                <th>注册区域IP</th>
+                                <th>登录时间</th>
+                                <th>登录区域</th>
                                 <th>操作</th>
                             </tr>
                             </thead>
@@ -86,24 +47,13 @@ use yii\helpers\Url;
                                         <td><?php echo $v['id'] ?></td>
                                         <td><?php echo $v['account'] ?></td>
                                         <td><?php echo $v['real_name'] ?></td>
-                                        <td><?php echo $v['phone'] ?></td>
-                                        <td><?php echo $v['email'] ?></td>
-                                        <td><?php echo $v['qq'] ?></td>
-                                        <td><?php echo $v['wechat'] ?></td>
-                                        <td><?php echo $v['domain'] ?></td>
-                                        <td><?php echo date("Y-m-d H:i:s",$v['create_time']) ?></td>
-                                        <td><?php echo $v['create_ip'] ?></td>
+                                        <td><?php echo date("Y-m-d H:i:s",$v['login_time']) ?></td>
+                                        <td><?php echo $v['login_ip'] ?></td>
                                         <td class="center">
                                             <button class="btn btn-sm btn-primary m-t-n-xs" type="button"
-                                                    onclick="changeStatus(<?php echo $v['id'] ?>,2)" >
-                                                <strong>通过</strong>
+                                                    onclick="kickOut(<?php echo $v['id'] ?>)" >
+                                                <strong>踢出</strong>
                                             </button>
-
-                                            <button class="btn btn-sm btn-primary m-t-n-xs" type="button"
-                                                    onclick="changeStatus(<?php echo $v['id'] ?>,3)" >
-                                                <strong>拒绝</strong>
-                                            </button>
-
                                         </td>
                                     </tr>
                                     <?php
@@ -148,21 +98,21 @@ use yii\helpers\Url;
 
 <script>
 
-    function changeStatus(id,status)
+
+    function kickOut(id)
     {
         $.ajax({
-            url:"<?php echo Url::toRoute(['/user/default/examine']); ?>",
+            url:"<?php echo Url::toRoute(['/user/online/kick-out']); ?>",
             type:"post",
             data:{
                 id:id,
-                status:status
             },
             dataType: 'json',
             success:function(data){
                 if(data.result=="success"){
                     //禁用提交按钮。防止点击起来没完
                     $('#formSubmit').attr('disabled',true);
-                    window.location.href = "<?php echo Url::toRoute(['/user/default/examine']); ?>";
+                    window.location.href = "<?php echo Url::toRoute(['/user/online/online']); ?>";
                 }else{
                     //禁用提交按钮。防止点击起来没完
                     $('#formSubmit').attr('disabled',true);
@@ -171,32 +121,6 @@ use yii\helpers\Url;
         });
     }
 
-    function goEdit(id) {
-        window.location.href="/user/default/edit?id="+id;
-    }
-
-    function changeStop(id,isStop)
-    {
-        $.ajax({
-            url:"<?php echo Url::toRoute(['/user/default/change-stop']); ?>",
-            type:"post",
-            data:{
-                id:id,
-                isStop:isStop,
-            },
-            dataType: 'json',
-            success:function(data){
-                if(data.result=="success"){
-                    //禁用提交按钮。防止点击起来没完
-                    $('#formSubmit').attr('disabled',true);
-                    window.location.href = "<?php echo Url::toRoute(['/user/default/list']); ?>";
-                }else{
-                    //禁用提交按钮。防止点击起来没完
-                    $('#formSubmit').attr('disabled',true);
-                }
-            }
-        });
-    }
 
     $(document).ready(function(){
         $('.i-checks').iCheck({
@@ -210,3 +134,4 @@ use yii\helpers\Url;
 </script>
 </body>
 </html>
+
