@@ -32,6 +32,8 @@ class ResultController extends BaseController
      */
     public function actionResultRecord()
     {
+        $title = "输赢记录";
+
         $get = \Yii::$app->request->get();
         $data = ResultService::getlist($get);
 
@@ -47,6 +49,8 @@ class ResultController extends BaseController
             'end' => $data['end'],
             'get' => $get,
             'user' => $user,
+            'title' => $title,
+            'moduleTitle' => $this->moduleTitle,
         ]);
     }
 }

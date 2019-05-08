@@ -26,12 +26,13 @@ class RechargeController extends BaseController
         }
     }
 
-
     /**
      * 充值记录
      */
     public function actionRechargeRecord()
     {
+        $title = "充值记录";
+
         $get = \Yii::$app->request->get();
         $data = RechargeService::getlist($get);
 
@@ -47,6 +48,8 @@ class RechargeController extends BaseController
             'end' => $data['end'],
             'get' => $get,
             'user' => $user,
+            'title' => $title,
+            'moduleTitle' => $this->moduleTitle,
         ]);
     }
 

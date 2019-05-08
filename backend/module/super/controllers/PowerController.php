@@ -35,10 +35,6 @@ class PowerController extends BaseController
         $data = PowerService::getPositionList($get);
         $pagination = new Pagination(['totalCount' => $data['count'], 'pageSize' => $data['pageSize']]);
 
-
-
-
-
         return $this->render('powerList', [
             'list' => $data['list'],
             'pagination' => $pagination,
