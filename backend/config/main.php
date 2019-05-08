@@ -73,4 +73,5 @@ return [
 
     ],
     'params' => $params,
+    'defaultRoute' => '/login/login/login'
 ];

@@ -6,7 +6,6 @@ use backend\module\BaseController;
 use backend\services\PowerService;
 use yii\data\Pagination;
 
-
 class PowerController extends BaseController
 {
     public $enableCsrfValidation = false;
@@ -44,7 +43,7 @@ class PowerController extends BaseController
     }
 
     /**
-     * 权限
+     * 职位权限
      */
     public function actionPositionPower()
     {
@@ -61,23 +60,6 @@ class PowerController extends BaseController
         //获取权限列表
         $list = PowerService::getPowerList();
 
-//        foreach ($list as $k => $v) {
-//            if ($v['pid'] == 0) {
-//              //  echo "<br />".$v['name'] . "<br />";
-//                for ($i = 0; $i < count($list); $i++) {
-//                    if($v['id'] == $list[$i]['pid']) {
-//                        //echo  "<br />".$list[$i]['name']. "-<br />";
-//                        for ($ii = 0; $ii < count($list); $ii++) {
-//                            if($list[$i]['id'] == $list[$ii]['pid']) {
-//                            //    echo $list[$i]['id']."=".$list[$ii]['name']."<br />";
-//                            }
-//
-//                        }
-//                    }
-//                }
-//            }
-//        }
-
         return $this->render('positionPower', [
             'list' => $list,
             'data' => $data,
@@ -87,6 +69,10 @@ class PowerController extends BaseController
         ]);
     }
 
+    /**
+     * 保存权限
+     * @return \yii\web\Response
+     */
     public function actionSavePower()
     {
         if (\Yii::$app->request->isPost) {
@@ -96,6 +82,5 @@ class PowerController extends BaseController
             return $this->asJson($json);
         }
     }
-
 
 }
