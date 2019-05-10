@@ -4,6 +4,8 @@ namespace backend\module\super\controllers;
 
 use app\models\RAdmin;
 use app\models\RBet;
+use app\models\RRechargeRecord;
+use app\models\RResult;
 use app\models\RUser;
 use backend\module\BaseController;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -133,6 +135,14 @@ class ExportController extends BaseController
      */
     public function actionExportRecharge()
     {
+        $field = 'id,game_type,settlement_type,user_id,agent_id,operator_id,create_time';
+        $data = RRechargeRecord::find()->select($field)->asArray()->all();
+        $title = [
+            [
+                '序号','游戏类型','结算类型','用户名称','代理名称','操作员','充值时间'
+            ],
+        ];
+        $this->export('充值记录', $data, $title);
     }
 
     /**
@@ -140,6 +150,18 @@ class ExportController extends BaseController
      */
     public function actionExportResult()
     {
+        $field = 'id,type,user_id,money,bet_times,success_times,bet_money,success_money,all_clear_code_num,success_clear_code_num,';
+        $field .= 'clear_code_type,clear_code_money,clear_code_lv,person_money,company_money';
+        $data = RResult::find()->select($field)->asArray()->all();
+        $title = [
+            [
+                '序号','类型','账号','姓名','当前余额','投注次数','有效次数',
+                '投注金额','有效金额','总洗码量','有效码量','洗码类型','洗码比率','洗码佣金',
+                '个人上水金额','公司上水金额',
+
+            ],
+        ];
+        $this->export('输赢记录', $data, $title);
     }
 
 }
