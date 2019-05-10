@@ -2,6 +2,7 @@
 
 namespace backend\module\report\controllers;
 
+use app\models\RUser;
 use backend\module\BaseController;
 use backend\services\BetService;
 use yii\data\Pagination;
@@ -35,6 +36,9 @@ class BetController extends BaseController
         $data = BetService::getlist($get);
         $pagination = new Pagination(['totalCount' => $data['count'], 'pageSize' => $data['pageSize']]);
 
+        //用户下拉列表
+        $user = RUser::find()->where([])->asArray()->all();
+
         return $this->render('betRecord', [
             'list' => $data['list'],
             'pagination' => $pagination,
@@ -43,6 +47,7 @@ class BetController extends BaseController
             'get' => $get,
             'title' => $title,
             'moduleTitle' => $this->moduleTitle,
+            'user' => $user,
         ]);
     }
 
