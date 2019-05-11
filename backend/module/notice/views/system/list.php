@@ -28,7 +28,13 @@ use yii\helpers\Url;
                 <div class="ibox-title">
                     <h5><?php echo $title; ?></h5>
                     <div class="ibox-tools">
-                        <a class="btn-sm" href="<?php echo Url::toRoute(['/notice/system/create']); ?>">新增消息</a>
+                        <?php
+                        if($this->params['position_id'] == 1 || in_array(6,$this->params['power_id'])) {
+                            ?>
+                            <a class="btn-sm" href="<?php echo Url::toRoute(['/notice/system/create']); ?>">新增消息</a>
+                            <?php
+                        }
+                        ?>
                     </div>
                 </div>
                 <div class="ibox-content">
@@ -58,11 +64,20 @@ use yii\helpers\Url;
 
                                         <td class="center">
 
+                                    <?php
+                                    if($this->params['position_id'] == 1 || in_array(7,$this->params['power_id'])) {
+                                        ?>
                                             <button class="btn btn-sm btn-primary m-t-n-xs" type="button"
                                                     onclick="goEdit(<?php echo $v['id'] ?>)">
-                                                <strong href="<?php echo Url::toRoute(['/notice/system/edit', 'id' => $v['id']]); ?>">编辑</strong>
+                                                <strong>编辑</strong>
                                             </button>
+                                        <?php
+                                    }
+                                    ?>
 
+                                            <?php
+                                            if($this->params['position_id'] == 1 || in_array(8,$this->params['power_id'])) {
+                                            ?>
                                             <?php
                                             if ($v['status'] == 1) {
                                                 ?>
@@ -81,7 +96,9 @@ use yii\helpers\Url;
                                                     onclick="changeStatus(<?php echo $v['id'] ?>,3);">
                                                 <strong>删除</strong>
                                             </button>
-
+                                                <?php
+                                            }
+                                            ?>
                                         </td>
                                     </tr>
                                     <?php

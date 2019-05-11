@@ -33,7 +33,6 @@ class ExamineController extends BaseController
             return $this->asJson($json);
         }
 
-
         $get = \Yii::$app->request->get();
 
         $data = UserService::getExamineList($get);

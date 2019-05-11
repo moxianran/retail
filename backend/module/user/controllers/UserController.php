@@ -111,6 +111,21 @@ class UserController extends BaseController
         CommonService::exportUser(['status' => 2]);
     }
 
+    /**
+     * 删除
+     */
+    public function actionDel()
+    {
+        if (\Yii::$app->request->isPost) {
+        $post = \Yii::$app->request->post();
+        $res = UserService::del($post);
+        $json = ['result' => $res['type'],'info'=>$res['msg']];
+        return $this->asJson($json);
+    }
+
+
+    }
+
     
     /**
      * 获取ip

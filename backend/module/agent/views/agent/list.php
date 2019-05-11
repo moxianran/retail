@@ -60,7 +60,14 @@ use yii\helpers\Url;
                 <div class="ibox-title">
                     <h5><?php echo $title; ?></h5>
                     <div class="ibox-tools">
+                        <?php
+                        if($this->params['position_id'] == 1 || in_array(25,$this->params['power_id'])
+                        ) {
+                        ?>
                         <a class="btn-sm" href="<?php echo Url::toRoute(['/agent/agent/create']); ?>">新增</a>
+                            <?php
+                        }
+                        ?>
                     </div>
                 </div>
                 <div class="ibox-content">
@@ -103,6 +110,11 @@ use yii\helpers\Url;
                                         <td><?php if($v['status'] == 1) { echo "正常";} else { echo "已禁用";}  ?></td>
 
                                         <td class="center">
+
+                                    <?php
+                                    if($this->params['position_id'] == 1 || in_array(28,$this->params['power_id'])
+                                    ) {
+                                        ?>
                                             <?php
                                             if($v['status'] == 1) {
                                                 ?>
@@ -120,10 +132,39 @@ use yii\helpers\Url;
                                                 <?php
                                             }
                                             ?>
+
+                                        <?php
+                                    }
+                                    ?>
+
+                                    <?php
+                                    if($this->params['position_id'] == 1 || in_array(26,$this->params['power_id'])
+                                    ) {
+                                        ?>
+
+
                                             <button class="btn btn-sm btn-primary m-t-n-xs" type="button"
                                                     onclick="goEdit(<?php echo $v['id'] ?>)" >
                                                 <strong>编辑</strong>
                                             </button>
+                                        <?php
+                                    }
+                                    ?>
+
+                                            <?php
+                                            if($this->params['position_id'] == 1 || in_array(129,$this->params['power_id'])
+                                            ) {
+                                                ?>
+
+                                                <button class="btn btn-sm btn-primary m-t-n-xs" type="button"
+                                                        onclick="goDel(<?php echo $v['id'] ?>)" >
+                                                    <strong>删除</strong>
+                                                </button>
+                                                <?php
+                                            }
+                                            ?>
+
+
                                         </td>
                                     </tr>
                                     <?php
@@ -167,6 +208,28 @@ use yii\helpers\Url;
 
 
 <script>
+
+    function goDel(id)
+    {
+        $.ajax({
+            url:"<?php echo Url::toRoute(['/agent/agent/del']); ?>",
+            type:"post",
+            data:{
+                id:id,
+            },
+            dataType: 'json',
+            success:function(data){
+                if(data.result=="success"){
+                    //禁用提交按钮。防止点击起来没完
+                    $('#formSubmit').attr('disabled',true);
+                    window.location.href = "<?php echo Url::toRoute(['/agent/agent/list']); ?>";
+                }else{
+                    //禁用提交按钮。防止点击起来没完
+                    $('#formSubmit').attr('disabled',true);
+                }
+            }
+        });
+    }
 
     $(function(){
         $("#export").click(function(){

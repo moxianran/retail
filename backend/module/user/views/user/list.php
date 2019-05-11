@@ -58,7 +58,14 @@ use yii\helpers\Url;
                 <div class="ibox-title">
                     <h5><?php echo $title; ?></h5>
                     <div class="ibox-tools">
+                        <?php
+                        if($this->params['position_id'] == 1 || in_array(18,$this->params['power_id'])
+                        ) {
+                        ?>
                         <a class="btn-sm" href="<?php echo Url::toRoute(['/user/user/create']); ?>">新增</a>
+                            <?php
+                        }
+                        ?>
                     </div>
                 </div>
                 <div class="ibox-content">
@@ -101,6 +108,14 @@ use yii\helpers\Url;
                                         <td><?php if($v['is_stop'] == 1) { echo "已禁用";} else { echo "正常";}  ?></td>
 
                                         <td class="center">
+
+
+                                    <?php
+                                    if($this->params['position_id'] == 1 || in_array(21,$this->params['power_id'])
+                                    ) {
+                                        ?>
+
+
                                             <?php
                                             if($v['is_stop'] == 2) {
                                                 ?>
@@ -118,10 +133,38 @@ use yii\helpers\Url;
                                                 <?php
                                             }
                                             ?>
+
+
+                                        <?php
+                                    }
+                                    ?>
+
+                                            <?php
+                                            if($this->params['position_id'] == 1 || in_array(19,$this->params['power_id'])
+                                            ) {
+                                            ?>
+
                                             <button class="btn btn-sm btn-primary m-t-n-xs" type="button"
                                                     onclick="goEdit(<?php echo $v['id'] ?>)" >
                                                 <strong>编辑</strong>
                                             </button>
+                                            <?php
+                                            }
+                                             ?>
+
+                                            <?php
+                                            if($this->params['position_id'] == 1 || in_array(128,$this->params['power_id'])
+                                            ) {
+                                                ?>
+
+                                                <button class="btn btn-sm btn-primary m-t-n-xs" type="button"
+                                                        onclick="goDel(<?php echo $v['id'] ?>)" >
+                                                    <strong>删除</strong>
+                                                </button>
+                                                <?php
+                                            }
+                                            ?>
+
                                         </td>
                                     </tr>
                                     <?php
@@ -200,6 +243,29 @@ use yii\helpers\Url;
             }
         });
     }
+
+    function goDel(id)
+    {
+        $.ajax({
+            url:"<?php echo Url::toRoute(['/user/user/del']); ?>",
+            type:"post",
+            data:{
+                id:id,
+            },
+            dataType: 'json',
+            success:function(data){
+                if(data.result=="success"){
+                    //禁用提交按钮。防止点击起来没完
+                    $('#formSubmit').attr('disabled',true);
+                    window.location.href = "<?php echo Url::toRoute(['/user/user/list']); ?>";
+                }else{
+                    //禁用提交按钮。防止点击起来没完
+                    $('#formSubmit').attr('disabled',true);
+                }
+            }
+        });
+    }
+
 
     $(document).ready(function(){
         $('.i-checks').iCheck({

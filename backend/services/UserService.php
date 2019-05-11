@@ -39,7 +39,7 @@ class UserService {
 
         $offset = ($page - 1) * $pageSize;
 
-        $query = RUser::find()->where(['status'=>2]);
+        $query = RUser::find()->where(['status' => 2, 'is_delete' => 2]);
         if($cond) {
             foreach($cond as $k => $v) {
                 $query->andWhere($v);
@@ -287,6 +287,25 @@ class UserService {
             return ['type'=>'success','msg' => '操作成功'];
         } else {
             return ['type'=>'fail','msg' => '操作失败'];
+        }
+    }
+
+    public static function del($params)
+    {
+        $session = \Yii::$app->session;
+        $adminInfo = $session->get('adminInfo');
+        $id = $params['id'];
+
+        $update_data = [
+            'is_delete' => 1,
+            'update_time' => time(),
+            'update_person' => $adminInfo['id'],
+        ];
+        $res = RUser::updateAll($update_data, 'id = ' . $id);
+        if ($res) {
+            return ['type' => 'success', 'msg' => '操作成功'];
+        } else {
+            return ['type' => 'fail', 'msg' => '操作失败'];
         }
     }
 

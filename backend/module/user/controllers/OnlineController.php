@@ -19,8 +19,6 @@ class OnlineController extends BaseController
         parent::init();
     }
 
-
-
     /**
      * 会员在线列表???
      * @return string

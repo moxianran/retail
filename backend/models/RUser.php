@@ -31,6 +31,7 @@ use Yii;
  * @property string $domain 域名
  * @property int $status 状态 1 待审核 2通过 3拒绝
  * @property int $is_stop 是否停用 1是 2否
+ * @property int $is_delete 是否删除 1是2否
  */
 class RUser extends \yii\db\ActiveRecord
 {
@@ -49,7 +50,7 @@ class RUser extends \yii\db\ActiveRecord
     {
         return [
             [['account'], 'required'],
-            [['money', 'agent_id', 'create_time', 'update_time', 'create_person', 'update_person', 'login_time', 'status', 'is_stop'], 'integer'],
+            [['money', 'agent_id', 'create_time', 'update_time', 'create_person', 'update_person', 'login_time', 'status', 'is_stop', 'is_delete'], 'integer'],
             [['account', 'pwd', 'game_account', 'game_pwd', 'money_pwd', 'real_name', 'phone', 'email', 'qq', 'wechat', 'bank_id', 'create_ip', 'login_ip', 'domain'], 'string', 'max' => 255],
         ];
     }
@@ -84,6 +85,7 @@ class RUser extends \yii\db\ActiveRecord
             'domain' => 'Domain',
             'status' => 'Status',
             'is_stop' => 'Is Stop',
+            'is_delete' => 'Is Delete',
         ];
     }
 }

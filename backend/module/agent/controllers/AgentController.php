@@ -55,6 +55,20 @@ class AgentController extends BaseController
     }
 
     /**
+     * 删除
+     */
+    public function actionDel()
+    {
+        if (\Yii::$app->request->isPost) {
+            $post = \Yii::$app->request->post();
+            $res = AgentService::del($post);
+            $json = ['result' => $res['type'], 'info' => $res['msg']];
+            return $this->asJson($json);
+        }
+    }
+
+
+    /**
      * 新增
      */
     public function actionCreate()
