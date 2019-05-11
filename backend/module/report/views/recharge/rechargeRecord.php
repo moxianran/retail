@@ -21,24 +21,67 @@
         <div class="ibox-content m-b-sm border-bottom">
             <form id="searchForm" action="" method="get">
                 <div class="row">
+
                     <div class="col-sm-3">
                         <div class="form-group">
-                            <label class="control-label" for="product_name">台号</label>
-                            <input type="text" name="platform_id" value="<?php echo $get['platform_id'] ?? '' ?>" class="form-control">
+                            <label class="control-label" for="game_type">游戏类型</label>
+                            <select name="game_type" id="game_type" class="form-control">
+                                <option value="0" <?php if(!isset($get['game_type']) || $get['game_type'] == '0' ) { echo ' selected="selected"';}?>>全部</option>
+
+                                <?php
+                                if(isset($game_type) && !empty($game_type)) {
+                                    foreach($game_type as $k => $v) {
+                                        ?>
+                                        <option value="<?php echo $k ?>"  <?php
+                                        if(isset($get['game_type']) && $get['game_type'] == $k ) { echo ' selected="selected"';}?>
+                                        ><?php echo $v; ?></option>
+                                        <?php
+                                    }}
+                                ?>
+                            </select>
                         </div>
                     </div>
+
                     <div class="col-sm-3">
                         <div class="form-group">
-                            <label class="control-label" for="price">靴号</label>
-                            <input type="text" name="series_id" value="<?php echo $get['series_id'] ?? '' ?>" class="form-control">
+                            <label class="control-label" for="settlement_type">结算类型</label>
+                            <select name="settlement_type" id="settlement_type" class="form-control">
+                                <option value="0" <?php if(!isset($get['settlement_type']) || $get['settlement_type'] == '0' ) { echo ' selected="selected"';}?>>全部</option>
+
+                                <?php
+                                if(isset($settlement_type) && !empty($settlement_type)) {
+                                    foreach($settlement_type as $k => $v) {
+                                        ?>
+                                        <option value="<?php echo $k; ?>"  <?php
+                                        if(isset($get['settlement_type']) && $get['settlement_type'] == $k ) { echo ' selected="selected"';}?>
+                                        ><?php echo $v ?></option>
+                                        <?php
+                                    }}
+                                ?>
+                            </select>
                         </div>
                     </div>
+
                     <div class="col-sm-3">
                         <div class="form-group">
-                            <label class="control-label" for="quantity">局号</label>
-                            <input type="text" name="game_id" value="<?php echo $get['game_id'] ?? '' ?>" class="form-control">
+                            <label class="control-label" for="user_id">代理</label>
+                            <select name="agent_id" id="agent_id" class="form-control">
+                                <option value="0" <?php if(!isset($get['agent_id']) || $get['agent_id'] == '0' ) { echo ' selected="selected"';}?>>全部</option>
+
+                                <?php
+                                if(isset($agent) && !empty($agent)) {
+                                    foreach($agent as $k => $v) {
+                                        ?>
+                                        <option value="<?php echo $v['id'] ?>"  <?php
+                                        if(isset($get['agent_id']) && $get['agent_id'] == $v['id'] ) { echo ' selected="selected"';}?>
+                                        ><?php echo $v['real_name'] ?></option>
+                                        <?php
+                                    }}
+                                ?>
+                            </select>
                         </div>
                     </div>
+
                     <div class="col-sm-3">
                         <div class="form-group">
                             <label class="control-label" for="user_id">会员</label>

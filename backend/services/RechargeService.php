@@ -9,6 +9,15 @@ class RechargeService
 
     public static function getList($params)
     {
+        $gameTypeArr = [
+            '1' => '牌',
+            '2' => '彩票'
+        ];
+        $settlementTypeArr = [
+            '1' => '微信',
+            '2' => '支付宝'
+        ];
+
 
         $pageSize= 10;
 
@@ -27,6 +36,19 @@ class RechargeService
             $end = strtotime(date("Y-m-d H:i:s"));
         }
 
+        if (isset($params['game_type']) && $params['game_type'] > 0) {
+            $cond[] = ['=', 'game_type', $params['game_type']];
+        }
+        if (isset($params['settlement_type']) && $params['settlement_type'] > 0) {
+            $cond[] = ['=', 'settlement_type', $params['settlement_type']];
+        }
+        if (isset($params['agent_id']) && $params['agent_id'] > 0) {
+            $cond[] = ['=', 'agent_id', $params['agent_id']];
+        }
+        if (isset($params['user_id']) && $params['user_id'] > 0) {
+            $cond[] = ['=', 'user_id', $params['user_id']];
+        }
+        
         $cond[] = ['>', 'create_time', $start];
         $cond[] = ['<', 'create_time', $end];
 
@@ -34,16 +56,6 @@ class RechargeService
         $endDate = date("m/d/Y",$end);
 
         $offset = ($page - 1) * $pageSize;
-
-
-        $gameTypeArr = [
-            '1' => '牌',
-            '2' => '彩票'
-        ];
-        $settlementTypeArr = [
-            '1' => '微信',
-            '2' => '支付宝'
-        ];
 
         $query = RRechargeRecord::find();
         if($cond) {
@@ -78,6 +90,8 @@ class RechargeService
             'pageSize' => $pageSize,
             'start' => $startDate,
             'end' => $endDate,
+            'game_type' => $gameTypeArr,
+            'settlement_type' => $settlementTypeArr
         ];
 
 

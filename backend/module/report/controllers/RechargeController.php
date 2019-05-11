@@ -2,6 +2,7 @@
 
 namespace backend\module\report\controllers;
 
+use app\models\RAdmin;
 use app\models\RUser;
 use backend\module\BaseController;
 use backend\services\RechargeService;
@@ -10,7 +11,6 @@ use yii\data\Pagination;
 class RechargeController extends BaseController
 {
 
-    public $pageSize = 10;
     public $enableCsrfValidation = false;
     public $moduleTitle = "通知管理";
     public $adminInfo = [];
@@ -36,8 +36,13 @@ class RechargeController extends BaseController
         $get = \Yii::$app->request->get();
         $data = RechargeService::getlist($get);
 
-        //获取全部用户
-        $user = RUser::find('id,real_name')->where(['status' => 2])->asArray()->all();
+        //全部用户
+        $user = RUser::find()->where(['status' => 2])->asArray()->all();
+
+        //全部代理
+        $agent = RAdmin::find()->where(['position_id' => 3])->asArray()->all();
+
+
 
         $pagination = new Pagination(['totalCount' => $data['count'], 'pageSize' => $data['pageSize']]);
 
@@ -48,8 +53,11 @@ class RechargeController extends BaseController
             'end' => $data['end'],
             'get' => $get,
             'user' => $user,
+            'agent' => $agent,
             'title' => $title,
             'moduleTitle' => $this->moduleTitle,
+            'game_type' => $data['game_type'],
+            'settlement_type' => $data['settlement_type'],
         ]);
     }
 
