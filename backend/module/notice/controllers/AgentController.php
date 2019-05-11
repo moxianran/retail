@@ -5,7 +5,6 @@ namespace backend\module\notice\controllers;
 use backend\module\BaseController;
 use backend\services\NoticeAgentService;
 use yii\data\Pagination;
-use yii\web\Controller;
 
 class AgentController extends BaseController
 {

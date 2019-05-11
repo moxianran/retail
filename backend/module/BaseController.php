@@ -39,7 +39,6 @@ class BaseController extends Controller
 //        echo $this->module->id;
 //        echo $this->id;
 //        print_r($this->action->id) ;
-//
 //        die;
 
 

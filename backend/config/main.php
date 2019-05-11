@@ -36,6 +36,9 @@ return [
         'super' => [
             'class' => 'backend\module\super\super',
         ],
+        'center' => [
+            'class' => 'backend\module\center\center',
+        ],
 
     ],
     'components' => [
