@@ -8,18 +8,20 @@ use Yii;
  * This is the model class for table "r_result".
  *
  * @property int $id
- * @property int $type
- * @property int $user_id
- * @property int $money
- * @property int $bet_times
- * @property int $bet_money
- * @property int $success_money
- * @property int $all_clear_code_num
- * @property int $success_clear_code_num
- * @property int $clear_code_type
- * @property int $clear_code_money
- * @property int $person_money
- * @property int $company_money
+ * @property int $game_type 游戏类型
+ * @property int $user_id 用户id
+ * @property int $money 余额
+ * @property int $bet_times 投注次数
+ * @property int $bet_money 投注金额
+ * @property int $success_money 有效金额
+ * @property int $all_clear_code_num 总洗码量
+ * @property int $success_clear_code_num 有效洗码
+ * @property int $clear_code_type 洗码类型
+ * @property int $clear_code_money 洗码金额
+ * @property int $clear_code_lv 洗码率
+ * @property int $person_money 个人上水金额
+ * @property int $company_money 公司上水金额
+ * @property int $success_times 有效次数
  * @property int $create_time
  * @property int $update_time
  * @property int $create_person
@@ -41,8 +43,7 @@ class RResult extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['type', 'user_id', 'money', 'bet_times', 'bet_money', 'success_money', 'all_clear_code_num', 'success_clear_code_num', 'clear_code_type', 'clear_code_money', 'person_money', 'company_money', 'create_time', 'update_time', 'create_person', 'update_person'], 'integer'],
-            [['success_clear_code_num'], 'required'],
+            [['game_type', 'user_id', 'money', 'bet_times', 'bet_money', 'success_money', 'all_clear_code_num', 'success_clear_code_num', 'clear_code_type', 'clear_code_money', 'clear_code_lv', 'person_money', 'company_money', 'success_times', 'create_time', 'update_time', 'create_person', 'update_person'], 'integer'],
         ];
     }
 
@@ -53,7 +54,7 @@ class RResult extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'type' => 'Type',
+            'game_type' => 'Game Type',
             'user_id' => 'User ID',
             'money' => 'Money',
             'bet_times' => 'Bet Times',
@@ -63,8 +64,10 @@ class RResult extends \yii\db\ActiveRecord
             'success_clear_code_num' => 'Success Clear Code Num',
             'clear_code_type' => 'Clear Code Type',
             'clear_code_money' => 'Clear Code Money',
+            'clear_code_lv' => 'Clear Code Lv',
             'person_money' => 'Person Money',
             'company_money' => 'Company Money',
+            'success_times' => 'Success Times',
             'create_time' => 'Create Time',
             'update_time' => 'Update Time',
             'create_person' => 'Create Person',

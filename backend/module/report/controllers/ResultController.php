@@ -26,7 +26,6 @@ class ResultController extends BaseController
         }
     }
 
-
     /**
      * 输赢记录
      */
@@ -51,6 +50,8 @@ class ResultController extends BaseController
             'user' => $user,
             'title' => $title,
             'moduleTitle' => $this->moduleTitle,
+            'game_type' => $data['game_type'],
+            'settlement_type' => $data['settlement_type'],
         ]);
     }
 }

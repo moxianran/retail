@@ -48,7 +48,7 @@ class RechargeService
         if (isset($params['user_id']) && $params['user_id'] > 0) {
             $cond[] = ['=', 'user_id', $params['user_id']];
         }
-        
+
         $cond[] = ['>', 'create_time', $start];
         $cond[] = ['<', 'create_time', $end];
 
@@ -83,7 +83,6 @@ class RechargeService
             }
         }
 
-
         return [
             'list' => $list,
             'count' => $count,
@@ -94,10 +93,6 @@ class RechargeService
             'settlement_type' => $settlementTypeArr
         ];
 
-
-
-
     }
-
 
 }

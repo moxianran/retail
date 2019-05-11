@@ -17,7 +17,72 @@
     <div class="col-lg-2"></div>
 </div>
 <div class="wrapper wrapper-content animated fadeInRight">
-        <div class="row">
+
+
+    <div class="ibox-content m-b-sm border-bottom">
+        <form id="searchForm" action="" method="get">
+            <div class="row">
+
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="control-label" for="game_type">游戏类型</label>
+                        <select name="game_type" id="game_type" class="form-control">
+                            <option value="0" <?php if(!isset($get['game_type']) || $get['game_type'] == '0' ) { echo ' selected="selected"';}?>>全部</option>
+
+                            <?php
+                            if(isset($game_type) && !empty($game_type)) {
+                                foreach($game_type as $k => $v) {
+                                    ?>
+                                    <option value="<?php echo $k ?>"  <?php
+                                    if(isset($get['game_type']) && $get['game_type'] == $k ) { echo ' selected="selected"';}?>
+                                    ><?php echo $v; ?></option>
+                                    <?php
+                                }}
+                            ?>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="control-label" for="user_id">会员</label>
+                        <select name="user_id" id="user_id" class="form-control">
+                            <option value="0" <?php if(!isset($get['user_id']) || $get['user_id'] == '0' ) { echo ' selected="selected"';}?>>全部</option>
+
+                            <?php
+                            if(isset($user) && !empty($user)) {
+                                foreach($user as $k => $v) {
+                                    ?>
+                                    <option value="<?php echo $v['id'] ?>"  <?php
+                                    if(isset($get['user_id']) && $get['user_id'] == $v['id'] ) { echo ' selected="selected"';}?>
+                                    ><?php echo $v['real_name'] ?></option>
+                                    <?php
+                                }}
+                            ?>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-sm-3 m-b-xs">
+                    <div class="input-daterange input-group" id="datepicker">
+                        <input type="text" class="input-sm form-control" name="start" value="<?php echo $start; ?>">
+                        <span class="input-group-addon">至</span>
+                        <input type="text" class="input-sm form-control" name="end" value="<?php echo $end; ?>">
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="input-group">
+                                <span class="input-group-append">
+                                    <button type="submit" class="btn btn-sm btn-primary">查询</button>
+                                </span>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+    <div class="row">
             <div class="col-lg-12">
                 <div class="ibox ">
                     <div class="ibox-title">
@@ -29,7 +94,7 @@
                                 <thead>
                                 <tr>
                                     <th>序号</th>
-                                    <th>类型</th>
+                                    <th>游戏类型</th>
                                     <th>账号</th>
                                     <th>姓名</th>
                                     <th>当前余额</th>
@@ -53,7 +118,7 @@
                                         ?>
                                         <tr class="gradeX">
                                             <td><?php echo $v['id'] ?></td>
-                                            <td><?php echo $v['type'] ?></td>
+                                            <td><?php echo $v['game_type'] ?></td>
                                             <td><?php echo $v['account'] ?></td>
                                             <td><?php echo $v['real_name'] ?></td>
                                             <td><?php echo $v['money'] ?></td>
