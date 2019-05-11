@@ -45,7 +45,14 @@ use yii\helpers\Url;
                 <div class="col-sm-3">
                     <div class="input-group">
                         <button type="submit" class="btn btn-primary">查询</button>
-                        <button type="button" class="btn btn-primary" id="export">导出会员列表</button>
+                        <?php
+                        if($this->params['position_id'] == 1 || in_array(125,$this->params['power_id'])
+                        ) {
+                            ?>
+                            <button type="button" class="btn btn-primary" id="export">导出会员列表</button>
+                            <?php
+                        }
+                        ?>
                     </div>
                 </div>
             </div>

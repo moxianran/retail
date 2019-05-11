@@ -46,7 +46,13 @@ use yii\helpers\Url;
                     <div class="input-group">
                         <span class="input-group-append">
                             <button type="submit" class="btn btn-sm btn-primary">查询</button>
-                            <button type="button" class="btn btn-primary" id="export">导出主管列表</button>
+                            <?php
+                            if($this->params['position_id'] == 1 || in_array(134,$this->params['power_id'])) {
+                                ?>
+                                <button type="button" class="btn btn-primary" id="export">导出主管列表</button>
+                                <?php
+                            }
+                            ?>
                         </span>
                     </div>
                 </div>
@@ -60,7 +66,13 @@ use yii\helpers\Url;
                 <div class="ibox-title">
                     <h5><?php echo $title; ?></h5>
                     <div class="ibox-tools">
-                        <a class="btn-sm" href="<?php echo Url::toRoute(['/director/director/create']); ?>">新增</a>
+                        <?php
+                        if($this->params['position_id'] == 1 || in_array(34,$this->params['power_id'])) {
+                            ?>
+                            <a class="btn-sm" href="<?php echo Url::toRoute(['/director/director/create']); ?>">新增</a>
+                            <?php
+                        }
+                        ?>
                     </div>
                 </div>
                 <div class="ibox-content">
@@ -99,27 +111,41 @@ use yii\helpers\Url;
                                         <td><?php if($v['status'] == 1) { echo "正常";} else { echo "已禁用";}  ?></td>
 
                                         <td class="center">
+
+                                    <?php
+                                    if($this->params['position_id'] == 1 || in_array(36,$this->params['power_id'])) {
+                                        ?>
+                                        <?php
+                                        if ($v['status'] == 1) {
+                                            ?>
+                                            <button class="btn btn-sm btn-primary m-t-n-xs" type="button"
+                                                    onclick="changeStatus(<?php echo $v['id'] ?>,2)">
+                                                <strong>禁用</strong>
+                                            </button>
                                             <?php
-                                            if($v['status'] == 1) {
+                                        } else {
+                                            ?>
+                                            <button class="btn btn-sm btn-primary m-t-n-xs" type="button"
+                                                    onclick="changeStatus(<?php echo $v['id'] ?>,1)">
+                                                <strong>恢复正常</strong>
+                                            </button>
+                                            <?php
+                                        }
+                                        ?>
+                                        <?php
+                                    }
+                                        ?>
+
+                                            <?php
+                                            if($this->params['position_id'] == 1 || in_array(35,$this->params['power_id'])) {
                                                 ?>
                                                 <button class="btn btn-sm btn-primary m-t-n-xs" type="button"
-                                                        onclick="changeStatus(<?php echo $v['id'] ?>,2)">
-                                                    <strong>禁用</strong>
-                                                </button>
-                                                <?php
-                                            } else {
-                                                ?>
-                                                <button class="btn btn-sm btn-primary m-t-n-xs" type="button"
-                                                        onclick="changeStatus(<?php echo $v['id'] ?>,1)">
-                                                    <strong>恢复正常</strong>
+                                                        onclick="goEdit(<?php echo $v['id'] ?>)">
+                                                    <strong>编辑</strong>
                                                 </button>
                                                 <?php
                                             }
                                             ?>
-                                            <button class="btn btn-sm btn-primary m-t-n-xs" type="button"
-                                                    onclick="goEdit(<?php echo $v['id'] ?>)" >
-                                                <strong>编辑</strong>
-                                            </button>
                                         </td>
                                     </tr>
                                     <?php

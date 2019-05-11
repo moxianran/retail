@@ -46,7 +46,13 @@ use yii\helpers\Url;
                     <div class="input-group">
                         <span class="input-group-append">
                             <button type="submit" class="btn btn-sm btn-primary">查询</button>
-                            <button type="button" class="btn btn-primary" id="export">导出代理列表</button>
+                            <?php
+                            if($this->params['position_id'] == 1 || in_array(126,$this->params['power_id'])) {
+                                ?>
+                                <button type="button" class="btn btn-primary" id="export">导出代理列表</button>
+                                <?php
+                            }
+                            ?>
                         </span>
                     </div>
                 </div>
@@ -112,8 +118,7 @@ use yii\helpers\Url;
                                         <td class="center">
 
                                     <?php
-                                    if($this->params['position_id'] == 1 || in_array(28,$this->params['power_id'])
-                                    ) {
+                                    if($this->params['position_id'] == 1 || in_array(28,$this->params['power_id'])) {
                                         ?>
                                             <?php
                                             if($v['status'] == 1) {
