@@ -2,12 +2,12 @@
 
 namespace backend\services;
 
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use app\models\RAdmin;
-use app\models\RUser;
-use app\models\RResult;
-use app\models\RRechargeRecord;
 use app\models\RBet;
+use app\models\RRechargeRecord;
+use app\models\RResult;
+use app\models\RUser;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
 class CommonService
 {
@@ -118,8 +118,106 @@ class CommonService
     }
 
 
+    /**
+     * 投注记录
+     */
+    public static function exportBet()
+    {
+        $field = 'id,game_title,platform_id,series_id,game_id,user_id,bet_desc,bet_time,bet_money,bet_result,code_clear_num,settlement_time,';
+        $field .= 'settlement_money,account_money,area,other';
+        $data = RBet::find()->select($field)->asArray()->all();
 
+        $user = RUser::find()->asArray()->one();
+        $real_name = array_column($user, 'real_name', 'id');
 
+        if ($data) {
+            foreach ($data as $k => $v) {
+                $data[$k]['user_id'] = $real_name[$v['user_id']] ?? '暂无';
+            }
+        }
+        $title = [
+            [
+                '序号', '游戏', '台号', '靴号', '局好', '会员', '投注信息', '投注时间', '投注金额',
+                '投注结果', '洗码量', '结算时间', '结算金额', '账号余额', '区域', '其他'
+            ],
+        ];
+        CommonService::export('投注记录', $data, $title);
+    }
+
+    /**
+     * 充值记录
+     */
+    public static function exportRecharge()
+    {
+
+        $gameTypeArr = [
+            '1' => '牌',
+            '2' => '彩票'
+        ];
+        $settlementTypeArr = [
+            '1' => '微信',
+            '2' => '支付宝'
+        ];
+
+        $user = RUser::find()->where([])->asArray()->all();
+        $user = array_column($user, 'real_name', 'id');
+
+        $admin = RAdmin::find()->where([])->asArray()->all();
+        $admin = array_column($admin, 'real_name', 'id');
+
+        $field = 'id,game_type,settlement_type,user_id,agent_id,operator_id,create_time';
+        $data = RRechargeRecord::find()->select($field)->asArray()->all();
+
+        if ($data) {
+            foreach ($data as $k => $v) {
+                $data[$k]['game_type'] = $gameTypeArr[$v['game_type']] ?? '暂无';
+                $data[$k]['settlement_type'] = $settlementTypeArr[$v['settlement_type']] ?? '暂无';
+                $data[$k]['user_id'] = $user[$v['user_id']] ?? '暂无';
+                $data[$k]['agent_id'] = $admin[$v['agent_id']] ?? '暂无';
+                $data[$k]['operator_id'] = $admin[$v['operator_id']] ?? '暂无';
+                $data[$k]['create_time'] = date("Y-m-d H:i:s", $v['create_time']);
+            }
+        }
+        $title = [
+            [
+                '序号', '游戏类型', '结算类型', '用户名称', '代理名称', '操作员', '充值时间'
+            ],
+        ];
+        CommonService::export('充值记录', $data, $title);
+    }
+
+    /**
+     * 导出输赢列表
+     */
+    public static function exportResult()
+    {
+        $gameTypeArr = [
+            '1' => '牌',
+            '2' => '彩票'
+        ];
+
+        $field = 'id,game_type,user_id,money,bet_times,success_times,bet_money,success_money,all_clear_code_num,success_clear_code_num,';
+        $field .= 'clear_code_type,clear_code_money,clear_code_lv,person_money,company_money';
+        $data = RResult::find()->select($field)->asArray()->all();
+
+        $user = RUser::find()->where([])->asArray()->all();
+        $user = array_column($user, 'account', 'id');
+        if ($data) {
+            foreach ($data as $k => $v) {
+                $data[$k]['game_type'] = $gameTypeArr[$v['game_type']] ?? '暂无';
+                $data[$k]['user_id'] = $user[$v['user_id']] ?? '暂无';
+            }
+        }
+
+        $title = [
+            [
+                '序号', '类型', '账号', '当前余额', '投注次数', '有效次数',
+                '投注金额', '有效金额', '总洗码量', '有效码量', '洗码类型', '洗码比率', '洗码佣金',
+                '个人上水金额', '公司上水金额',
+            ],
+        ];
+        CommonService::export('输赢记录', $data, $title);
+    }
 
 
 
