@@ -1,6 +1,8 @@
 <?php
 namespace backend\services;
+use app\models\RAdmin;
 use app\models\RRechargeRecord;
+use app\models\RUser;
 
 class RechargeService
 {
@@ -16,15 +18,12 @@ class RechargeService
             $page = 1;
         }
 
-        //删选数组
-        $cond = [];
-
         //投注时间
         if(!empty($params['start']) && !empty($params['end'])) {
             $start = strtotime($params['start']);
             $end = strtotime($params['end']);
         } else {
-            $start = strtotime(date("Y-m-d H:i:s",strtotime("-1 month")));
+            $start = strtotime(date("Y-m-d H:i:s", strtotime("-1 years")));
             $end = strtotime(date("Y-m-d H:i:s"));
         }
 
@@ -34,24 +33,17 @@ class RechargeService
         $startDate = date("m/d/Y",$start);
         $endDate = date("m/d/Y",$end);
 
-        //台号
-//        if(!empty($params['platform_id'])) {
-//            $cond[] = ['=', 'platform_id', $params['platform_id']];
-//        }
-//        //靴号
-//        if(!empty($params['series_id'])) {
-//            $cond[] = ['=', 'series_id', $params['series_id']];
-//        }
-//        //局号
-//        if(!empty($params['game_id'])) {
-//            $cond[] = ['=', 'game_id', $params['game_id']];
-//        }
-//        //会员
-//        if(!empty($params['user_id'])) {
-//            $cond[] = ['=', 'user_id', $params['user_id']];
-//        }
-
         $offset = ($page - 1) * $pageSize;
+
+
+        $gameTypeArr = [
+            '1' => '牌',
+            '2' => '彩票'
+        ];
+        $settlementTypeArr = [
+            '1' => '微信',
+            '2' => '支付宝'
+        ];
 
         $query = RRechargeRecord::find();
         if($cond) {
@@ -62,6 +54,22 @@ class RechargeService
 
         $count = $query->count();
         $list = $query->offset($offset)->limit($pageSize)->asArray()->all();
+        if ($list) {
+
+            $user = RUser::find()->where([])->asArray()->all();
+            $user = array_column($user,'real_name','id');
+
+            $agent = RAdmin::find()->where([])->asArray()->all();
+            $agent = array_column($agent,'real_name','id');
+
+            foreach ($list as $k => $v) {
+                $list[$k]['game_type'] = $gameTypeArr[$v['game_type']] ?? '暂无';
+                $list[$k]['settlement_type'] = $settlementTypeArr[$v['settlement_type']] ?? '暂无';
+                $list[$k]['user_id'] = $user[$v['user_id']] ?? '暂无';
+                $list[$k]['agent_id'] = $agent[$v['agent_id']] ?? '暂无';
+                $list[$k]['operator_id'] = $agent[$v['operator_id']] ?? '暂无';
+            }
+        }
 
 
         return [

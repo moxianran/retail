@@ -2,9 +2,9 @@
 
 namespace backend\module\user\controllers;
 
-use app\models\RUser;
 use backend\module\BaseController;
 use backend\services\AgentService;
+use backend\services\CommonService;
 use backend\services\UserService;
 use yii\data\Pagination;
 
@@ -102,6 +102,15 @@ class UserController extends BaseController
             return $this->asJson($json);
         }
     }
+
+    /**
+     * 导出会员列表
+     */
+    public function actionExportUser()
+    {
+        CommonService::exportUser(['status' => 2]);
+    }
+
     
     /**
      * 获取ip

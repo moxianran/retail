@@ -127,7 +127,7 @@ use yii\helpers\Url;
 
     function goList(type)
     {
-        window.location.href="/report/report/user-add-record?type="+type;
+        window.location.href="/report/user/user-add-record?type="+type;
     }
 
     $(document).ready(function(){

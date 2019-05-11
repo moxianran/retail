@@ -127,7 +127,7 @@ use yii\helpers\Url;
 
     function goList(type)
     {
-        window.location.href="/report/report/agent-add-record?type="+type;
+        window.location.href="/report/agent/agent-add-record?type="+type;
     }
 
     $(document).ready(function(){

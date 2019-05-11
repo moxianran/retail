@@ -4,7 +4,9 @@ namespace backend\module\agent\controllers;
 
 use backend\module\BaseController;
 use backend\services\AgentService;
+use backend\services\CommonService;
 use yii\data\Pagination;
+
 
 class AgentController extends BaseController
 {
@@ -105,6 +107,13 @@ class AgentController extends BaseController
         ]);
     }
 
+    /**
+     * 导出代理
+     */
+    public function actionExportAgent()
+    {
+        CommonService::exportAgent(['position_id' => 3]);
+    }
 
     /**
      * 获取ip

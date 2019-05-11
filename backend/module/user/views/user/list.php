@@ -44,8 +44,8 @@ use yii\helpers\Url;
 
                 <div class="col-sm-3">
                     <div class="input-group">
-                        <button type="submit" class="btn  btn-primary">查询</button>
-<!--                        <button type="button" class="btn  btn-primary" id="export">导出</button>-->
+                        <button type="submit" class="btn btn-primary">查询</button>
+                        <button type="button" class="btn btn-primary" id="export">导出会员列表</button>
                     </div>
                 </div>
             </div>
@@ -169,7 +169,7 @@ use yii\helpers\Url;
 
     $(function(){
         $("#export").click(function(){
-            window.location.href="/super/export/export-user";
+            window.location.href="/user/user/export-user";
         })
     })
 
