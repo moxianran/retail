@@ -51,7 +51,12 @@ class AgentService {
 
         $count = $query->count();
         $list = $query->orderBy('id desc')->offset($offset)->limit($pageSize)->asArray()->all();
-
+        if ($list) {
+            foreach ($list as $k => $v) {
+                $agentName = RAdmin::find()->where(['id' => $v['up_agent_id']])->asArray()->one();
+                $list[$k]['agentName'] = $agentName['real_name'] ?? '无';
+            }
+        }
 
         return [
             'list' => $list,
@@ -106,8 +111,12 @@ class AgentService {
 
         $count = $query->count();
         $list = $query->orderBy('id desc')->offset($offset)->limit($pageSize)->asArray()->all();
-
-
+        if ($list) {
+            foreach ($list as $k => $v) {
+                $agentName = RAdmin::find()->where(['id' => $v['up_agent_id']])->asArray()->one();
+                $list[$k]['agentName'] = $agentName['real_name'] ?? '无';
+            }
+        }
         return [
             'list' => $list,
             'count' => $count,

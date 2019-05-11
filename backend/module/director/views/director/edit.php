@@ -118,7 +118,7 @@ use yii\helpers\Url;
         $("#btn_save").click(function(){
 
             $.ajax({
-                url:"<?php echo Url::toRoute(['/admin/director/edit']); ?>",
+                url:"<?php echo Url::toRoute(['/director/director/edit']); ?>",
                 type:"post",
                 data:$("#saveForm").serialize(),
                 dataType: 'json',
@@ -126,7 +126,7 @@ use yii\helpers\Url;
                     if(data.result=="success"){
                         //禁用提交按钮。防止点击起来没完
                         $('#formSubmit').attr('disabled',true);
-                        window.location.href = "<?php echo Url::toRoute(['/admin/director/list']); ?>";
+                        window.location.href = "<?php echo Url::toRoute(['/director/director/list']); ?>";
                     }else{
                         //禁用提交按钮。防止点击起来没完
                         $('#formSubmit').attr('disabled',true);

@@ -59,7 +59,7 @@ use yii\helpers\Url;
                 <div class="ibox-title">
                     <h5><?php echo $title; ?></h5>
                     <div class="ibox-tools">
-                        <a class="btn-sm" href="<?php echo Url::toRoute(['/admin/agent/create']); ?>">新增</a>
+                        <a class="btn-sm" href="<?php echo Url::toRoute(['/agent/agent/create']); ?>">新增</a>
                     </div>
                 </div>
                 <div class="ibox-content">
@@ -74,7 +74,7 @@ use yii\helpers\Url;
                                 <th>电子邮箱</th>
                                 <th>qq</th>
                                 <th>微信</th>
-                                <th>下级代理</th>
+                                <th>上级代理</th>
                                 <th>绑定域名</th>
                                 <th>注册时间</th>
                                 <th>注册区域IP</th>
@@ -95,7 +95,7 @@ use yii\helpers\Url;
                                         <td><?php echo $v['email'] ?></td>
                                         <td><?php echo $v['qq'] ?></td>
                                         <td><?php echo $v['wechat'] ?></td>
-                                        <td><?php echo $v['down_agent_id'] ?></td>
+                                        <td><?php echo $v['agentName'] ?></td>
                                         <td><?php echo $v['domain'] ?></td>
                                         <td><?php echo date("Y-m-d H:i:s",$v['create_time']) ?></td>
                                         <td><?php echo $v['create_ip'] ?></td>
@@ -168,13 +168,13 @@ use yii\helpers\Url;
 <script>
 
     function goEdit(id) {
-        window.location.href="/admin/agent/edit?id="+id;
+        window.location.href="/agent/agent/edit?id="+id;
     }
 
     function changeStatus(id,status)
     {
         $.ajax({
-            url:"<?php echo Url::toRoute(['/admin/agent/change-status']); ?>",
+            url:"<?php echo Url::toRoute(['/agent/agent/change-status']); ?>",
             type:"post",
             data:{
                 id:id,
@@ -185,7 +185,7 @@ use yii\helpers\Url;
                 if(data.result=="success"){
                     //禁用提交按钮。防止点击起来没完
                     $('#formSubmit').attr('disabled',true);
-                    window.location.href = "<?php echo Url::toRoute(['/admin/agent/list']); ?>";
+                    window.location.href = "<?php echo Url::toRoute(['/agent/agent/list']); ?>";
                 }else{
                     //禁用提交按钮。防止点击起来没完
                     $('#formSubmit').attr('disabled',true);

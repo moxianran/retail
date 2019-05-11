@@ -59,7 +59,7 @@ use yii\helpers\Url;
                 <div class="ibox-title">
                     <h5><?php echo $title; ?></h5>
                     <div class="ibox-tools">
-                        <a class="btn-sm" href="<?php echo Url::toRoute(['/admin/customer/create']); ?>">新增</a>
+                        <a class="btn-sm" href="<?php echo Url::toRoute(['/customer/customer/create']); ?>">新增</a>
                     </div>
                 </div>
                 <div class="ibox-content">
@@ -164,13 +164,13 @@ use yii\helpers\Url;
 
 <script>
     function goEdit(id) {
-        window.location.href="/admin/customer/edit?id="+id;
+        window.location.href="/customer/customer/edit?id="+id;
     }
 
     function changeStatus(id,status)
     {
         $.ajax({
-            url:"<?php echo Url::toRoute(['/admin/customer/change-status']); ?>",
+            url:"<?php echo Url::toRoute(['/customer/customer/change-status']); ?>",
             type:"post",
             data:{
                 id:id,
@@ -181,7 +181,7 @@ use yii\helpers\Url;
                 if(data.result=="success"){
                     //禁用提交按钮。防止点击起来没完
                     $('#formSubmit').attr('disabled',true);
-                    window.location.href = "<?php echo Url::toRoute(['/admin/customer/list']); ?>";
+                    window.location.href = "<?php echo Url::toRoute(['/customer/customer/list']); ?>";
                 }else{
                     //禁用提交按钮。防止点击起来没完
                     $('#formSubmit').attr('disabled',true);

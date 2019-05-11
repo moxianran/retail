@@ -91,7 +91,7 @@ use yii\helpers\Url;
                                         <td><?php echo $v['email'] ?></td>
                                         <td><?php echo $v['qq'] ?></td>
                                         <td><?php echo $v['wechat'] ?></td>
-                                        <td><?php echo $v['up_agent_id'] ?></td>
+                                        <td><?php echo $v['agentName'] ?></td>
                                         <td><?php echo $v['domain'] ?></td>
                                         <td><?php echo date("Y-m-d H:i:s",$v['create_time']) ?></td>
                                         <td><?php echo $v['create_ip'] ?></td>
@@ -153,7 +153,7 @@ use yii\helpers\Url;
     function changeStatus(id,status)
     {
         $.ajax({
-            url:"<?php echo Url::toRoute(['/admin/agent/examine']); ?>",
+            url:"<?php echo Url::toRoute(['/agent/examine/examine']); ?>",
             type:"post",
             data:{
                 id:id,
@@ -164,7 +164,7 @@ use yii\helpers\Url;
                 if(data.result=="success"){
                     //禁用提交按钮。防止点击起来没完
                     $('#formSubmit').attr('disabled',true);
-                    window.location.href = "<?php echo Url::toRoute(['/admin/agent/examine']); ?>";
+                    window.location.href = "<?php echo Url::toRoute(['/agent/examine/examine']); ?>";
                 }else{
                     //禁用提交按钮。防止点击起来没完
                     $('#formSubmit').attr('disabled',true);

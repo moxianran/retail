@@ -51,7 +51,7 @@ class UserService {
         if ($list) {
             foreach ($list as $k => $v) {
                 $agentName = RAdmin::find()->where(['id' => $v['agent_id']])->asArray()->one();
-                $list[$k]['agentName'] = $agentName['real_name'];
+                $list[$k]['agentName'] = $agentName['real_name'] ?? '暂无';
             }
         }
 
