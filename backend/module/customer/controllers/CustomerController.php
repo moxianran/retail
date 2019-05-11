@@ -84,6 +84,7 @@ class CustomerController extends BaseController
 
         if (\Yii::$app->request->isPost) {
             $post = \Yii::$app->request->post();
+
             $res = CustomerService::editCustomer($post);
             $json = ['result' => $res['type'], 'info' => $res['msg']];
             return $this->asJson($json);

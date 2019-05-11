@@ -83,6 +83,25 @@ use yii\helpers\Url;
                         </div>
                         <div class="hr-line-dashed"></div>
 
+
+                        <div class="form-group  row"><label class="col-sm-2 col-form-label">禁止登陆</label>
+                            <div class="col-sm-10">
+                                <div class="input-daterange input-group" id="datepicker">
+                                    <input type="text" class="input-sm form-control" name="stop_login_start" value="
+                                    <?php echo date("m/d/Y",$data['stop_login_start']); ?>">
+                                    <span class="input-group-addon">至</span>
+                                    <input type="text" class="input-sm form-control" name="stop_login_end" value="
+                                    <?php echo date("m/d/Y",$data['stop_login_end']); ?>">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+
+                        <div class="col-sm-3 m-b-xs">
+
+                        </div>
+
+
                         <div class="form-group row">
                             <div class="col-sm-4 col-sm-offset-2">
                                 <button class="btn btn-primary btn-sm" type="button" id="btn_save">保存</button>
@@ -109,9 +128,15 @@ use yii\helpers\Url;
 <script src="/js/plugins/pace/pace.min.js"></script>
 
 <!-- iCheck -->
-<script src="/js/plugins/iCheck/icheck.min.js"></script>
+<script src="/js/plugins/datapicker/bootstrap-datepicker.js"></script>
+
 <script>
 
+    $('.input-daterange').datepicker({
+        keyboardNavigation: false,
+        forceParse: false,
+        autoclose: false
+    });
 
     $(function(){
         $("#btn_save").click(function(){

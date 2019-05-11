@@ -58,7 +58,7 @@ use yii\helpers\Url;
                         art.dialog.tips(data.info+' | 正在跳转..', 3);
 
 
-                        window.location.href = "<?php echo Url::toRoute(['/admin/agent/list']); ?>";
+                        window.location.href = "<?php echo Url::toRoute(['/notice/website/list']); ?>";
                     }else{
 
                         art.dialog.tips(data.info);

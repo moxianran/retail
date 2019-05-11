@@ -42,6 +42,13 @@ class LoginService
             return ['type' => 'fail','msg' => '密码错误'];
         }
 
+        if($admin['position_id'] == 4) {
+            if($admin['stop_login_end'] > time()) {
+                return ['type' => 'fail','msg' => '该账号已被禁止登陆'];
+            }
+        }
+
+
         //获取职位列表
         $positionData = RPosition::find()->asArray()->all();
         $positionData = array_column($positionData,'name','id');

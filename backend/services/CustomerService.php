@@ -101,6 +101,15 @@ class CustomerService
         $session = \Yii::$app->session;
         $adminInfo = $session->get('adminInfo');
 
+        $stop_login_start = strtotime($params['stop_login_start']);
+        $stop_login_end = strtotime($params['stop_login_end']);
+        if($stop_login_start <= 0 ){
+            $stop_login_start = 0;
+        }
+        if($stop_login_end <= 0 ){
+            $stop_login_end = 0;
+        }
+
         $update_data = [
             'account' => $params['account'],
             'pwd' => base64_encode($params['pwd']),
@@ -110,7 +119,9 @@ class CustomerService
             'qq' => $params['qq'],
             'wechat' => $params['wechat'],
             'update_time' => time(),
-            'update_person' => $adminInfo['id']
+            'update_person' => $adminInfo['id'],
+            'stop_login_start' => $stop_login_start,
+            'stop_login_end' => $stop_login_end,
         ];
         $res = RAdmin::updateAll($update_data, 'id = ' . $params['id']);
         if ($res) {

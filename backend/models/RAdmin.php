@@ -30,6 +30,9 @@ use Yii;
  * @property string $domain 域名
  * @property string $create_ip 注册ip
  * @property string $bank_id 银行卡号
+ * @property int $agent_level 代理级别
+ * @property int $stop_login_start 禁止登陆时间开始
+ * @property int $stop_login_end 禁止登陆时间结束
  */
 class RAdmin extends \yii\db\ActiveRecord
 {
@@ -47,7 +50,7 @@ class RAdmin extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['login_time', 'position_id', 'status', 'examine_status', 'is_delete', 'create_time', 'update_time', 'create_person', 'update_person', 'up_agent_id', 'down_agent_id'], 'integer'],
+            [['login_time', 'position_id', 'status', 'examine_status', 'is_delete', 'create_time', 'update_time', 'create_person', 'update_person', 'up_agent_id', 'down_agent_id', 'agent_level', 'stop_login_start', 'stop_login_end'], 'integer'],
             [['account', 'pwd', 'real_name', 'phone', 'email', 'qq', 'wechat', 'login_ip', 'domain', 'create_ip', 'bank_id'], 'string', 'max' => 255],
         ];
     }
@@ -81,6 +84,9 @@ class RAdmin extends \yii\db\ActiveRecord
             'domain' => 'Domain',
             'create_ip' => 'Create Ip',
             'bank_id' => 'Bank ID',
+            'agent_level' => 'Agent Level',
+            'stop_login_start' => 'Stop Login Start',
+            'stop_login_end' => 'Stop Login End',
         ];
     }
 }
