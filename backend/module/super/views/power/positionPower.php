@@ -34,7 +34,14 @@ use yii\helpers\Url;
                     ?>
 
                     <div class="ibox-title">
-                        <h5><?php echo $v['name']; ?></h5>
+                        <h5><?php echo $v['name']; ?>
+
+                            <input type="checkbox" value="<?php echo $v['id']; ?>" class="powerInput[]"
+                                <?php
+                                if(in_array($v['id'],$data)) { echo ' checked="checked"';}
+                                ?>
+                            >
+                        </h5>
                     </div>
                     <div class="ibox-content">
 
@@ -44,7 +51,16 @@ use yii\helpers\Url;
                         if($v['id'] == $list[$i]['pid']) {
                             ?>
                             <div class="form-group row">
-                                <label class="col-sm-2 col-form-label"><?php echo $list[$i]['name']; ?></label>
+                                <label class="col-sm-2 col-form-label">
+                                    <?php echo $list[$i]['name']; ?>
+
+                                    <input type="checkbox" value="<?php echo $list[$i]['id']; ?>" class="powerInput[]"
+                                        <?php
+                                        if(in_array($list[$i]['id'],$data)) { echo ' checked="checked"';}
+                                        ?>
+                                    >
+
+                                </label>
 
                                 <div class="col-sm-10">
 
@@ -56,9 +72,7 @@ use yii\helpers\Url;
                                             <input type="checkbox" value="<?php echo $list[$ii]['id']; ?>" class="powerInput[]"
                                             <?php
                                             if(in_array($list[$ii]['id'],$data)) { echo ' checked="checked"';}
-
                                             ?>
-
                                             >
                                             <?php echo $list[$ii]['name']; ?>
                                         </label>

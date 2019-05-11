@@ -35,6 +35,16 @@ class BaseController extends Controller
         $positionPowerList = PowerService::getPowerList();
         $view->params['menu'] = $positionPowerList;
 
+        //判断是否有权限操作
+//        echo $this->module->id;
+//        echo $this->id;
+//        print_r($this->action->id) ;
+//
+//        die;
+
+
+
+
     }
 
 

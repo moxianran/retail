@@ -51,8 +51,10 @@ $adminInfo = Yii::$app->session->get('adminInfo');
 
                 <?php
                     $list = $this->params['menu'] ;
-                    foreach ($list as $k => $v) {
-                        if ($v['pid'] == 0) {
+                    $power_ids = $this->params['power_id'] ;
+
+                foreach ($list as $k => $v) {
+                        if ($v['pid'] == 0 && in_array($v['id'],$power_ids)) {
                 ?>
                         <li <?php if($this->context->module->id == $v['module']) { echo ' class="active"';} ?>>
                             <a href="">
@@ -63,7 +65,7 @@ $adminInfo = Yii::$app->session->get('adminInfo');
                             <ul class="nav nav-second-level collapse ">
                 <?php
                     for ($i = 0; $i < count($list); $i++) {
-                        if ($v['id'] == $list[$i]['pid']) {
+                        if ($v['id'] == $list[$i]['pid']  && in_array($list[$i]['id'],$power_ids)) {
                 ?>
                             <li <?php if($this->context->id == $list[$i]['controller']) { echo ' class="active"';} ?>>
                                 <a href="<?php echo Url::toRoute(["/".$list[$i]['module']."/".$list[$i]['controller']."/".$list[$i]['action']]); ?>"><?php echo $list[$i]['name'] ;?></a>
