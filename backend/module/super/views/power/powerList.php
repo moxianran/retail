@@ -47,11 +47,16 @@ use yii\helpers\Url;
 
                                         <td class="center">
 
-                                            <button class="btn btn-sm btn-primary m-t-n-xs" type="button"
-                                                    onclick="goEdit(<?php echo $v['id'] ?>)">
-                                                <strong>编辑权限</strong>
-                                            </button>
-
+                                    <?php
+                                    if($this->params['position_id'] == 1 || in_array(136,$this->params['power_id'])) {
+                                        ?>
+                                        <button class="btn btn-sm btn-primary m-t-n-xs" type="button"
+                                                onclick="goEdit(<?php echo $v['id'] ?>)">
+                                            <strong>编辑权限</strong>
+                                        </button>
+                                        <?php
+                                    }
+                                        ?>
                                         </td>
                                     </tr>
                                     <?php

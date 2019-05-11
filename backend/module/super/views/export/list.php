@@ -1,17 +1,28 @@
 
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
-        <div class="col-lg-3" onclick="excel('user')">
-            <div class="ibox">
-                <div class="ibox-content">
-                    <h5 class="m-b-md">导出会员信息</h5>
-                    <h2 class="text-navy">
-                        <i class="fa fa-play fa-rotate-270"></i> 会员信息
-                    </h2>
+
+
+        <?php
+        if($this->params['position_id'] == 1 || in_array(139,$this->params['power_id'])) {
+            ?>
+
+            <div class="col-lg-3" onclick="excel('user')">
+                <div class="ibox">
+                    <div class="ibox-content">
+                        <h5 class="m-b-md">导出会员信息</h5>
+                        <h2 class="text-navy">
+                            <i class="fa fa-play fa-rotate-270"></i> 会员信息
+                        </h2>
+                    </div>
                 </div>
             </div>
-        </div>
-
+            <?php
+        }
+        ?>
+        <?php
+        if($this->params['position_id'] == 1 || in_array(140,$this->params['power_id'])) {
+        ?>
         <div class="col-lg-3" onclick="excel('agent')">
             <div class="ibox">
                 <div class="ibox-content">
@@ -22,7 +33,12 @@
                 </div>
             </div>
         </div>
-
+            <?php
+        }
+        ?>
+        <?php
+        if($this->params['position_id'] == 1 || in_array(141,$this->params['power_id'])) {
+        ?>
         <div class="col-lg-3" onclick="excel('customer')">
             <div class="ibox">
                 <div class="ibox-content">
@@ -33,7 +49,12 @@
                 </div>
             </div>
         </div>
-
+            <?php
+        }
+        ?>
+        <?php
+        if($this->params['position_id'] == 1 || in_array(142,$this->params['power_id'])) {
+        ?>
         <div class="col-lg-3" onclick="excel('director')">
             <div class="ibox">
                 <div class="ibox-content">
@@ -44,10 +65,15 @@
                 </div>
             </div>
         </div>
-
+            <?php
+        }
+        ?>
     </div>
 
     <div class="row">
+        <?php
+        if($this->params['position_id'] == 1 || in_array(143,$this->params['power_id'])) {
+        ?>
         <div class="col-lg-3" onclick="excel('bet')">
             <div class="ibox">
                 <div class="ibox-content">
@@ -58,7 +84,12 @@
                 </div>
             </div>
         </div>
-
+            <?php
+        }
+        ?>
+        <?php
+        if($this->params['position_id'] == 1 || in_array(145,$this->params['power_id'])) {
+        ?>
         <div class="col-lg-3" onclick="excel('result')">
             <div class="ibox">
                 <div class="ibox-content">
@@ -69,7 +100,12 @@
                 </div>
             </div>
         </div>
-
+            <?php
+        }
+        ?>
+        <?php
+        if($this->params['position_id'] == 1 || in_array(144,$this->params['power_id'])) {
+        ?>
         <div class="col-lg-3" onclick="excel('recharge')">
             <div class="ibox">
                 <div class="ibox-content">
@@ -80,7 +116,9 @@
                 </div>
             </div>
         </div>
-
+            <?php
+        }
+        ?>
     </div>
 </div>
 
