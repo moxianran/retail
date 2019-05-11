@@ -3,6 +3,7 @@
 namespace backend\module\customer\controllers;
 
 use backend\module\BaseController;
+use backend\services\CommonService;
 use backend\services\CustomerService;
 use yii\data\Pagination;
 
@@ -96,6 +97,14 @@ class CustomerController extends BaseController
             'title' => $title,
             'moduleTitle' => $this->moduleTitle,
         ]);
+    }
+
+    /**
+     * 导出客服
+     */
+    public function actionExportCustomer()
+    {
+        CommonService::exportCustomer(['position_id' => 4]);
     }
 
     /**

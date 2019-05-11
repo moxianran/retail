@@ -85,12 +85,37 @@ class CommonService
         CommonService::export('代理列表',$data,$title);
     }
 
+    /**
+     * 导出客服
+     * @param $where
+     */
+    public static function exportCustomer($where)
+    {
+        $field = 'id,account,real_name,phone,email,qq,wechat';
+        $data = RAdmin::find()->select($field)->where($where)->asArray()->all();
+        $title = [
+            [
+                '序号', '客服帐号', '真实姓名', '手机号码', '电子邮箱', 'QQ', '微信'
+            ],
+        ];
+        CommonService::export('客服列表', $data, $title);
+    }
 
-
-
-
-
-
+    /**
+     * 导出主管
+     * @param $where
+     */
+    public static function exportDirector($where)
+    {
+        $field = 'id,account,real_name,phone,email,qq,wechat';
+        $data = RAdmin::find()->select($field)->where($where)->asArray()->all();
+        $title = [
+            [
+                '序号', '客服帐号', '真实姓名', '手机号码', '电子邮箱', 'QQ', '微信'
+            ],
+        ];
+        CommonService::export('主管列表', $data, $title);
+    }
 
 
 

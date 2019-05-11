@@ -6,6 +6,7 @@ namespace backend\module\director\controllers;
 use backend\module\BaseController;
 use backend\services\DirectorService;
 use yii\data\Pagination;
+use backend\services\CommonService;
 
 class DirectorController extends BaseController
 {
@@ -98,6 +99,14 @@ class DirectorController extends BaseController
             'title' => $title,
             'moduleTitle' => $this->moduleTitle,
         ]);
+    }
+
+    /**
+     * 导出主管
+     */
+    public function actionExportDirector()
+    {
+        CommonService::exportDirector(['position_id' => 5]);
     }
 
     /**

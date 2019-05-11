@@ -46,6 +46,7 @@ use yii\helpers\Url;
                     <div class="input-group">
                         <span class="input-group-append">
                             <button type="submit" class="btn btn-sm btn-primary">查询</button>
+                            <button type="button" class="btn btn-primary" id="export">导出主管列表</button>
                         </span>
                     </div>
                 </div>
@@ -162,6 +163,13 @@ use yii\helpers\Url;
 
 
 <script>
+
+    $(function(){
+        $("#export").click(function(){
+            window.location.href="/director/director/export-director";
+        })
+    })
+
 
     function goEdit(id) {
         window.location.href="/director/director/edit?id="+id;

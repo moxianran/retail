@@ -46,7 +46,7 @@ use yii\helpers\Url;
                     <div class="input-group">
                         <span class="input-group-append">
                             <button type="submit" class="btn btn-sm btn-primary">查询</button>
-                            <button type="button" class="btn  btn-primary" id="export">导出代理列表</button>
+                            <button type="button" class="btn btn-primary" id="export">导出代理列表</button>
                         </span>
                     </div>
                 </div>
