@@ -7,7 +7,7 @@ use yii\helpers\Url;
         <h2><?php echo $title; ?></h2>
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
-                <a href="index.html">首页</a>
+                <a href="#">首页</a>
             </li>
             <li class="breadcrumb-item">
                 <a><?php echo $moduleTitle; ?></a>
@@ -172,7 +172,7 @@ use yii\helpers\Url;
         $("#btn_save").click(function(){
 
             $.ajax({
-                url:"<?php echo Url::toRoute(['/user/default/edit']); ?>",
+                url:"<?php echo Url::toRoute(['/user/user/edit']); ?>",
                 type:"post",
                 data:$("#saveForm").serialize(),
                 dataType: 'json',
@@ -180,7 +180,7 @@ use yii\helpers\Url;
                     if(data.result=="success"){
                         //禁用提交按钮。防止点击起来没完
                         $('#formSubmit').attr('disabled',true);
-                        window.location.href = "<?php echo Url::toRoute(['/user/default/list']); ?>";
+                        window.location.href = "<?php echo Url::toRoute(['/user/user/list']); ?>";
                     }else{
                         //禁用提交按钮。防止点击起来没完
                         $('#formSubmit').attr('disabled',true);

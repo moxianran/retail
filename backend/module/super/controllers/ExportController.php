@@ -54,7 +54,33 @@ class ExportController extends BaseController
     public function actionExportUser()
     {
         $field = 'id,account,game_account,money,real_name,phone,email,qq,wechat,bank_id,agent_id,domain,status,is_stop';
-        $data = RUser::find()->select($field)->asArray()->all();
+        $data = RUser::find()->where(['status' => 2])->select($field)->asArray()->all();
+
+
+        $agent = RAdmin::find()->where(['position_id' => 3])->asArray()->all();
+        $agent = array_column($agent,'real_name','id');
+
+        if($data) {
+            foreach ($data as $k => $v) {
+                $data[$k]['agent_id'] = $agent[$v['agent_id']] ?? '暂无';
+
+                if($v['status'] == 1) {
+                    $data[$k]['status'] = '待审核';
+                } else if($v['status'] == 2) {
+                    $data[$k]['status'] = '通过';
+                } else if($v['status'] == 3) {
+                    $data[$k]['status'] = '拒绝';
+                }
+
+                if($v['is_stop'] == 1) {
+                    $data[$k]['is_stop'] = '是';
+                } else {
+                    $data[$k]['is_stop'] = '否';
+                }
+
+            }
+        }
+
         $title = [
             [
                 '编号', '账号', '游戏账号', '余额', '真实姓名', '手机', '邮箱', 'QQ', '微信',

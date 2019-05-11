@@ -7,7 +7,7 @@ use yii\helpers\Url;
         <h2><?php echo $title; ?></h2>
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
-                <a href="index.html">主页</a>
+                <a href="#">主页</a>
             </li>
             <li class="breadcrumb-item">
                 <a><?php echo $moduleTitle; ?></a>

@@ -1,5 +1,7 @@
 <?php
 namespace backend\services;
+
+use app\models\RAdmin;
 use app\models\RUser;
 
 class UserService {
@@ -46,7 +48,12 @@ class UserService {
 
         $count = $query->count();
         $list = $query->orderBy('id desc')->offset($offset)->limit($pageSize)->asArray()->all();
-
+        if ($list) {
+            foreach ($list as $k => $v) {
+                $agentName = RAdmin::find()->where(['id' => $v['agent_id']])->asArray()->one();
+                $list[$k]['agentName'] = $agentName['real_name'];
+            }
+        }
 
         return [
             'list' => $list,
@@ -269,7 +276,7 @@ class UserService {
 
         $id = $params['id'];
         $isStop = $params['isStop'];
-        
+
         $update_data = [
             'is_stop' => $isStop,
             'update_time' => time(),
@@ -405,10 +412,6 @@ class UserService {
             'type' => $type,
         ];
     }
-
-
-
-
 
 
 }

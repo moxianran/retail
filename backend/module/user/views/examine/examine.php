@@ -6,7 +6,7 @@ use yii\helpers\Url;
         <h2><?php echo $title; ?></h2>
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
-                <a href="index.html">首页</a>
+                <a href="#">首页</a>
             </li>
             <li class="breadcrumb-item">
                 <a><?php echo $moduleTitle; ?></a>
@@ -151,7 +151,7 @@ use yii\helpers\Url;
     function changeStatus(id,status)
     {
         $.ajax({
-            url:"<?php echo Url::toRoute(['/user/default/examine']); ?>",
+            url:"<?php echo Url::toRoute(['/user/examine/examine']); ?>",
             type:"post",
             data:{
                 id:id,

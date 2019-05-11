@@ -6,7 +6,7 @@ use yii\helpers\Url;
         <h2><?php echo $title; ?></h2>
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
-                <a href="index.html">首页</a>
+                <a href="#">首页</a>
             </li>
             <li class="breadcrumb-item">
                 <a><?php echo $moduleTitle; ?></a>
@@ -44,9 +44,8 @@ use yii\helpers\Url;
 
                 <div class="col-sm-3">
                     <div class="input-group">
-                        <span class="input-group-append">
-                            <button type="submit" class="btn btn-sm btn-primary">查询</button>
-                        </span>
+                        <button type="submit" class="btn  btn-primary">查询</button>
+<!--                        <button type="button" class="btn  btn-primary" id="export">导出</button>-->
                     </div>
                 </div>
             </div>
@@ -59,7 +58,7 @@ use yii\helpers\Url;
                 <div class="ibox-title">
                     <h5><?php echo $title; ?></h5>
                     <div class="ibox-tools">
-                        <a class="btn-sm" href="<?php echo Url::toRoute(['/user/default/create']); ?>">新增</a>
+                        <a class="btn-sm" href="<?php echo Url::toRoute(['/user/user/create']); ?>">新增</a>
                     </div>
                 </div>
                 <div class="ibox-content">
@@ -95,7 +94,7 @@ use yii\helpers\Url;
                                         <td><?php echo $v['email'] ?></td>
                                         <td><?php echo $v['qq'] ?></td>
                                         <td><?php echo $v['wechat'] ?></td>
-                                        <td><?php echo $v['agent_id'] ?></td>
+                                        <td><?php echo $v['agentName'] ?></td>
                                         <td><?php echo $v['domain'] ?></td>
                                         <td><?php echo date("Y-m-d H:i:s",$v['create_time']) ?></td>
                                         <td><?php echo $v['create_ip'] ?></td>
@@ -167,14 +166,22 @@ use yii\helpers\Url;
 
 <script>
 
+
+    $(function(){
+        $("#export").click(function(){
+            window.location.href="/super/export/export-user";
+        })
+    })
+
+
     function goEdit(id) {
-        window.location.href="/user/default/edit?id="+id;
+        window.location.href="/user/user/edit?id="+id;
     }
 
     function changeStop(id,isStop)
     {
         $.ajax({
-            url:"<?php echo Url::toRoute(['/user/default/change-stop']); ?>",
+            url:"<?php echo Url::toRoute(['/user/user/change-stop']); ?>",
             type:"post",
             data:{
                 id:id,
@@ -185,7 +192,7 @@ use yii\helpers\Url;
                 if(data.result=="success"){
                     //禁用提交按钮。防止点击起来没完
                     $('#formSubmit').attr('disabled',true);
-                    window.location.href = "<?php echo Url::toRoute(['/user/default/list']); ?>";
+                    window.location.href = "<?php echo Url::toRoute(['/user/user/list']); ?>";
                 }else{
                     //禁用提交按钮。防止点击起来没完
                     $('#formSubmit').attr('disabled',true);

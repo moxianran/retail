@@ -102,9 +102,7 @@ class UserController extends BaseController
             return $this->asJson($json);
         }
     }
-
-
-
+    
     /**
      * 获取ip
      */
