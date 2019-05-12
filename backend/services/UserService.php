@@ -39,7 +39,16 @@ class UserService {
 
         $offset = ($page - 1) * $pageSize;
 
-        $query = RUser::find()->where(['status' => 2, 'is_delete' => 2]);
+        $where = ['status' => 2, 'is_delete' => 2];
+
+        //代理只能看到自己的会员信息
+        $session = \Yii::$app->session;
+        $adminInfo = $session->get('adminInfo');
+        if($adminInfo['position_id'] == 3) {
+            $where['agent_id'] = $adminInfo['id'];
+        }
+
+        $query = RUser::find()->where($where);
         if($cond) {
             foreach($cond as $k => $v) {
                 $query->andWhere($v);

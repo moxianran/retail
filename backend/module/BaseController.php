@@ -26,6 +26,7 @@ class BaseController extends Controller
         $adminInfo = \Yii::$app->session->get('adminInfo');
         $position_id = $adminInfo['position_id'];
         $view->params['position_id'] = $position_id;
+        $view->params['agent_level'] = $adminInfo['agent_level'];
 
 
         $positionPower = RPositionPower::find()->select('power_id')->where(['position_id' => $position_id])->asArray()->all();

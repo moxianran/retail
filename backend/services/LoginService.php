@@ -68,6 +68,7 @@ class LoginService
             'real_name' => $admin['real_name'],
             'position_id' => $admin['position_id'],
             'positionName' => $positionData[$admin['position_id']] ?? '暂无',
+            'agent_level' => $admin['agent_level'],
         ];
 
         $session->set('adminInfo' ,$adminInfo);

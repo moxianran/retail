@@ -1,5 +1,7 @@
 <?php
+
 use yii\helpers\Url;
+
 ?>
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
@@ -80,15 +82,35 @@ use yii\helpers\Url;
                         <table class="table table-striped">
                             <thead>
                             <tr>
+                                <?php
+                                if ($this->params['position_id'] == 3 && $this->params['agent_level'] == 1) {
+                                    ?>
+
+
+                                    <?php
+                                } else {
+                                    ?>
+
+
+                                    <?php
+                                }
+                                ?>
+
                                 <th>序号</th>
                                 <th>会员帐号</th>
                                 <th>真实姓名</th>
                                 <th>手机号码</th>
                                 <th>电子邮箱</th>
                                 <th>qq</th>
-                                <th>微信</th>
-                                <th>上级代理</th>
-                                <th>注册域名</th>
+                                <th>微信</th
+                                <?php
+                                if ($this->params['position_id'] != 3) {
+                                    ?>
+                                    <th>上级代理</th>
+                                    <th>注册域名</th>
+                                    <?php
+                                }
+                                ?>
                                 <th>注册时间</th>
                                 <th>注册区域IP</th>
                                 <th>状态</th>
@@ -108,8 +130,14 @@ use yii\helpers\Url;
                                         <td><?php echo $v['email'] ?></td>
                                         <td><?php echo $v['qq'] ?></td>
                                         <td><?php echo $v['wechat'] ?></td>
+                                    <?php
+                                    if ($this->params['position_id'] != 3) {
+                                        ?>
                                         <td><?php echo $v['agentName'] ?></td>
                                         <td><?php echo $v['domain'] ?></td>
+                                        <?php
+                                    }
+                                        ?>
                                         <td><?php echo date("Y-m-d H:i:s",$v['create_time']) ?></td>
                                         <td><?php echo $v['create_ip'] ?></td>
                                         <td><?php if($v['is_stop'] == 1) { echo "已禁用";} else { echo "正常";}  ?></td>
