@@ -835,7 +835,7 @@
 
 
 <div id="bottom">
-    <a href="index.html">
+    <a href="/">
         <span class="icon1"></span>
         <p>首页</p>
     </a>
@@ -843,7 +843,7 @@
         <span class="icon5"></span>
         <p>登录</p>
     </a>
-    <a href="register.html">
+    <a href="<?php echo Url::toRoute(['/site/register']); ?>">
         <span class="icon2"></span>
         <p>注册</p>
     </a>
@@ -883,7 +883,7 @@
                 </div>
                 <div class="btns clearfix">
                     <a href="javascript:;" class="login-btn">登录</a>
-                    <a href="register.html" class="register-btn">注册</a>
+                    <a href="<?php echo Url::toRoute(['/site/register']); ?>" class="register-btn">注册</a>
                 </div>
             </form>
         </div>

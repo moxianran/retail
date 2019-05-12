@@ -51,7 +51,7 @@ use yii\helpers\Url;
     <!-- 头部 Start! -->
     <div id="hd">
         <div class="container">
-            <a href="index.html" class="hd-logo fl">
+            <a href="/" class="hd-logo fl">
                 <img src="/images/logo.png">
             </a>
             <div class="hd-nav fr">
@@ -111,11 +111,11 @@ use yii\helpers\Url;
                 </div>
                 <div class="nav-common">
                     <a href="<?php echo Url::toRoute(['/site/about']); ?>">关于我们</a>
-                    <a href="contact.html">联系我们</a>
-                    <a href="join.html">加入代理</a>
+                    <a href="#">联系我们</a>
+                    <a href="<?php echo Url::toRoute(['/site/join']); ?>">加入代理</a>
                     <a href="#">存款帮助</a>
                     <a href="#">取款帮助</a>
-                    <a href="help.html">常见问题</a>
+                    <a href="<?php echo Url::toRoute(['/site/help']); ?>">常见问题</a>
                 </div>
             </div>
             <a href="javascript:;" class="nav-btn"></a>

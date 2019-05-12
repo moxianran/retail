@@ -24,7 +24,7 @@
                 <li><a href="#">登录记录</a></li>
                 <li><a href="#">公告信息<span>(2)</span></a></li>
             </ul>
-            <a href="index.html" class="menu-logo"><img src="images/logo2.png"></a>
+            <a href="/" class="menu-logo"><img src="images/logo2.png"></a>
         </div>
         <div class="public-con fr">
             <div class="public-page-title"><span>账户管理</span></div>
@@ -402,7 +402,7 @@
 
 
 <div id="bottom">
-    <a href="index.html">
+    <a href="/">
         <span class="icon1"></span>
         <p>首页</p>
     </a>
@@ -410,7 +410,7 @@
         <span class="icon5"></span>
         <p>登录</p>
     </a>
-    <a href="register.html">
+    <a href="<?php echo Url::toRoute(['/site/register']); ?>">
         <span class="icon2"></span>
         <p>注册</p>
     </a>
@@ -450,7 +450,7 @@
                 </div>
                 <div class="btns clearfix">
                     <a href="javascript:;" class="login-btn">登录</a>
-                    <a href="register.html" class="register-btn">注册</a>
+                    <a href="<?php echo Url::toRoute(['/site/register']); ?>" class="register-btn">注册</a>
                 </div>
             </form>
         </div>
