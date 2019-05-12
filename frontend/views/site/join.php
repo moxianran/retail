@@ -1,3 +1,6 @@
+<?php
+use yii\helpers\Url;
+?>
 <!-- 轮播图 Start! -->
 <div id="banner" class="page-banner join-banner">
     <img src="/images/banner7.jpg">

@@ -1,3 +1,6 @@
+<?php
+use yii\helpers\Url;
+?>
 <!-- 公告 Start! -->
 <div class="notice">
     <div class="container">

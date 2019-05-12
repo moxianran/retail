@@ -1,9 +1,12 @@
+<?php
+use yii\helpers\Url;
+?>
 <!-- 公告 Start! -->
 <div class="notice">
     <div class="container">
         <div class="notice-wp">
-            <img src="images/notice.png" class="notice-tit">
-            <img src="images/notice-m.png" class="notice-tit-m">
+            <img src="/images/notice.png" class="notice-tit">
+            <img src="/images/notice-m.png" class="notice-tit-m">
             <marquee behavior="scroll" direction="left">重要通知：由于腾讯进行微信排查封号 jjxpj111（蜜儿）已被冻结,请添加新微信号 pkyw1356 （颖儿）进行咨询 ,给您带来不便敬请谅解！</marquee>
         </div>
     </div>
@@ -14,7 +17,7 @@
 <div class="page-content">
     <div class="public-page container">
         <div class="public-menu fl">
-            <div class="menu-title"><img src="images/title4.png"></div>
+            <div class="menu-title"><img src="/images/title4.png"></div>
             <ul class="clearfix">
                 <li class="on"><a href="#">账户管理</a></li>
                 <li><a href="#">在线取款</a></li>
@@ -24,7 +27,7 @@
                 <li><a href="#">登录记录</a></li>
                 <li><a href="#">公告信息<span>(2)</span></a></li>
             </ul>
-            <a href="/" class="menu-logo"><img src="images/logo2.png"></a>
+            <a href="/" class="menu-logo"><img src="/images/logo2.png"></a>
         </div>
         <div class="public-con fr">
             <div class="public-page-title"><span>账户管理</span></div>
@@ -32,32 +35,32 @@
                 <div class="info-box">
                     <ul class="row">
                         <li class="col-md-6">
-                            <img src="images/aicon1.png">
+                            <img src="/images/aicon1.png">
                             <span>真实姓名：翻篇</span>
                             <a href="javascript:;" class="edit-btn"></a>
                         </li>
                         <li class="col-md-6">
-                            <img src="images/aicon2.png">
+                            <img src="/images/aicon2.png">
                             <span>手机号码：186****8562</span>
                             <a href="javascript:;" class="edit-btn"></a>
                         </li>
                         <li class="col-md-6">
-                            <img src="images/aicon3.png">
+                            <img src="/images/aicon3.png">
                             <span>电子邮箱：85213487@163.com</span>
                             <a href="javascript:;" class="edit-btn"></a>
                         </li>
                         <li class="col-md-6">
-                            <img src="images/aicon4.png">
+                            <img src="/images/aicon4.png">
                             <span>社交账号：85213487@163.com</span>
                             <a href="javascript:;" class="edit-btn"></a>
                         </li>
                         <li class="col-md-6">
-                            <img src="images/aicon7.png">
+                            <img src="/images/aicon7.png">
                             <span>会员密码：123456</span>
                             <a href="javascript:;" class="edit-btn"></a>
                         </li>
                         <li class="col-md-6">
-                            <img src="images/aicon8.png">
+                            <img src="/images/aicon8.png">
                             <span>取款密码：123456</span>
                             <a href="javascript:;" class="edit-btn"></a>
                         </li>
@@ -65,19 +68,19 @@
                             <div class="deadline"></div>
                         </li>
                         <li class="col-md-6">
-                            <img src="images/aicon5.png">
+                            <img src="/images/aicon5.png">
                             <span>当前余额：￥100,00000</span>
                         </li>
                         <li class="col-md-6">
-                            <img src="images/aicon5.png">
+                            <img src="/images/aicon5.png">
                             <span>可用余额：￥100 ,000,000,000</span>
                         </li>
                         <li class="col-xs-12">
-                            <img src="images/aicon9.png">
+                            <img src="/images/aicon9.png">
                             <span>游戏账户：     腾龙厅：123456    百胜厅：123456    帝宝厅：123456    华美厅：123456</span>
                         </li>
                         <li class="col-xs-12">
-                            <img src="images/aicon10.png">
+                            <img src="/images/aicon10.png">
                             <span>游戏密码：     以上各厅游戏密码统一为cs+手机尾数后4位数</span>
                         </li>
                         <!-- <li class="col-md-6 col-md-offset-6 info-btns">
@@ -433,7 +436,7 @@
     <div class="popup">
         <a href="javascript:;" class="popup-close close-btn"></a>
         <div class="login-box wap-login-box">
-            <img src="images/login-tit.png" class="login-tit">
+            <img src="/images/login-tit.png" class="login-tit">
             <form>
                 <div class="input-group">
                     <span class="icon1"></span>
@@ -463,7 +466,7 @@
     <div class="popup">
         <a href="javascript:;" class="popup-close close-btn"></a>
         <div class="popup-con">
-            <div class="title"><img src="images/title2.png"></div>
+            <div class="title"><img src="/images/title2.png"></div>
             <div class="layui-tab">
                 <ul class="layui-tab-title">
                     <li class="layui-this">腾龙厅</li>
@@ -474,42 +477,42 @@
                 <div class="layui-tab-content">
                     <div class="layui-tab-item layui-show">
                         <div class="img">
-                            <img src="images/betting.jpg">
+                            <img src="/images/betting.jpg">
                         </div>
                         <div class="text">APP下载链接：
-                            <a href="#"><img src="images/icon21.png">链接一</a>
-                            <a href="#"><img src="images/icon22.png">链接二</a>
-                            <a href="#"><img src="images/icon23.png">链接三</a>
+                            <a href="#"><img src="/images/icon21.png">链接一</a>
+                            <a href="#"><img src="/images/icon22.png">链接二</a>
+                            <a href="#"><img src="/images/icon23.png">链接三</a>
                         </div>
                     </div>
                     <div class="layui-tab-item">
                         <div class="img">
-                            <img src="images/betting.jpg">
+                            <img src="/images/betting.jpg">
                         </div>
                         <div class="text">APP下载链接：
-                            <a href="#"><img src="images/icon21.png">链接四</a>
-                            <a href="#"><img src="images/icon22.png">链接五</a>
-                            <a href="#"><img src="images/icon23.png">链接六</a>
+                            <a href="#"><img src="/images/icon21.png">链接四</a>
+                            <a href="#"><img src="/images/icon22.png">链接五</a>
+                            <a href="#"><img src="/images/icon23.png">链接六</a>
                         </div>
                     </div>
                     <div class="layui-tab-item">
                         <div class="img">
-                            <img src="images/betting.jpg">
+                            <img src="/images/betting.jpg">
                         </div>
                         <div class="text">APP下载链接：
-                            <a href="#"><img src="images/icon21.png">链接七</a>
-                            <a href="#"><img src="images/icon22.png">链接八</a>
-                            <a href="#"><img src="images/icon23.png">链接九</a>
+                            <a href="#"><img src="/images/icon21.png">链接七</a>
+                            <a href="#"><img src="/images/icon22.png">链接八</a>
+                            <a href="#"><img src="/images/icon23.png">链接九</a>
                         </div>
                     </div>
                     <div class="layui-tab-item">
                         <div class="img">
-                            <img src="images/betting.jpg">
+                            <img src="/images/betting.jpg">
                         </div>
                         <div class="text">APP下载链接：
-                            <a href="#"><img src="images/icon21.png">链接三</a>
-                            <a href="#"><img src="images/icon22.png">链接二</a>
-                            <a href="#"><img src="images/icon23.png">链接一</a>
+                            <a href="#"><img src="/images/icon21.png">链接三</a>
+                            <a href="#"><img src="/images/icon22.png">链接二</a>
+                            <a href="#"><img src="/images/icon23.png">链接一</a>
                         </div>
                     </div>
                 </div>
@@ -524,12 +527,12 @@
     <div class="popup">
         <a href="javascript:;" class="popup-close close-btn"></a>
         <div class="popup-con">
-            <div class="title"><img src="images/title3.png"></div>
+            <div class="title"><img src="/images/title3.png"></div>
             <ul class="row">
                 <li class="col-xs-6 col-sm-3">
                     <div class="thumbnail">
                         <div class="img">
-                            <img src="images/game.jpg">
+                            <img src="/images/game.jpg">
                         </div>
                         <div class="text">
                             <h4>腾龙厅</h4>
@@ -544,7 +547,7 @@
                 <li class="col-xs-6 col-sm-3">
                     <div class="thumbnail">
                         <div class="img">
-                            <img src="images/game.jpg">
+                            <img src="/images/game.jpg">
                         </div>
                         <div class="text">
                             <h4>华美厅</h4>
@@ -559,7 +562,7 @@
                 <li class="col-xs-6 col-sm-3">
                     <div class="thumbnail">
                         <div class="img">
-                            <img src="images/game.jpg">
+                            <img src="/images/game.jpg">
                         </div>
                         <div class="text">
                             <h4>帝宝厅</h4>
@@ -574,7 +577,7 @@
                 <li class="col-xs-6 col-sm-3">
                     <div class="thumbnail">
                         <div class="img">
-                            <img src="images/game.jpg">
+                            <img src="/images/game.jpg">
                         </div>
                         <div class="text">
                             <h4>名称厅</h4>
@@ -601,13 +604,13 @@
 <div class="service-bar">
     <a href="javascript:;" class="service-bar-close"></a>
     <div class="service-list">
-        <a href="#"><img src="images/service1.png">电话咨询</a>
-        <a href="#"><img src="images/service2.png">短信咨询</a>
-        <a href="#"><img src="images/service3.png">在线客服</a>
-        <a href="#"><img src="images/service4.png">QQ客服</a>
+        <a href="#"><img src="/images/service1.png">电话咨询</a>
+        <a href="#"><img src="/images/service2.png">短信咨询</a>
+        <a href="#"><img src="/images/service3.png">在线客服</a>
+        <a href="#"><img src="/images/service4.png">QQ客服</a>
     </div>
     <div class="erweima">
-        <img src="images/erweima.jpg">
+        <img src="/images/erweima.jpg">
     </div>
 </div>
 <!-- 客服边栏 End! -->

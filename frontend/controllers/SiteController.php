@@ -45,12 +45,6 @@ class SiteController extends Controller
     {
         return $this->render('join');
     }
-
-    public function actionService()
-    {
-        return $this->render('service');
-    }
-
     public function actionGuide()
     {
         return $this->render('guide');

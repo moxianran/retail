@@ -1,3 +1,6 @@
+<?php
+use yii\helpers\Url;
+?>
 <!-- 轮播图 Start! -->
 <div id="banner">
     <div id="index-banner" class="carousel slide" data-ride="carousel">
