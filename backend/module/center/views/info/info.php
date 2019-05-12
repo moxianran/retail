@@ -43,7 +43,7 @@ use yii\helpers\Url;
                         <div class="user-button">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <button type="button" class="btn btn-primary btn-sm btn-block">
+                                    <button type="button" class="btn btn-primary btn-sm btn-block" value="" onclick="goEdit()">
                                         <i class="fa fa-envelope"></i> 修改资料
                                     </button>
                                 </div>
@@ -60,8 +60,6 @@ use yii\helpers\Url;
         </div>
     </div>
 </div>
-
-
 
 <!-- Mainly scripts -->
 <script src="/js/jquery-3.1.1.min.js"></script>
@@ -80,6 +78,10 @@ use yii\helpers\Url;
 <!-- Peity -->
 <script src="/js/demo/peity-demo.js"></script>
 
-</body>
+<script>
 
-</html>
+    function goEdit() {
+        window.location.href="/center/info/edit";
+    }
+
+</script>
