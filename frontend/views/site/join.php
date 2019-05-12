@@ -166,32 +166,32 @@ use yii\helpers\Url;
                         <div class="layui-tab-item">
                             <div class="agent_register">
                                 <div class="register-page">
-                                    <form>
+                                    <form id="saveForm">
                                         <div class="reg-box">
                                             <div class="reg-title"><img src="/images/ricon1.png">注册信息</div>
                                             <ul>
                                                 <li class="row">
                                                     <div class="col-sm-3 col-md-2 name required">代理帐号</div>
                                                     <div class="col-sm-9 col-md-4 col-lg-5 input">
-                                                        <input type="text" placeholder="2 - 15字符,字母开头,限字母,数字和底线">
+                                                        <input type="text" placeholder="2 - 15字符,字母开头,限字母,数字和底线" name="account">
                                                     </div>
                                                 </li>
                                                 <li class="row">
                                                     <div class="col-sm-3 col-md-2 name required">代理登录密码</div>
                                                     <div class="col-sm-9 col-md-4 col-lg-5 input">
-                                                        <input type="text" placeholder="6 个字符以上,须包含字母及数字">
+                                                        <input type="text" placeholder="6 个字符以上,须包含字母及数字" name="pwd">
                                                     </div>
                                                 </li>
                                                 <li class="row">
                                                     <div class="col-sm-3 col-md-2 name required">确认登录密码</div>
                                                     <div class="col-sm-9 col-md-4 col-lg-5 input">
-                                                        <input type="text" placeholder="请确认登录密​​码">
+                                                        <input type="text" placeholder="请确认登录密​​码" name="pwd_again">
                                                     </div>
                                                 </li>
                                                 <li class="row">
                                                     <div class="col-sm-3 col-md-2 name required">取款密​​码</div>
                                                     <div class="col-sm-9 col-md-4 col-lg-5 input">
-                                                        <input type="text" placeholder="请确认取款密​​码">
+                                                        <input type="text" placeholder="请确认取款密​​码" name="money_pwd">
                                                     </div>
                                                 </li>
                                             </ul>
@@ -202,25 +202,25 @@ use yii\helpers\Url;
                                                 <li class="row">
                                                     <div class="col-sm-3 col-md-2 name">真实姓名</div>
                                                     <div class="col-sm-9 col-md-4 col-lg-5 input">
-                                                        <input type="text" placeholder="必须与提款的银行户口相同,否则无法提款">
+                                                        <input type="text" placeholder="必须与提款的银行户口相同,否则无法提款" name="real_name">
                                                     </div>
                                                 </li>
                                                 <li class="row">
                                                     <div class="col-sm-3 col-md-2 name required">手机号码</div>
                                                     <div class="col-sm-9 col-md-4 col-lg-5 input">
-                                                        <input type="text" placeholder="请输入您的手机号码">
+                                                        <input type="text" placeholder="请输入您的手机号码" name="phone">
                                                     </div>
                                                 </li>
                                                 <li class="row">
                                                     <div class="col-sm-3 col-md-2 name">QQ/微信</div>
                                                     <div class="col-sm-9 col-md-4 col-lg-5 input">
-                                                        <input type="text" placeholder="请输入您的QQ或者微信号,非微信昵称">
+                                                        <input type="text" placeholder="请输入您的QQ或者微信号,非微信昵称" name="qq">
                                                     </div>
                                                 </li>
                                                 <li class="row">
                                                     <div class="col-sm-3 col-md-2 name required">验证码</div>
                                                     <div class="col-sm-9 col-md-4 col-lg-5 input ver-code">
-                                                        <input type="text" placeholder="请输入验证码">
+                                                        <input type="text" placeholder="请输入验证码" name="code">
                                                         <a href="javascript:;" class="ver-img">
                                                             <img src="/images/ver-img.jpg">
                                                         </a>
@@ -228,14 +228,14 @@ use yii\helpers\Url;
                                                 </li>
                                                 <li class="row">
                                                     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 treaty">
-                                                        <input type="checkbox" id="Treaty">
+                                                        <input type="checkbox" id="Treaty" name="agree">
                                                         <label for="Treaty">我已届满合法博彩年龄，且同意各项。<a href="javascript:;" class="treaty-show">注册条约</a></label>
                                                     </div>
                                                 </li>
                                             </ul>
                                         </div>
                                         <div class="reg-btns">
-                                            <button type="button" class="submit-btn">提交</button>
+                                            <button type="button" class="submit-btn" id="register_btn">提交</button>
                                             <button type="button" class="reset-btn">重置</button>
                                         </div>
                                     </form>
@@ -470,3 +470,28 @@ use yii\helpers\Url;
 <!-- 客服边栏 End! -->
 </body>
 </html>
+
+<script>
+
+    $("#register_btn").click(function(){
+        $.ajax({
+            url:"<?php echo Url::toRoute(['/site/join']); ?>",
+            type:"post",
+            data:$("#saveForm").serialize(),
+            dataType: 'json',
+            success:function(data){
+                if(data.result=="success"){
+                    //禁用提交按钮。防止点击起来没完
+                    $('#register_btn').attr('disabled',true);
+                    alert("注册成功，请等待审核");
+                }else{
+                    //禁用提交按钮。防止点击起来没完
+                    $('#register_btn').attr('disabled',true);
+                    alert(data.info);
+                }
+            }
+        });
+
+    })
+
+</script>

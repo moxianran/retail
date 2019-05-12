@@ -46,6 +46,38 @@ class SiteController extends Controller
 
     public function actionJoin()
     {
+        //添加代理
+        if (\Yii::$app->request->isPost) {
+            $post = \Yii::$app->request->post();
+
+            //判断是否正确
+            $res = $this->checkRegister($post);
+            if ($res['result'] == 'fail') {
+                return $this->asJson($res);
+            }
+
+            $admin = new RAdmin();
+            $admin->account = trim($post['account']);
+            $admin->pwd = base64_encode(trim($post['pwd']));
+            $admin->money_pwd = base64_encode(trim($post['money_pwd']));
+            $admin->real_name = trim($post['real_name']);
+            $admin->phone = trim($post['phone']);
+            $admin->qq = trim($post['qq']);
+            $admin->create_time = time();
+            $admin->position_id = 3;
+            $admin->agent_level = 1;
+            $admin->create_ip = $this->getRealIp();
+            $res = $admin->insert();
+
+
+            if($res) {
+                $json = ['result'=>'success','info' => '操作成功'];
+            } else {
+                $json = ['result'=>'fail','info' => '操作失败'];
+            }
+            return $this->asJson($json);
+        }
+
         return $this->render('join');
     }
     public function actionGuide()
@@ -154,5 +186,25 @@ class SiteController extends Controller
         return $res;
     }
 
+    /**
+     * 获取ip
+     */
+    private function getRealIp(){
+        $ip=false;
+        if(!empty($_SERVER['HTTP_CLIENT_IP'])){
+            $ip=$_SERVER['HTTP_CLIENT_IP'];
+        }
+        if(!empty($_SERVER['HTTP_X_FORWARDED_FOR'])){
+            $ips=explode (', ', $_SERVER['HTTP_X_FORWARDED_FOR']);
+            if($ip){ array_unshift($ips, $ip); $ip=FALSE; }
+            for ($i=0; $i < count($ips); $i++){
+                if(!eregi ('^(10│172.16│192.168).', $ips[$i])){
+                    $ip=$ips[$i];
+                    break;
+                }
+            }
+        }
+        return ($ip ? $ip : $_SERVER['REMOTE_ADDR']);
+    }
 
 }

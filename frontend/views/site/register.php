@@ -418,10 +418,7 @@ use yii\helpers\Url;
 
 
         //注册
-
         $("#register_btn").click(function(){
-
-
             $.ajax({
                 url:"<?php echo Url::toRoute(['/site/register']); ?>",
                 type:"post",
@@ -435,21 +432,11 @@ use yii\helpers\Url;
                     }else{
                         //禁用提交按钮。防止点击起来没完
                         $('#register_btn').attr('disabled',true);
-
                         alert(data.info);
-
-
                     }
                 }
             });
-
         })
-
-
-
-
-
-
 
     });
 </script>
