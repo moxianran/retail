@@ -51,7 +51,28 @@ class SiteController extends Controller
         return $this->render('service');
     }
 
+    public function actionGuide()
+    {
+        return $this->render('guide');
+    }
+    public function actionAbout()
+    {
+        return $this->render('about');
+    }
 
+    public function actionHelp()
+    {
+        return $this->render('help');
+    }
 
+    public function actionMember()
+    {
+        return $this->render('member');
+    }
+
+    public function actionRegister()
+    {
+        return $this->render('register');
+    }
 
 }

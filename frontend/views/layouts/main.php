@@ -40,7 +40,7 @@ use yii\helpers\Url;
             </div>
             <div class="top-time fl"></div>
             <div class="top-link fr">
-                <a href="guide.html"><img src="/images/icon1.png">新手指南</a>
+                <a href="<?php echo Url::toRoute(['/site/service']); ?>"><img src="/images/icon1.png">新手指南</a>
                 <a href="javascript:;" class="game-box-show"><img src="/images/icon2.png">游戏体验</a>
                 <a href="javascript:;" class="betting-box-show"><img src="/images/icon3.png">手机投注</a>
             </div>
@@ -57,37 +57,44 @@ use yii\helpers\Url;
             <div class="hd-nav fr">
                 <a href="javascript:;" class="nav-close"></a>
                 <ul class="clearfix">
-                    <li class="on">
+                    <li <?php if($this->context->action->id == 'index') { echo ' class="on"';}?>>
                         <a href="<?php echo Url::toRoute(['/']); ?>">
                             <h3>首页</h3>
                             <h4>HOME</h4>
                         </a
                         ></li>
-                    <li><a href="<?php echo Url::toRoute(['/site/casino']); ?>">
+                    <li <?php if($this->context->action->id == 'casino') { echo ' class="on"';}?>>
+                        <a href="<?php echo Url::toRoute(['/site/casino']); ?>">
                             <h3>真人视讯</h3>
                             <h4>CASINO</h4>
                         </a></li>
-                    <li><a href="<?php echo Url::toRoute(['/site/sports']); ?>">
+                    <li <?php if($this->context->action->id == 'sports') { echo ' class="on"';}?>>
+                        <a href="<?php echo Url::toRoute(['/site/sports']); ?>">
                             <h3>体育赛事</h3>
                             <h4>SPORTS</h4>
                         </a></li>
-                    <li><a href="<?php echo Url::toRoute(['/site/game']); ?>">
+                    <li <?php if($this->context->action->id == 'game') { echo ' class="on"';}?>>
+                        <a href="<?php echo Url::toRoute(['/site/game']); ?>">
                             <h3>电子游艺</h3>
                             <h4>GAME</h4>
                         </a></li>
-                    <li><a href="<?php echo Url::toRoute(['/site/lottery']); ?>">
+                    <li <?php if($this->context->action->id == 'lottery') { echo ' class="on"';}?>>
+                        <a href="<?php echo Url::toRoute(['/site/lottery']); ?>">
                             <h3>彩票游戏</h3>
                             <h4>LOTTERY</h4>
                         </a></li>
-                    <li><a href="<?php echo Url::toRoute(['/site/promotions']); ?>">
+                    <li <?php if($this->context->action->id == 'promotions') { echo ' class="on"';}?>>
+                        <a href="<?php echo Url::toRoute(['/site/promotions']); ?>">
                             <h3>优惠活动</h3>
                             <h4>PROMOTIONS</h4>
                         </a></li>
-                    <li><a href="<?php echo Url::toRoute(['/site/join']); ?>">
+                    <li <?php if($this->context->action->id == 'join') { echo ' class="on"';}?>>
+                        <a href="<?php echo Url::toRoute(['/site/join']); ?>">
                             <h3>合作加盟</h3>
                             <h4>JOIN</h4>
                         </a></li>
-                    <li><a href="<?php echo Url::toRoute(['/site/service']); ?>">
+                    <li <?php if($this->context->action->id == 'service') { echo ' class="on"';}?>>
+                        <a href="<?php echo Url::toRoute(['/site/service']); ?>">
                             <h3>在线客服</h3>
                             <h4>SERVICE</h4>
                         </a></li>
@@ -98,12 +105,12 @@ use yii\helpers\Url;
                     <a href="#">English</a>
                 </div>
                 <div class="nav-link">
-                    <a href="guide.html"><img src="/images/icon1.png">新手指南</a>
+                    <a href="<?php echo Url::toRoute(['/site/guide']); ?>"><img src="/images/icon1.png">新手指南</a>
                     <a href="javascript:;" class="game-box-show"><img src="/images/icon2.png">游戏体验</a>
                     <a href="javascript:;" class="betting-box-show"><img src="/images/icon3.png">手机投注</a>
                 </div>
                 <div class="nav-common">
-                    <a href="about.html">关于我们</a>
+                    <a href="<?php echo Url::toRoute(['/site/about']); ?>">关于我们</a>
                     <a href="contact.html">联系我们</a>
                     <a href="join.html">加入代理</a>
                     <a href="#">存款帮助</a>
@@ -159,19 +166,19 @@ use yii\helpers\Url;
             <a href="#"><img src="/images/link11.png"></a>
         </div>
         <div class="ft-nav">
-            <a href="about.html">关于我们</a>
+            <a href="<?php echo Url::toRoute(['/site/about']); ?>">关于我们</a>
             <span>｜</span>
-            <a href="contact.html">联系我们</a>
+            <a href="#<?php //echo Url::toRoute(['/site/contact']); ?>">联系我们</a>
             <span>｜</span>
-            <a href="guide.html">新手指南</a>
+            <a href="<?php echo Url::toRoute(['/site/service']); ?>">新手指南</a>
             <span>｜</span>
             <a href="#">存款帮助</a>
             <span>｜</span>
-            <a href="help.html">常见问题</a>
+            <a href="<?php echo Url::toRoute(['/site/help']); ?>">常见问题</a>
             <span>｜</span>
-            <a href="join.html">加入代理</a>
+            <a href="<?php echo Url::toRoute(['/site/join']); ?>">加入代理</a>
             <span>｜</span>
-            <a href="help.html">常见问题</a>
+            <a href="<?php echo Url::toRoute(['/site/help']); ?>">常见问题</a>
         </div>
     </div>
     <div class="copyright">Copyright © 太阳城集团 Reserved</div>
