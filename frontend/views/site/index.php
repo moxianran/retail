@@ -21,14 +21,14 @@ use yii\helpers\Url;
     </div>
     <div class="login-box">
         <img src="/images/login-tit.png" class="login-tit">
-        <form>
+        <form id="saveForm">
             <div class="input-group">
                 <span class="icon1"></span>
-                <input type="text" placeholder="账号">
+                <input type="text" placeholder="账号" name="account">
             </div>
             <div class="input-group forget">
                 <span class="icon2"></span>
-                <input type="text" placeholder="密码">
+                <input type="text" placeholder="密码" name="pwd">
                 <a href="#">忘记？</a>
             </div>
             <div class="input-group">
@@ -36,7 +36,7 @@ use yii\helpers\Url;
                 <input type="text" placeholder="验证码">
             </div>
             <div class="btns clearfix">
-                <a href="javascript:;" class="login-btn">登录</a>
+                <a href="javascript:void(0);" class="login-btn" id="login-btn">登录</a>
                 <a href="<?php echo Url::toRoute(['/site/register']); ?>" class="register-btn">注册</a>
             </div>
         </form>
@@ -45,9 +45,6 @@ use yii\helpers\Url;
 
 <!-- 轮播图 End! -->
 <?= $this->render('_notice',['gameNotice' => $gameNotice]) ?>
-<!-- 公告 Start! -->
-
-<!-- 公告 End! -->
 
 <!-- 内容 Start! -->
 <div id="main">
@@ -278,6 +275,28 @@ use yii\helpers\Url;
 <!-- 弹窗 End! -->
 
 <script type="text/javascript">
+    $(function(){
+        $("#login-btn").click(function(){
+            $.ajax({
+                url:"<?php echo Url::toRoute(['/site/login']); ?>",
+                type:"post",
+                data:$("#saveForm").serialize(),
+                dataType: 'json',
+                success:function(data){
+                    if(data.result=="success"){
+                        //禁用提交按钮。防止点击起来没完
+                        $('#formSubmit').attr('disabled',true);
+                        window.location.href = "<?php echo Url::toRoute(['/site/member']); ?>";
+                    }else{
+                        //禁用提交按钮。防止点击起来没完
+                        $('#formSubmit').attr('disabled',true);
+                        alert(data.info);
+                    }
+                }
+            });
+        })
+    })
+
     $(function(){
 
         setTimeout(function(){

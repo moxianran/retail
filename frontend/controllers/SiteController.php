@@ -9,9 +9,7 @@ use yii\web\Controller;
 
 class SiteController extends Controller
 {
-
     public $enableCsrfValidation = false;
-    public $gameNotice = '';
 
     /**
      * 首页
@@ -30,7 +28,6 @@ class SiteController extends Controller
     public function actionCasino()
     {
         $gameNotice = $this->getGameNotice();
-
         return $this->render('casino',[
             'gameNotice' => $gameNotice,
         ]);
@@ -42,7 +39,6 @@ class SiteController extends Controller
     public function actionSports()
     {
         $gameNotice = $this->getGameNotice();
-
         return $this->render('sports',[
             'gameNotice' => $gameNotice,
         ]);
@@ -54,7 +50,6 @@ class SiteController extends Controller
     public function actionGame()
     {
         $gameNotice = $this->getGameNotice();
-
         return $this->render('game',[
             'gameNotice' => $gameNotice,
         ]);
@@ -66,7 +61,6 @@ class SiteController extends Controller
     public function actionLottery()
     {
         $gameNotice = $this->getGameNotice();
-
         return $this->render('lottery',[
             'gameNotice' => $gameNotice,
         ]);
@@ -78,7 +72,6 @@ class SiteController extends Controller
     public function actionPromotions()
     {
         $gameNotice = $this->getGameNotice();
-
         return $this->render('promotions',[
             'gameNotice' => $gameNotice,
         ]);
@@ -114,7 +107,6 @@ class SiteController extends Controller
             $admin->create_ip = $this->getRealIp();
             $res = $admin->insert();
 
-
             if($res) {
                 $json = ['result'=>'success','info' => '操作成功'];
             } else {
@@ -127,6 +119,10 @@ class SiteController extends Controller
             'gameNotice' => $gameNotice,
         ]);
     }
+
+    /**
+     * 新手指南
+     */
     public function actionGuide()
     {
         $gameNotice = $this->getGameNotice();
@@ -216,7 +212,83 @@ class SiteController extends Controller
             return $this->asJson($json);
         }
 
-        return $this->render('register');
+        return $this->render('register',[
+            'gameNotice' => $gameNotice,
+        ]);
+    }
+
+    /**
+     * 登录
+     */
+    public function actionLogin()
+    {
+        if (\Yii::$app->request->isPost) {
+            $post = \Yii::$app->request->post();
+
+            $account = trim($post['account']);
+            if (empty($account)) {
+                $res = ['result' => 'fail', 'info' => '请输入账号'];
+                return $this->asJson($res);
+            }
+            if (!preg_match('/^[A-Za-z0-9_]+$/', $post['account'])) {
+                $res = ['result' => 'fail', 'info' => '账号必须数字或字母或下划线组成'];
+                return $this->asJson($res);
+            }
+
+            //密码
+            $pwd = trim($post['pwd']);
+            if (empty($pwd)) {
+                $res = ['result' => 'fail', 'info' => '请输入密码'];
+                return $this->asJson($res);
+            }
+            if(strlen($pwd) < 6) {
+                $res = ['result' => 'fail', 'info' => '密码6位或6位以上'];
+                return $this->asJson($res);
+            }
+
+            $where = [
+                'account' => $account,
+                'pwd' => base64_encode($pwd),
+                'is_delete' => 2
+            ];
+            $user = RUser::find()->where($where)->asArray()->one();
+            if(!$user) {
+                $res = ['result' => 'fail', 'info' => '账号或密码错误'];
+                return $this->asJson($res);
+            }
+            if($user['status'] == 1) {
+                $res = ['result' => 'fail', 'info' => '账号审核中，请联系客服开通'];
+                return $this->asJson($res);
+            }
+            if($user['status'] == 3) {
+                $res = ['result' => 'fail', 'info' => '账号审核失败，请联系客服'];
+                return $this->asJson($res);
+            }
+            if($user['is_stop'] == 1) {
+                $res = ['result' => 'fail', 'info' => '账号已被锁定，请联系客服'];
+                return $this->asJson($res);
+            }
+
+            //设置最后登录时间和ip
+            $update_data = [
+                'login_ip' => $this->getRealIp(),
+                'login_time' => time(),
+                'update_time' => time(),
+            ];
+            RUser::updateAll($update_data,'id = '.$user['id']);
+
+            //设置session
+            $session = \Yii::$app->session;
+            $adminInfo = [
+                'id' => $user['id'],
+                'real_name' => $user['real_name'],
+            ];
+
+            $session->set('adminInfo' ,$adminInfo);
+
+
+            return $this->asJson(['result'=>'success','info'=>'登录成功']);
+        }
     }
 
     /**
