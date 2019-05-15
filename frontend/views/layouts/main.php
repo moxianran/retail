@@ -13,7 +13,7 @@ use yii\helpers\Url;
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta name="format-detection" content="telephone=no" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <title>首页</title>
+    <title>财神娱乐</title>
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.css"/>
     <link rel="stylesheet" type="text/css" href="/layui/css/layui.css"/>
     <link rel="stylesheet" type="text/css" href="/css/style.css"/>
@@ -170,15 +170,13 @@ use yii\helpers\Url;
             <span>｜</span>
             <a href="#<?php //echo Url::toRoute(['/site/contact']); ?>">联系我们</a>
             <span>｜</span>
-            <a href="<?php echo Url::toRoute(['/site/service']); ?>">新手指南</a>
+            <a href="<?php echo Url::toRoute(['/site/guide']); ?>">新手指南</a>
             <span>｜</span>
             <a href="#">存款帮助</a>
             <span>｜</span>
             <a href="<?php echo Url::toRoute(['/site/help']); ?>">常见问题</a>
             <span>｜</span>
             <a href="<?php echo Url::toRoute(['/site/join']); ?>">加入代理</a>
-            <span>｜</span>
-            <a href="<?php echo Url::toRoute(['/site/help']); ?>">常见问题</a>
         </div>
     </div>
     <div class="copyright">Copyright © 太阳城集团 Reserved</div>

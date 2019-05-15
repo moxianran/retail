@@ -7,15 +7,7 @@ use yii\helpers\Url;
 <!-- 轮播图 End! -->
 
 <!-- 公告 Start! -->
-<div class="notice">
-    <div class="container">
-        <div class="notice-wp">
-            <img src="/images/notice.png" class="notice-tit">
-            <img src="/images/notice-m.png" class="notice-tit-m">
-            <marquee behavior="scroll" direction="left">重要通知：由于腾讯进行微信排查封号 jjxpj111（蜜儿）已被冻结,请添加新微信号 pkyw1356 （颖儿）进行咨询 ,给您带来不便敬请谅解！</marquee>
-        </div>
-    </div>
-</div>
+<?= $this->render('_notice',['gameNotice' => $gameNotice]) ?>
 <!-- 公告 End! -->
 
 <!-- 内容 Start! -->

@@ -2,6 +2,7 @@
 namespace frontend\controllers;
 
 use app\models\RAdmin;
+use app\models\RNoticeGame;
 use app\models\RUser;
 use yii\web\Controller;
 
@@ -10,42 +11,86 @@ class SiteController extends Controller
 {
 
     public $enableCsrfValidation = false;
+    public $gameNotice = '';
 
     /**
      * 首页
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $gameNotice = $this->getGameNotice();
+        return $this->render('index',[
+            'gameNotice' => $gameNotice,
+        ]);
     }
 
+    /**
+     * 真人视讯
+     */
     public function actionCasino()
     {
-        return $this->render('casino');
+        $gameNotice = $this->getGameNotice();
+
+        return $this->render('casino',[
+            'gameNotice' => $gameNotice,
+        ]);
     }
 
+    /**
+     * 体育赛事
+     */
     public function actionSports()
     {
-        return $this->render('sports');
+        $gameNotice = $this->getGameNotice();
+
+        return $this->render('sports',[
+            'gameNotice' => $gameNotice,
+        ]);
     }
 
+    /**
+     * 电子游艺
+     */
     public function actionGame()
     {
-        return $this->render('game');
+        $gameNotice = $this->getGameNotice();
+
+        return $this->render('game',[
+            'gameNotice' => $gameNotice,
+        ]);
     }
 
+    /**
+     * 彩票游戏
+     */
     public function actionLottery()
     {
-        return $this->render('lottery');
+        $gameNotice = $this->getGameNotice();
+
+        return $this->render('lottery',[
+            'gameNotice' => $gameNotice,
+        ]);
     }
 
+    /**
+     * 优惠活动
+     */
     public function actionPromotions()
     {
-        return $this->render('promotions');
+        $gameNotice = $this->getGameNotice();
+
+        return $this->render('promotions',[
+            'gameNotice' => $gameNotice,
+        ]);
     }
 
+    /**
+     * 合作加盟
+     */
     public function actionJoin()
     {
+        $gameNotice = $this->getGameNotice();
+
         //添加代理
         if (\Yii::$app->request->isPost) {
             $post = \Yii::$app->request->post();
@@ -78,25 +123,64 @@ class SiteController extends Controller
             return $this->asJson($json);
         }
 
-        return $this->render('join');
+        return $this->render('join',[
+            'gameNotice' => $gameNotice,
+        ]);
     }
     public function actionGuide()
     {
-        return $this->render('guide');
-    }
-    public function actionAbout()
-    {
-        return $this->render('about');
+        $gameNotice = $this->getGameNotice();
+
+        return $this->render('guide',[
+            'gameNotice' => $gameNotice,
+        ]);
     }
 
+    /**
+     * 关于我们
+     */
+    public function actionAbout()
+    {
+        $gameNotice = $this->getGameNotice();
+
+        return $this->render('about',[
+            'gameNotice' => $gameNotice,
+        ]);
+    }
+
+    /**
+     * 常见问题
+     */
     public function actionHelp()
     {
-        return $this->render('help');
+        $gameNotice = $this->getGameNotice();
+
+        return $this->render('help',[
+            'gameNotice' => $gameNotice,
+        ]);
     }
 
     public function actionMember()
     {
-        return $this->render('member');
+        $gameNotice = $this->getGameNotice();
+
+        return $this->render('member',[
+            'gameNotice' => $gameNotice,
+        ]);
+    }
+
+    /**
+     * 获取游戏通知
+     * @return mixed|string
+     */
+    private function getGameNotice()
+    {
+        $gameNotice = RNoticeGame::find()->where(['status' => 1])->orderBy('id desc')->asArray()->one();
+        if($gameNotice) {
+            return $gameNotice['content'];
+        } else {
+            return '';
+        }
     }
 
     /**
@@ -104,6 +188,8 @@ class SiteController extends Controller
      */
     public function actionRegister()
     {
+        $gameNotice = $this->getGameNotice();
+
         if (\Yii::$app->request->isPost) {
             $post = \Yii::$app->request->post();
 
@@ -133,6 +219,11 @@ class SiteController extends Controller
         return $this->render('register');
     }
 
+    /**
+     * 注册验证数据
+     * @param $post
+     * @return array
+     */
     private function checkRegister($post)
     {
         $res = ['result' => 'success'];
