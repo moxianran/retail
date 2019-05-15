@@ -299,19 +299,19 @@ use yii\helpers\Url;
 
     $(function(){
 
-        setTimeout(function(){
-            $('.index-popup').fadeIn();
-        },1000);
-
-        setTimeout(function(){
-            if($('.index-popup').is(':visible')){
-                $('.index-popup').fadeOut();
-            }
-        },6000);
-
-        $('.slide-close').on('click',function(){
-            $(this).parents('.slide-bar').fadeOut();
-        })
+        // setTimeout(function(){
+        //     $('.index-popup').fadeIn();
+        // },1000);
+        //
+        // setTimeout(function(){
+        //     if($('.index-popup').is(':visible')){
+        //         $('.index-popup').fadeOut();
+        //     }
+        // },6000);
+        //
+        // $('.slide-close').on('click',function(){
+        //     $(this).parents('.slide-bar').fadeOut();
+        // })
 
     });
 </script>

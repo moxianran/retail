@@ -156,12 +156,25 @@ class SiteController extends Controller
         ]);
     }
 
+    /**
+     * 用户中心
+     */
     public function actionMember()
     {
         $gameNotice = $this->getGameNotice();
 
+        $session = \Yii::$app->session;
+        $userInfo = $session->get('userInfo');
+
+        if(!$userInfo) {
+            return $this->redirect(['/']);
+        }
+
+        $user = RUser::find()->where(['id'=>$userInfo['id']])->asArray()->one();
+
         return $this->render('member',[
             'gameNotice' => $gameNotice,
+            'user' => $user
         ]);
     }
 
@@ -284,7 +297,7 @@ class SiteController extends Controller
                 'real_name' => $user['real_name'],
             ];
 
-            $session->set('adminInfo' ,$adminInfo);
+            $session->set('userInfo' ,$adminInfo);
 
 
             return $this->asJson(['result'=>'success','info'=>'登录成功']);
@@ -369,5 +382,4 @@ class SiteController extends Controller
         }
         return ($ip ? $ip : $_SERVER['REMOTE_ADDR']);
     }
-
 }

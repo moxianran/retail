@@ -28,32 +28,32 @@ use yii\helpers\Url;
                     <ul class="row">
                         <li class="col-md-6">
                             <img src="/images/aicon1.png">
-                            <span>真实姓名：翻篇</span>
+                            <span>真实姓名：<?php echo $user['real_name']; ?></span>
                             <a href="javascript:;" class="edit-btn"></a>
                         </li>
                         <li class="col-md-6">
                             <img src="/images/aicon2.png">
-                            <span>手机号码：186****8562</span>
+                            <span>手机号码：<?php echo $user['phone']; ?></span>
                             <a href="javascript:;" class="edit-btn"></a>
                         </li>
                         <li class="col-md-6">
                             <img src="/images/aicon3.png">
-                            <span>电子邮箱：85213487@163.com</span>
+                            <span>电子邮箱：<?php echo $user['email']; ?></span>
                             <a href="javascript:;" class="edit-btn"></a>
                         </li>
                         <li class="col-md-6">
                             <img src="/images/aicon4.png">
-                            <span>社交账号：85213487@163.com</span>
+                            <span>社交账号：<?php echo $user['qq']; ?></span>
                             <a href="javascript:;" class="edit-btn"></a>
                         </li>
                         <li class="col-md-6">
                             <img src="/images/aicon7.png">
-                            <span>会员密码：123456</span>
+                            <span>会员密码：<?php echo base64_decode($user['pwd']); ?></span>
                             <a href="javascript:;" class="edit-btn"></a>
                         </li>
                         <li class="col-md-6">
                             <img src="/images/aicon8.png">
-                            <span>取款密码：123456</span>
+                            <span>取款密码：<?php echo base64_decode($user['money_pwd']); ?></span>
                             <a href="javascript:;" class="edit-btn"></a>
                         </li>
                         <li class="col-xs-12">
@@ -61,11 +61,11 @@ use yii\helpers\Url;
                         </li>
                         <li class="col-md-6">
                             <img src="/images/aicon5.png">
-                            <span>当前余额：￥100,00000</span>
+                            <span>当前余额：￥<?php echo $user['money']; ?></span>
                         </li>
                         <li class="col-md-6">
                             <img src="/images/aicon5.png">
-                            <span>可用余额：￥100 ,000,000,000</span>
+                            <span>可用余额：￥<?php echo $user['money']; ?></span>
                         </li>
                         <li class="col-xs-12">
                             <img src="/images/aicon9.png">

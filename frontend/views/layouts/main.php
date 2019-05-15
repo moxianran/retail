@@ -94,7 +94,7 @@ use yii\helpers\Url;
                             <h4>JOIN</h4>
                         </a></li>
                     <li <?php if($this->context->action->id == 'service') { echo ' class="on"';}?>>
-                        <a href="<?php echo Url::toRoute(['/site/service']); ?>">
+                        <a href="#">
                             <h3>在线客服</h3>
                             <h4>SERVICE</h4>
                         </a></li>
