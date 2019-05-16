@@ -157,28 +157,6 @@ class SiteController extends Controller
     }
 
     /**
-     * 用户中心
-     */
-    public function actionMember()
-    {
-        $gameNotice = $this->getGameNotice();
-
-        $session = \Yii::$app->session;
-        $userInfo = $session->get('userInfo');
-
-        if(!$userInfo) {
-            return $this->redirect(['/']);
-        }
-
-        $user = RUser::find()->where(['id'=>$userInfo['id']])->asArray()->one();
-
-        return $this->render('member',[
-            'gameNotice' => $gameNotice,
-            'user' => $user
-        ]);
-    }
-
-    /**
      * 获取游戏通知
      * @return mixed|string
      */
