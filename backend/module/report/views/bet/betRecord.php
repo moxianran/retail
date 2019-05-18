@@ -23,20 +23,20 @@
                     <div class="row">
                         <div class="col-sm-3">
                             <div class="form-group">
-                                <label class="control-label" for="product_name">台号</label>
-                                <input type="text" name="platform_id" value="<?php echo $get['platform_id'] ?? '' ?>" class="form-control">
-                            </div>
-                        </div>
-                        <div class="col-sm-3">
-                            <div class="form-group">
-                                <label class="control-label" for="price">靴号</label>
+                                <label class="control-label" for="product_name">桌号</label>
                                 <input type="text" name="series_id" value="<?php echo $get['series_id'] ?? '' ?>" class="form-control">
                             </div>
                         </div>
                         <div class="col-sm-3">
                             <div class="form-group">
-                                <label class="control-label" for="quantity">局号</label>
-                                <input type="text" name="game_id" value="<?php echo $get['game_id'] ?? '' ?>" class="form-control">
+                                <label class="control-label" for="price">场</label>
+                                <input type="text" name="platform_id" value="<?php echo $get['platform_id'] ?? '' ?>" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label" for="quantity">次</label>
+                                <input type="text" name="inning_id" value="<?php echo $get['inning_id'] ?? '' ?>" class="form-control">
                             </div>
                         </div>
                         <div class="col-sm-3">
@@ -66,37 +66,6 @@
                                 <input type="text" class="input-sm form-control" name="end" value="<?php echo $end; ?>">
                             </div>
                         </div>
-
-<!--                        <div class="col-sm-9 m-b-xs">-->
-<!--                            <div class="btn-group btn-group-toggle" data-toggle="buttons">-->
-<!--                                <label onclick="goList(1);" class="btn btn-sm btn-white ">-->
-<!--                                    <input type="radio" name="options" autocomplete="off" > 今日-->
-<!--                                </label>-->
-<!--                                <label onclick="goList(2);" class="btn btn-sm btn-white">-->
-<!--                                    <input type="radio" name="options" autocomplete="off"> 昨日-->
-<!--                                </label>-->
-<!--                                <label onclick="goList(3);" class="btn btn-sm btn-white ">-->
-<!--                                    <input type="radio" name="options" autocomplete="off"> 本周-->
-<!--                                </label>-->
-<!--                                <label onclick="goList(4);" class="btn btn-sm btn-white ">-->
-<!--                                    <input type="radio" name="options" autocomplete="off"> 上周-->
-<!--                                </label>-->
-<!--                                <label onclick="goList(5);" class="btn btn-sm btn-white ">-->
-<!--                                    <input type="radio" name="options" autocomplete="off"> 本月-->
-<!--                                </label>-->
-<!--                                <label onclick="goList(6);" class="btn btn-sm btn-white ">-->
-<!--                                    <input type="radio" name="options" autocomplete="off"> 上月-->
-<!--                                </label>-->
-<!--                                <label onclick="goList(7);" class="btn btn-sm btn-white ">-->
-<!--                                    <input type="radio" name="options" autocomplete="off"> 本季度-->
-<!--                                </label>-->
-<!--                                <label onclick="goList(8);" class="btn btn-sm btn-white ">-->
-<!--                                    <input type="radio" name="options" autocomplete="off"> 上季度-->
-<!--                                </label>-->
-<!--                            </div>-->
-<!--                        </div>-->
-
-<!--                        <div class="col-sm-9"></div>-->
                         <div class="col-sm-3">
                             <div class="input-group">
                                 <span class="input-group-append">
@@ -121,9 +90,9 @@
                                     <tr>
                                         <th>编号</th>
                                         <th>游戏</th>
-                                        <th>台号</th>
-                                        <th>靴号</th>
-                                        <th>局好</th>
+                                        <th>桌号</th>
+                                        <th>场</th>
+                                        <th>次</th>
                                         <th>会员</th>
                                         <th>投注信息</th>
                                         <th>投注时间</th>
@@ -133,8 +102,7 @@
                                         <th>结算时间</th>
                                         <th>结算金额</th>
                                         <th>账号余额</th>
-                                        <th>区域</th>
-                                        <th>其他</th>
+                                        <th>区域ip</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -144,10 +112,10 @@
                                             ?>
                                             <tr class="gradeX">
                                                 <td><?php echo $v['id'] ?></td>
-                                                <td><?php echo $v['game_title'] ?></td>
-                                                <td><?php echo $v['platform_id'] ?></td>
+                                                <td><?php echo $v['gameTitle'] ?></td>
                                                 <td><?php echo $v['series_id'] ?></td>
-                                                <td><?php echo $v['game_id'] ?></td>
+                                                <td><?php echo $v['platform_id'] ?></td>
+                                                <td><?php echo $v['inning_id'] ?></td>
                                                 <td><?php echo $v['userName'] ?></td>
                                                 <td><?php echo $v['bet_desc'] ?></td>
                                                 <td><?php echo date("Y-m-d H:i:s",$v['bet_time']); ?></td>
@@ -156,9 +124,8 @@
                                                 <td><?php echo $v['code_clear_num'] ?></td>
                                                 <td><?php echo date("Y-m-d H:i:s",$v['settlement_time']); ?></td>
                                                 <td><?php echo $v['settlement_money'] / 100 ?></td>
-                                                <td><?php echo $v['account_money'] ?></td>
-                                                <td><?php echo $v['area'] ?></td>
-                                                <td><?php echo $v['other'] ?></td>
+                                                <td><?php echo $v['account_money'] / 100 ?></td>
+                                                <td><?php echo $v['ip'] ?></td>
                                             </tr>
                                             <?php
                                         }}

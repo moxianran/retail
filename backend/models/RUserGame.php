@@ -5,28 +5,25 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "r_recharge_record".
+ * This is the model class for table "r_user_game".
  *
  * @property int $id
- * @property int $game_type 游戏类型
- * @property int $user_id 用户id
- * @property int $type 充值类型
- * @property int $money 充值金额
- * @property int $balance 余额
- * @property int $operator_id 操作员
+ * @property int $user_id 会员ID
+ * @property int $game_id 游戏id
+ * @property string $game_account 游戏账号
  * @property int $create_time
  * @property int $update_time
  * @property int $create_person
  * @property int $update_person
  */
-class RRechargeRecord extends \yii\db\ActiveRecord
+class RUserGame extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'r_recharge_record';
+        return 'r_user_game';
     }
 
     /**
@@ -35,7 +32,8 @@ class RRechargeRecord extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['game_type', 'user_id', 'type', 'money', 'balance', 'operator_id', 'create_time', 'update_time', 'create_person', 'update_person'], 'integer'],
+            [['user_id', 'game_id', 'create_time', 'update_time', 'create_person', 'update_person'], 'integer'],
+            [['game_account'], 'string', 'max' => 255],
         ];
     }
 
@@ -46,12 +44,9 @@ class RRechargeRecord extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'game_type' => 'Game Type',
             'user_id' => 'User ID',
-            'type' => 'Type',
-            'money' => 'Money',
-            'balance' => 'Balance',
-            'operator_id' => 'Operator ID',
+            'game_id' => 'Game ID',
+            'game_account' => 'Game Account',
             'create_time' => 'Create Time',
             'update_time' => 'Update Time',
             'create_person' => 'Create Person',

@@ -8,21 +8,18 @@ use Yii;
  * This is the model class for table "r_bet".
  *
  * @property int $id
- * @property string $game_title 游戏名称
- * @property int $series_id 靴号
- * @property int $platform_id 台号
- * @property int $game_id 局号
+ * @property int $game_record_id 游戏记录类型
  * @property int $user_id 会员id
- * @property string $bet_desc 投注信息
  * @property int $bet_time 投注时间
+ * @property int $bet_door 投注 1 庄 2 闲 3和 4庄对 5闲对
  * @property int $bet_money 投注金额
- * @property int $bet_result 投注结果
+ * @property int $bet_result 投注结果 1 庄 2 闲 3和 4庄对 5闲对
+ * @property int $result_money 输赢金额
  * @property int $code_clear_num 洗码量
  * @property int $settlement_time 结算时间
  * @property int $settlement_money 结算金额
  * @property int $account_money 账号余额
- * @property string $area 区域
- * @property string $other 其他
+ * @property string $ip 区域ip
  * @property int $create_time
  * @property int $update_time
  * @property int $create_person
@@ -44,8 +41,8 @@ class RBet extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['series_id', 'platform_id', 'game_id', 'user_id', 'bet_time', 'bet_money', 'bet_result', 'code_clear_num', 'settlement_time', 'settlement_money', 'account_money', 'create_time', 'update_time', 'create_person', 'update_person'], 'integer'],
-            [['game_title', 'bet_desc', 'area', 'other'], 'string', 'max' => 255],
+            [['game_record_id', 'user_id', 'bet_time', 'bet_door', 'bet_money', 'bet_result', 'result_money', 'code_clear_num', 'settlement_time', 'settlement_money', 'account_money', 'create_time', 'update_time', 'create_person', 'update_person'], 'integer'],
+            [['ip'], 'string', 'max' => 255],
         ];
     }
 
@@ -56,21 +53,18 @@ class RBet extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'game_title' => 'Game Title',
-            'series_id' => 'Series ID',
-            'platform_id' => 'Platform ID',
-            'game_id' => 'Game ID',
+            'game_record_id' => 'Game Record ID',
             'user_id' => 'User ID',
-            'bet_desc' => 'Bet Desc',
             'bet_time' => 'Bet Time',
+            'bet_door' => 'Bet Door',
             'bet_money' => 'Bet Money',
             'bet_result' => 'Bet Result',
+            'result_money' => 'Result Money',
             'code_clear_num' => 'Code Clear Num',
             'settlement_time' => 'Settlement Time',
             'settlement_money' => 'Settlement Money',
             'account_money' => 'Account Money',
-            'area' => 'Area',
-            'other' => 'Other',
+            'ip' => 'Ip',
             'create_time' => 'Create Time',
             'update_time' => 'Update Time',
             'create_person' => 'Create Person',

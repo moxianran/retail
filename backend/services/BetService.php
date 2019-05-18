@@ -1,6 +1,8 @@
 <?php
 namespace backend\services;
 use app\models\RBet;
+use app\models\RGame;
+use app\models\RGameRecord;
 use app\models\RUser;
 
 class BetService {
@@ -39,15 +41,15 @@ class BetService {
         $startDate = date("m/d/Y",$start);
         $endDate = date("m/d/Y",$end);
 
-        //台号
+        //桌号
         if(!empty($params['platform_id'])) {
             $cond[] = ['=', 'platform_id', $params['platform_id']];
         }
-        //靴号
+        //场
         if(!empty($params['series_id'])) {
             $cond[] = ['=', 'series_id', $params['series_id']];
         }
-        //局号
+        //次
         if(!empty($params['game_id'])) {
             $cond[] = ['=', 'game_id', $params['game_id']];
         }
@@ -68,15 +70,72 @@ class BetService {
         $count = $query->count();
         $list = $query->offset($offset)->limit($pageSize)->asArray()->all();
 
-
         if($list) {
+
+            //游戏名称
+            $game = RGame::find()->asArray()->all();
+            $game = array_column($game, 'name', 'id');
+
+
+
+
 
             $userIds = array_column($list,'user_id');
             $user = RUser::find('id,real_name')->where(['id' => $userIds])->asArray()->all();
             $user = array_column($user,'real_name','id');
 
+
+//            print_r($list);die;
             foreach ($list as $k=>$v) {
+
+
+                //用户游戏账号信息
+//                $userGame = RUserGame::find()->where(['user_id' => $v['user_id']])->asArray()->all();
+//                $userGame = array_column($userGame, 'game_account', 'game_id');
+
+
+                $gameRecord = RGameRecord::find()->where(['id' => $v['game_record_id']])->asArray()->one();
+//print_r($gameRecord);die;
+
+
+                $list[$k]['gameTitle'] = $game[$gameRecord['game_id']] ?? '--';
+
+                $list[$k]['series_id'] = $gameRecord['series_id'];
+                $list[$k]['platform_id'] = $gameRecord['platform_id'];
+                $list[$k]['inning_id'] = $gameRecord['inning_id'];
+
+                $betDesc = '投注了';
+                if ($v['bet_door'] == 1) {
+                    $betDesc .= "庄";
+                } else if ($v['bet_door'] == 2) {
+                    $betDesc .= "闲";
+                } else if ($v['bet_door'] == 3) {
+                    $betDesc .= "平";
+                } else if ($v['bet_door'] == 4) {
+                    $betDesc .= "庄对";
+                } else if ($v['bet_door'] == 5) {
+                    $betDesc .= "闲对";
+                }
+                $betDesc .= $v['bet_money'] / 100 . "元";
+                $list[$k]['bet_desc'] = $betDesc;
+
+                $bet_result = '';
+                if ($v['bet_result'] == 1) {
+                    $bet_result = "庄";
+                } else if ($v['bet_result'] == 2) {
+                    $bet_result = "闲";
+                } else if ($v['bet_result'] == 3) {
+                    $bet_result = "平";
+                } else if ($v['bet_result'] == 4) {
+                    $bet_result = "庄对";
+                } else if ($v['bet_result'] == 5) {
+                    $bet_result = "闲对";
+                }
+                $list[$k]['bet_result'] = $bet_result;
+
                 $list[$k]['userName'] = $user[$v['user_id']] ?? '暂无';
+
+
                 if($v['bet_result'] == '0') {
                     $list[$k]['bet_result'] = '平';
                 } else if($v['bet_result'] == '1'){
