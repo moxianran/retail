@@ -33,15 +33,9 @@ class LoginController extends Controller
             //登录操作
             $res = LoginService::login($account,$pwd,$ip);
             if($res['type'] == 'success') {
-                $json = [
-                    'result' => 'success',
-                    'info' => '操作成功'
-                ];
+                $json = ['result' => 'success', 'info' => '操作成功'];
             } else {
-                $json = [
-                    'result' => 'fail',
-                    'info' => $res['msg']
-                ];
+                $json = ['result' => 'fail', 'info' => $res['msg']];
             }
             return $this->asJson($json);
         }

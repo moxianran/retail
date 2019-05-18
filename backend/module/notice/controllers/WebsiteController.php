@@ -16,12 +16,6 @@ class WebsiteController extends BaseController
     public function init()
     {
         parent::init();
-        //判断是否登录
-        $session = \Yii::$app->session;
-        $this->adminInfo = $session->get('adminInfo');
-        if(!$this->adminInfo) {
-            return $this->redirect(['/login/login/login']);
-        }
     }
 
     /**

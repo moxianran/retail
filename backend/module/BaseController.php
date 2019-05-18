@@ -19,15 +19,17 @@ class BaseController extends Controller
         //判断是否登录
         $session = \Yii::$app->session;
         $this->adminInfo = $session->get('adminInfo');
-        if(!$this->adminInfo) {
-            return $this->redirect(['/login/login/login']);
+        if($this->adminInfo) {
+//            echo 1;
+        } else {
+//            echo 2;
+            header("location:/");
         }
-
+//echo 3;die;
         $adminInfo = \Yii::$app->session->get('adminInfo');
         $position_id = $adminInfo['position_id'];
         $view->params['position_id'] = $position_id;
         $view->params['agent_level'] = $adminInfo['agent_level'];
-
 
         $positionPower = RPositionPower::find()->select('power_id')->where(['position_id' => $position_id])->asArray()->all();
         $power_id = array_column($positionPower,'power_id');
@@ -41,10 +43,6 @@ class BaseController extends Controller
 //        echo $this->id;
 //        print_r($this->action->id) ;
 //        die;
-
-
-
-
     }
 
 

@@ -69,6 +69,7 @@ class LoginService
             'position_id' => $admin['position_id'],
             'positionName' => $positionData[$admin['position_id']] ?? '暂无',
             'agent_level' => $admin['agent_level'],
+            'expire_time' => time()+3600
         ];
 
         $session->set('adminInfo' ,$adminInfo);
