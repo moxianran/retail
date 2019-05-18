@@ -2,6 +2,9 @@
 
 namespace frontend\controllers;
 
+use app\models\RBet;
+use app\models\RGame;
+use app\models\RGameRecord;
 use app\models\RNoticeGame;
 use app\models\RRechargeRecord;
 use app\models\RUser;
@@ -52,12 +55,10 @@ class MemberController extends Controller
         $startDate = \Yii::$app->request->get('startDate','');
         $endDate = \Yii::$app->request->get('endDate','');
 
-
         $where = [];
         if(!empty($startDate) && !empty($endDate)) {
-            $where = ['between','create_time',strtotime($startDate),strtotime($endDate)];
+            $where = ['between', 'create_time', strtotime($startDate), strtotime($endDate) + 86399];
         }
-
 
         $userGame = RUserGame::find()->where(['user_id' => $this->userInfo['id']])->asArray()->all();
         $userGame = array_column($userGame, 'game_account', 'game_id');
@@ -87,6 +88,9 @@ class MemberController extends Controller
         ]);
     }
 
+    /**
+     * 登录记录
+     */
     public function actionLogin()
     {
         $gameNotice = $this->getGameNotice();
@@ -109,6 +113,68 @@ class MemberController extends Controller
         ]);
     }
 
+    /**
+     * 投注记录
+     */
+    public function actionBet()
+    {
+        $gameNotice = $this->getGameNotice();
+
+        //本页输赢
+        $pageResult = 0;
+
+        $page = \Yii::$app->request->get('page', 1);
+        $startDate = \Yii::$app->request->get('startDate', '');
+        $endDate = \Yii::$app->request->get('endDate', '');
+
+        $where = [];
+        if (!empty($startDate) && !empty($endDate)) {
+            $where = ['between', 'settlement_time', strtotime($startDate), strtotime($endDate) + 86399];
+        }
+
+        //游戏名称
+        $game = RGame::find()->asArray()->all();
+        $game = array_column($game, 'name', 'id');
+
+        //用户游戏账号信息
+        $userGame = RUserGame::find()->where(['user_id' => $this->userInfo['id']])->asArray()->all();
+        $userGame = array_column($userGame, 'game_account', 'game_id');
+
+        //投注记录
+        $query = RBet::find()->where(['user_id' => $this->userInfo['id']])->andWhere($where);
+        $count = $query->count();
+
+        $allResult = RBet::find()->where(['user_id' => $this->userInfo['id']])->andWhere($where)->sum('result_money');
+
+
+        $offset = ($page - 1) * 10;
+        $bet = $query->offset($offset)->limit(10)->orderBy('id desc')->asArray()->all();
+        if ($bet) {
+            foreach ($bet as $k => $v) {
+                $gameRecord = RGameRecord::find()->where(['id' => $v['game_record_id']])->asArray()->one();
+                $bet[$k]['account'] = $userGame[$gameRecord['game_id']] ?? '--';
+                $bet[$k]['gameTitle'] = $game[$gameRecord['game_id']] ?? '--';
+                $bet[$k]['series_id'] = $gameRecord['series_id'];
+                $bet[$k]['platform_id'] = $gameRecord['platform_id'];
+                $bet[$k]['inning_id'] = $gameRecord['inning_id'];
+                $pageResult += $v['result_money'];
+            }
+        }
+        $totalPage = ceil($count / 10);
+
+
+        return $this->render('bet', [
+            'gameNotice' => $gameNotice,
+            'bet' => $bet,
+            'count' => $count,
+            'totalPage' => $totalPage,
+            'page' => $page,
+            'startDate' => $startDate,
+            'endDate' => $endDate,
+            'pageResult' => $pageResult / 100,
+            'allResult' => $allResult / 100,
+        ]);
+    }
 
 
     /**
