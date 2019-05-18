@@ -38,24 +38,10 @@ use yii\helpers\Url;
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
-                        <div class="form-group  row"><label class="col-sm-2 col-form-label">游戏账号</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" name="game_account"
-                                       value="<?php echo $data['game_account']; ?>">
-                            </div>
-                        </div>
-                        <div class="hr-line-dashed"></div>
                         <div class="form-group  row"><label class="col-sm-2 col-form-label">登录密码</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" name="pwd"
                                        value="<?php echo $data['pwd']; ?>">
-                            </div>
-                        </div>
-                        <div class="hr-line-dashed"></div>
-                        <div class="form-group  row"><label class="col-sm-2 col-form-label">游戏密码</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" name="game_pwd"
-                                       value="<?php echo $data['game_pwd']; ?>">
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
@@ -87,17 +73,10 @@ use yii\helpers\Url;
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
-                        <div class="form-group  row"><label class="col-sm-2 col-form-label">qq</label>
+                        <div class="form-group  row"><label class="col-sm-2 col-form-label">qq/微信</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" name="qq"
                                        value="<?php echo $data['qq']; ?>">
-                            </div>
-                        </div>
-                        <div class="hr-line-dashed"></div>
-                        <div class="form-group  row"><label class="col-sm-2 col-form-label">微信</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" name="wechat"
-                                       value="<?php echo $data['wechat']; ?>">
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
@@ -115,13 +94,6 @@ use yii\helpers\Url;
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
-                        <div class="form-group  row"><label class="col-sm-2 col-form-label">注册区域IP</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" name="create_ip"
-                                       value="<?php echo $data['create_ip']; ?>">
-                            </div>
-                        </div>
-
                         <div class="form-group row"><label class="col-sm-2 col-form-label">上级代理</label>
                             <div class="col-sm-10">
                                 <select class="form-control m-b" name="agent_id">
@@ -129,7 +101,8 @@ use yii\helpers\Url;
                                     if(isset($agentList) && $agentList) {
                                         foreach ($agentList as $k => $v) {
                                             ?>
-                                            <option value="<?php echo $v['id'] ?>"><?php echo $v['real_name'] ?></option>
+                                            <option value="<?php echo $v['id'] ?>"
+                                            <?php if($v['id'] == $data['agent_id']){ echo 'selected="selected"';} ?>><?php echo $v['real_name'] ?></option>
 
                                             <?php
                                         }}

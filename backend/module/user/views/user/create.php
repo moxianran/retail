@@ -37,21 +37,9 @@ use yii\helpers\Url;
                                     </div>
                                 </div>
                                 <div class="hr-line-dashed"></div>
-                                <div class="form-group  row"><label class="col-sm-2 col-form-label">游戏账号</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" name="game_account">
-                                    </div>
-                                </div>
-                                <div class="hr-line-dashed"></div>
                                 <div class="form-group  row"><label class="col-sm-2 col-form-label">登录密码</label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" name="pwd">
-                                    </div>
-                                </div>
-                                <div class="hr-line-dashed"></div>
-                                <div class="form-group  row"><label class="col-sm-2 col-form-label">游戏密码</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" name="game_pwd">
                                     </div>
                                 </div>
                                 <div class="hr-line-dashed"></div>
@@ -79,18 +67,13 @@ use yii\helpers\Url;
                                     </div>
                                 </div>
                                 <div class="hr-line-dashed"></div>
-                                <div class="form-group  row"><label class="col-sm-2 col-form-label">qq</label>
+                                <div class="form-group  row"><label class="col-sm-2 col-form-label">qq/微信</label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" name="qq">
                                     </div>
                                 </div>
                                 <div class="hr-line-dashed"></div>
-                                <div class="form-group  row"><label class="col-sm-2 col-form-label">微信</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" name="wechat">
-                                    </div>
-                                </div>
-                                <div class="hr-line-dashed"></div>
+
                                 <div class="form-group  row"><label class="col-sm-2 col-form-label">银行卡号</label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" name="bank_id">
@@ -158,7 +141,7 @@ use yii\helpers\Url;
                     if(data.result=="success"){
                         //禁用提交按钮。防止点击起来没完
                         $('#formSubmit').attr('disabled',true);
-                        window.location.href = "<?php echo Url::toRoute(['/user/user/examine']); ?>";
+                        window.location.href = "<?php echo Url::toRoute(['/user/examine/examine']); ?>";
                     }else{
                         //禁用提交按钮。防止点击起来没完
                         $('#formSubmit').attr('disabled',true);

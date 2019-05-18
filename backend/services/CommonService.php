@@ -18,7 +18,7 @@ class CommonService
      */
     public static function exportUser($where)
     {
-        $field = 'id,account,game_account,money,real_name,phone,email,qq,wechat,bank_id,agent_id,domain,status,is_stop';
+        $field = 'id,account,money,real_name,phone,email,qq,bank_id,agent_id,domain,status,is_stop';
         $data = RUser::find()->where($where)->select($field)->asArray()->all();
 
 
@@ -28,6 +28,9 @@ class CommonService
         if($data) {
             foreach ($data as $k => $v) {
                 $data[$k]['agent_id'] = $agent[$v['agent_id']] ?? '暂无';
+
+                $data[$k]['money'] = $v['money'] / 100;
+
 
                 if($v['status'] == 1) {
                     $data[$k]['status'] = '待审核';
@@ -48,7 +51,7 @@ class CommonService
 
         $title = [
             [
-                '编号', '账号', '游戏账号', '余额', '真实姓名', '手机', '邮箱', 'QQ', '微信',
+                '编号', '账号', '余额', '真实姓名', '手机', '邮箱', 'QQ/微信',
                 '银行账号', '上级代理', '域名', '状态', '是否停用'
             ],
         ];

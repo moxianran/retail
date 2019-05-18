@@ -85,13 +85,9 @@ use yii\helpers\Url;
                                 <?php
                                 if ($this->params['position_id'] == 3 && $this->params['agent_level'] == 1) {
                                     ?>
-
-
                                     <?php
                                 } else {
                                     ?>
-
-
                                     <?php
                                 }
                                 ?>
@@ -101,8 +97,7 @@ use yii\helpers\Url;
                                 <th>真实姓名</th>
                                 <th>手机号码</th>
                                 <th>电子邮箱</th>
-                                <th>qq</th>
-                                <th>微信</th
+                                <th>qq/微信</th>
                                 <?php
                                 if ($this->params['position_id'] != 3) {
                                     ?>
@@ -129,7 +124,6 @@ use yii\helpers\Url;
                                         <td><?php echo $v['phone'] ?></td>
                                         <td><?php echo $v['email'] ?></td>
                                         <td><?php echo $v['qq'] ?></td>
-                                        <td><?php echo $v['wechat'] ?></td>
                                     <?php
                                     if ($this->params['position_id'] != 3) {
                                         ?>
@@ -141,10 +135,7 @@ use yii\helpers\Url;
                                         <td><?php echo date("Y-m-d H:i:s",$v['create_time']) ?></td>
                                         <td><?php echo $v['create_ip'] ?></td>
                                         <td><?php if($v['is_stop'] == 1) { echo "已禁用";} else { echo "正常";}  ?></td>
-
                                         <td class="center">
-
-
                                     <?php
                                     if($this->params['position_id'] == 1 || in_array(21,$this->params['power_id'])
                                     ) {
@@ -168,12 +159,9 @@ use yii\helpers\Url;
                                                 <?php
                                             }
                                             ?>
-
-
                                         <?php
                                     }
                                     ?>
-
                                             <?php
                                             if($this->params['position_id'] == 1 || in_array(19,$this->params['power_id'])
                                             ) {

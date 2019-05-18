@@ -186,15 +186,12 @@ class UserService {
 
         $user = new RUser();
         $user->account = $params['account'];
-        $user->game_account = $params['game_account'];
         $user->pwd = base64_encode($params['pwd']);
-        $user->game_pwd = base64_encode($params['game_pwd']);
         $user->money_pwd = base64_encode($params['money_pwd']);
         $user->real_name = $params['real_name'];
         $user->phone = $params['phone'];
         $user->email = $params['email'];
         $user->qq = $params['qq'];
-        $user->wechat = $params['wechat'];
         $user->bank_id = $params['bank_id'];
         $user->agent_id = $params['agent_id'];
         $user->domain = $params['domain'];
@@ -225,16 +222,14 @@ class UserService {
 
         $update_data = [
             'account' => $params['account'],
-            'game_account' => $params['game_account'],
             'pwd' => base64_encode($params['pwd']),
-            'game_pwd' => base64_encode($params['game_pwd']),
             'money_pwd' => base64_encode($params['money_pwd']),
             'real_name' => $params['real_name'],
             'phone' => $params['phone'],
             'email' => $params['email'],
             'qq' => $params['qq'],
-            'wechat' => $params['wechat'],
             'bank_id' => $params['bank_id'],
+            'agent_id' => $params['agent_id'],
             'domain' => $params['domain'],
             'update_time' => time(),
             'update_person' => $adminInfo['id'],
@@ -327,7 +322,6 @@ class UserService {
     {
         $data = RUser::find()->where(['id'=> $id,])->asArray()->one();
         $data['pwd'] = base64_decode($data['pwd']);
-        $data['game_pwd'] = base64_decode($data['game_pwd']);
         $data['money_pwd'] = base64_decode($data['money_pwd']);
         return $data;
     }

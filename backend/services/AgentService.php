@@ -285,7 +285,7 @@ class AgentService {
      */
     public static function getAgentList()
     {
-        $list = RAdmin::find()->where(['position_id'=>3,'is_delete'=>2])->asArray()->all();
+        $list = RAdmin::find()->where(['position_id'=>3,'is_delete'=>2,'examine_status'=>2])->asArray()->all();
         return $list;
     }
 
