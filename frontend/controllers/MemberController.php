@@ -6,6 +6,7 @@ use app\models\RNoticeGame;
 use app\models\RRechargeRecord;
 use app\models\RUser;
 use app\models\RUserGame;
+use app\models\RUserLoginRecord;
 use yii\web\Controller;
 
 
@@ -85,6 +86,30 @@ class MemberController extends Controller
             'endDate' => $endDate,
         ]);
     }
+
+    public function actionLogin()
+    {
+        $gameNotice = $this->getGameNotice();
+        $page = \Yii::$app->request->get('page', 1);
+
+        $query = RUserLoginRecord::find()->where(['user_id' => $this->userInfo['id']]);
+        $count = $query->count();
+
+        $offset = ($page - 1) * 10;
+        $loginRecord = $query->offset($offset)->limit(10)->orderBy('id desc')->asArray()->all();
+
+        $totalPage = ceil($count / 10);
+
+        return $this->render('login', [
+            'gameNotice' => $gameNotice,
+            'loginRecord' => $loginRecord,
+            'count' => $count,
+            'totalPage' => $totalPage,
+            'page' => $page,
+        ]);
+    }
+
+
 
     /**
      * 获取游戏通知
