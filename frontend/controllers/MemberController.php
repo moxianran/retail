@@ -25,9 +25,15 @@ class MemberController extends Controller
 
         $session = \Yii::$app->session;
         $this->userInfo = $session->get('userInfo');
+
         if (!$this->userInfo) {
             return $this->redirect(['/']);
         }
+        if($this->userInfo['expire_time'] < time()) {
+            unset($session['userInfo']);
+
+        }
+
     }
 
     /**

@@ -28,13 +28,13 @@ use yii\helpers\Url;
             </div>
             <div class="input-group forget">
                 <span class="icon2"></span>
-                <input type="text" placeholder="密码" name="pwd">
+                <input type="password" placeholder="密码" name="pwd">
                 <a href="#">忘记？</a>
             </div>
-            <div class="input-group">
-                <span class="icon3"></span>
-                <input type="text" placeholder="验证码">
-            </div>
+<!--            <div class="input-group">-->
+<!--                <span class="icon3"></span>-->
+<!--                <input type="text" placeholder="验证码">-->
+<!--            </div>-->
             <div class="btns clearfix">
                 <a href="javascript:void(0);" class="login-btn" id="login-btn">登录</a>
                 <a href="<?php echo Url::toRoute(['/site/register']); ?>" class="register-btn">注册</a>
@@ -286,7 +286,7 @@ use yii\helpers\Url;
                     if(data.result=="success"){
                         //禁用提交按钮。防止点击起来没完
                         $('#formSubmit').attr('disabled',true);
-                        window.location.href = "<?php echo Url::toRoute(['/site/member']); ?>";
+                        window.location.href = "<?php echo Url::toRoute(['/member/member']); ?>";
                     }else{
                         //禁用提交按钮。防止点击起来没完
                         $('#formSubmit').attr('disabled',true);

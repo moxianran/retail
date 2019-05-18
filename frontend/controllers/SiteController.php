@@ -4,6 +4,7 @@ namespace frontend\controllers;
 use app\models\RAdmin;
 use app\models\RNoticeGame;
 use app\models\RUser;
+use app\models\RUserLoginRecord;
 use yii\web\Controller;
 
 
@@ -260,23 +261,21 @@ class SiteController extends Controller
                 return $this->asJson($res);
             }
 
-            //设置最后登录时间和ip
-            $update_data = [
-                'login_ip' => $this->getRealIp(),
-                'login_time' => time(),
-                'update_time' => time(),
-            ];
-            RUser::updateAll($update_data,'id = '.$user['id']);
-
             //设置session
             $session = \Yii::$app->session;
             $adminInfo = [
                 'id' => $user['id'],
                 'real_name' => $user['real_name'],
+                'expire_time' => time()+3600
             ];
+            $session->set('userInfo',$adminInfo);
 
-            $session->set('userInfo' ,$adminInfo);
-
+            //设置最后登录时间和ip
+            $userLoginRecord = new RUserLoginRecord();
+            $userLoginRecord->login_ip = $this->getRealIp();
+            $userLoginRecord->login_time = time();
+            $userLoginRecord->user_id = $user['id'];
+            $userLoginRecord->insert();
 
             return $this->asJson(['result'=>'success','info'=>'登录成功']);
         }
