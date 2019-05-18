@@ -18,8 +18,8 @@ use yii\helpers\Url;
         <li<?php if($this->context->action->id == 'login'){ echo ' class="on"';} ?>>
             <a href="<?php echo Url::toRoute(['/member/login']); ?>">登录记录</a>
         </li>
-        <li>
-            <a href="#">公告信息<span>(2)</span></a>
+        <li<?php if($this->context->action->id == 'notice'){ echo ' class="on"';} ?>>
+            <a href="<?php echo Url::toRoute(['/member/notice']); ?>">公告信息</a>
         </li>
     </ul>
     <a href="/" class="menu-logo"><img src="/images/logo2.png"></a>

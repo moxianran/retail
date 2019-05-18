@@ -16,32 +16,50 @@ use yii\helpers\Url;
                     <ul class="row">
                         <li class="col-md-6">
                             <img src="/images/aicon1.png">
-                            <span>真实姓名：<?php echo $user['real_name']; ?></span>
-                            <a href="javascript:;" class="edit-btn"></a>
+                            <span>真实姓名：
+                                <b><?php echo $user['real_name']; ?></b>
+                                <input type="text" data-field="real_name" class="iptEdit" value="<?php echo $user['real_name']; ?>" style="display: none;"/>
+                            </span>
+                            <a href="javascript:;" class="edit-btn" ></a>
                         </li>
                         <li class="col-md-6">
                             <img src="/images/aicon2.png">
-                            <span>手机号码：<?php echo $user['phone']; ?></span>
+                            <span>手机号码：<b>
+                                    <?php echo $user['phone']; ?></b>
+                            <input type="text" data-field="phone" class="iptEdit" value="<?php echo $user['phone']; ?>" style="display: none;"/>
+                            </span>
                             <a href="javascript:;" class="edit-btn"></a>
                         </li>
                         <li class="col-md-6">
                             <img src="/images/aicon3.png">
-                            <span>电子邮箱：<?php echo $user['email']; ?></span>
+                            <span>电子邮箱：<b><?php echo $user['email']; ?></b>
+
+                            <input type="text" data-field="email" class="iptEdit" value="<?php echo $user['email']; ?>" style="display: none;"/>
+                            </span>
                             <a href="javascript:;" class="edit-btn"></a>
                         </li>
                         <li class="col-md-6">
                             <img src="/images/aicon4.png">
-                            <span>社交账号：<?php echo $user['qq']; ?></span>
+                            <span>社交账号：<b><?php echo $user['qq']; ?></b>
+
+                            <input type="text" data-field="qq" class="iptEdit" value="<?php echo $user['qq']; ?>" style="display: none;"/>
+                            </span>
                             <a href="javascript:;" class="edit-btn"></a>
                         </li>
                         <li class="col-md-6">
                             <img src="/images/aicon7.png">
-                            <span>会员密码：<?php echo base64_decode($user['pwd']); ?></span>
+                            <span>会员密码：<b><?php echo base64_decode($user['pwd']); ?></b>
+
+                            <input type="text" data-field="pwd" class="iptEdit" value="<?php echo base64_decode($user['pwd']); ?>" style="display: none;"/>
+                            </span>
                             <a href="javascript:;" class="edit-btn"></a>
                         </li>
                         <li class="col-md-6">
                             <img src="/images/aicon8.png">
-                            <span>取款密码：<?php echo base64_decode($user['money_pwd']); ?></span>
+                            <span>取款密码：
+                                <b><?php echo base64_decode($user['money_pwd']); ?></b>
+                            <input type="text" data-field="money_pwd" class="iptEdit" value="<?php echo base64_decode($user['money_pwd']); ?>" style="display: none;"/>
+                            </span>
                             <a href="javascript:;" class="edit-btn"></a>
                         </li>
                         <li class="col-xs-12">
@@ -49,19 +67,21 @@ use yii\helpers\Url;
                         </li>
                         <li class="col-md-6">
                             <img src="/images/aicon5.png">
-                            <span>当前余额：￥<?php echo $user['money']; ?></span>
+                            <span>当前余额：￥<?php echo $user['money'] / 100; ?></span>
                         </li>
                         <li class="col-md-6">
                             <img src="/images/aicon5.png">
-                            <span>可用余额：￥<?php echo $user['money']; ?></span>
+                            <span>可用余额：￥<?php echo $user['money'] / 100; ?></span>
                         </li>
                         <li class="col-xs-12">
                             <img src="/images/aicon9.png">
-                            <span>游戏账户：     腾龙厅：123456    百胜厅：123456    帝宝厅：123456    华美厅：123456</span>
+                            <span>游戏账户：     <?php echo $gameInfo ?></span>
                         </li>
                         <li class="col-xs-12">
                             <img src="/images/aicon10.png">
-                            <span>游戏密码：     以上各厅游戏密码统一为cs+手机尾数后4位数</span>
+                            <span>游戏密码：     以上各厅游戏密码统一为cs+手机尾数后4位数
+                            <input type="text" name="jjj" id="jjj" />
+                            </span>
                         </li>
                         <!-- <li class="col-md-6 col-md-offset-6 info-btns">
                             <a href="#" class="modify-login">修改登录密码</a>
@@ -77,30 +97,51 @@ use yii\helpers\Url;
 
 <script type="text/javascript">
     $(function(){
+        $(".edit-btn").click(function(){
+            $(this).prev().children("input").show()
+            $(this).prev().children("b").hide()
+        })
+    })
 
-        layui.use('laydate', function(){
-            var laydate = layui.laydate;
+    $(".iptEdit").blur(function () {
 
-            laydate.render({
-                elem: '#startDate1',
-                theme: '#222222',
-            });
+        var oldVal = $(this).prev().html();
+        var field = $(this).attr("data-field");
+        var newVal = $(this).val();
 
-            laydate.render({
-                elem: '#endDate1',
-                theme: '#222222',
-            });
+        console.log(newVal);
 
-            laydate.render({
-                elem: '#startDate2',
-                theme: '#222222',
-            });
+        var a = $(this);
+        $.ajax({
+            url:"<?php echo Url::toRoute(['/member/edit']); ?>",
+            type:"post",
+            data:{
+                field:field,
+                newVal:newVal
+            },
+            dataType: 'json',
+            success:function(data){
+                $('#formSubmit').attr('disabled',true);
 
-            laydate.render({
-                elem: '#endDate2',
-                theme: '#222222',
-            });
+                if(data.result=="success"){
+                    a.prev().html(newVal);
+                }else{
+
+                    a.val(oldVal);
+                    a.prev().html(oldVal);
+
+
+
+                    layui.use('layer', function(){
+                        var layer = layui.layer;
+                        layer.msg('操作失败');
+                    });
+
+                }
+            }
         });
+        $(this).prev().show()
 
+        $(this).hide()
     });
 </script>

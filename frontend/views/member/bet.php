@@ -96,13 +96,13 @@ use yii\helpers\Url;
                         </div>
                         <div class="record-page fr" style=" <?php if($totalPage == 1) { echo "display:none";} ?>">
                             <span>第<?php echo $page ?>页 共<?php echo $totalPage ?>页 总<?php echo $count ?>录 每页10录</span>
-                            <a <?php if($page <= 1) { echo 'style="display:none"';} ?> href="<?php echo Url::toRoute(['/member/recharge','page'=>1,'startDate'=>$startDate,'endDate'=>$endDate]); ?>">首 页</a>
+                            <a <?php if($page <= 1) { echo 'style="display:none"';} ?> href="<?php echo Url::toRoute(['/member/bet','page'=>1,'startDate'=>$startDate,'endDate'=>$endDate]); ?>">首 页</a>
                             <a <?php if($page <= 1) { echo 'style="display:none"';} ?>
-                                    href="<?php echo Url::toRoute(['/member/recharge','page'=>$page -1,'startDate'=>$startDate,'endDate'=>$endDate]); ?>">上一页</a>
-                            <a <?php if($page >= $totalPage) { echo 'style="display:none"';} ?> href="<?php echo Url::toRoute(['/member/recharge','page'=>$page+1,'startDate'=>$startDate,'endDate'=>$endDate]); ?>"
+                                    href="<?php echo Url::toRoute(['/member/bet','page'=>$page -1,'startDate'=>$startDate,'endDate'=>$endDate]); ?>">上一页</a>
+                            <a <?php if($page >= $totalPage) { echo 'style="display:none"';} ?> href="<?php echo Url::toRoute(['/member/bet','page'=>$page+1,'startDate'=>$startDate,'endDate'=>$endDate]); ?>"
                                 >下一页</a>
                             <a <?php if($page >= $totalPage) { echo 'style="display:none"';} ?>
-                                    href="<?php echo Url::toRoute(['/member/recharge','page'=>$totalPage,'startDate'=>$startDate,'endDate'=>$endDate]); ?>"
+                                    href="<?php echo Url::toRoute(['/member/bet','page'=>$totalPage,'startDate'=>$startDate,'endDate'=>$endDate]); ?>"
                                 >末 页</a>
                         </div>
                     </div>

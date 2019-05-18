@@ -6,6 +6,7 @@ use app\models\RBet;
 use app\models\RGame;
 use app\models\RGameRecord;
 use app\models\RNoticeGame;
+use app\models\RNoticeSystem;
 use app\models\RRechargeRecord;
 use app\models\RUser;
 use app\models\RUserGame;
@@ -38,10 +39,67 @@ class MemberController extends Controller
 
         $user = RUser::find()->where(['id' => $this->userInfo['id']])->asArray()->one();
 
+        //游戏名称
+        $game = RGame::find()->asArray()->all();
+        $game = array_column($game, 'name', 'id');
+
+        //用户游戏账号信息
+        $userGame = RUserGame::find()->where(['user_id' => $this->userInfo['id']])->asArray()->all();
+        $userGame = array_column($userGame, 'game_account', 'game_id');
+
+        $gameInfo = '';
+        if($userGame) {
+            foreach ($userGame as $k=>$v) {
+                $gameInfo .= $game[$k].": ".$v."  ";
+            }
+        }
+
         return $this->render('member', [
             'gameNotice' => $gameNotice,
-            'user' => $user
+            'user' => $user,
+            'gameInfo' => $gameInfo
         ]);
+    }
+
+    /**
+     * 修改个人信息
+     */
+    public function actionEdit()
+    {
+        if (\Yii::$app->request->isPost) {
+            $post = \Yii::$app->request->post();
+
+            $field = trim($post['field']);
+            $newVal = trim($post['newVal']);
+
+            if(empty($newVal)) {
+                $json = ['result'=>'fail','info' => '操作失败'];
+                return $this->asJson($json);
+            }
+
+            $fields = [
+                'real_name','phone','email','qq','pwd','money_pwd'
+            ];
+
+            if(in_array($field,$fields)) {
+
+                if($field == 'pwd' || $field == 'money_pwd') {
+                    $newVal = base64_encode($newVal);
+                }
+
+                $update_data = [
+                    $field => $newVal,
+                    'update_time' => time(),
+                ];
+                $res = RUser::updateAll($update_data,'id = '.$this->userInfo['id']);
+                if($res) {
+                    $json = ['result'=>'success','info' => '操作成功'];
+                } else {
+                    $json = ['result'=>'fail','info' => '操作失败'];
+                }
+                return $this->asJson($json);
+            }
+        }
     }
 
     /**
@@ -60,6 +118,7 @@ class MemberController extends Controller
             $where = ['between', 'create_time', strtotime($startDate), strtotime($endDate) + 86399];
         }
 
+        //用户游戏账号信息
         $userGame = RUserGame::find()->where(['user_id' => $this->userInfo['id']])->asArray()->all();
         $userGame = array_column($userGame, 'game_account', 'game_id');
 
@@ -162,7 +221,6 @@ class MemberController extends Controller
         }
         $totalPage = ceil($count / 10);
 
-
         return $this->render('bet', [
             'gameNotice' => $gameNotice,
             'bet' => $bet,
@@ -176,6 +234,31 @@ class MemberController extends Controller
         ]);
     }
 
+    /**
+     * 公告信息
+     */
+    public function actionNotice()
+    {
+        $gameNotice = $this->getGameNotice();
+
+        $page = \Yii::$app->request->get('page', 1);
+
+        $query = RNoticeSystem::find()->where([ 'status' => 1]);
+        $count = $query->count();
+
+        $offset = ($page - 1) * 10;
+        $notice = $query->offset($offset)->limit(10)->orderBy('id desc')->asArray()->all();
+
+        $totalPage = ceil($count / 10);
+
+        return $this->render('notice', [
+            'gameNotice' => $gameNotice,
+            'notice' => $notice,
+            'count' => $count,
+            'totalPage' => $totalPage,
+            'page' => $page,
+        ]);
+    }
 
     /**
      * 获取游戏通知
