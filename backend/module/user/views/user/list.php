@@ -146,14 +146,14 @@ use yii\helpers\Url;
                                             if($v['is_stop'] == 2) {
                                                 ?>
                                                 <button class="btn btn-sm btn-primary m-t-n-xs" type="button"
-                                                        onclick="changeStop(<?php echo $v['id'] ?>,2)">
+                                                        onclick="changeStop(<?php echo $v['id'] ?>,1)">
                                                     <strong>禁用</strong>
                                                 </button>
                                                 <?php
                                             } else {
                                                 ?>
                                                 <button class="btn btn-sm btn-primary m-t-n-xs" type="button"
-                                                        onclick="changeStop(<?php echo $v['id'] ?>,1)">
+                                                        onclick="changeStop(<?php echo $v['id'] ?>,2)">
                                                     <strong>恢复正常</strong>
                                                 </button>
                                                 <?php

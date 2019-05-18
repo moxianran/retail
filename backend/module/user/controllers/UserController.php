@@ -121,9 +121,7 @@ class UserController extends BaseController
         $res = UserService::del($post);
         $json = ['result' => $res['type'],'info'=>$res['msg']];
         return $this->asJson($json);
-    }
-
-
+        }
     }
 
     
