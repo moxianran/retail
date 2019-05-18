@@ -105,11 +105,12 @@ use yii\helpers\Url;
                                     <?php
                                     if (isset($agentList) && $agentList) {
                                         foreach ($agentList as $k => $v) {
+                                            if($data['id'] != $v['id']){
                                             ?>
-                                            <option value="<?php echo $v['id'] ?>"><?php echo $v['real_name'] ?></option>
+                                            <option value="<?php echo $v['id'] ?>"
+                                                <?php if($v['id'] == $data['up_agent_id']){ echo 'selected="selected"';} ?>><?php echo $v['real_name'] ?></option>
                                             <?php
-                                        }
-                                    }
+                                        }}}
                                     ?>
                                 </select>
                             </div>

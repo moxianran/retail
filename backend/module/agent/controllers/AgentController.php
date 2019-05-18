@@ -36,7 +36,7 @@ class AgentController extends BaseController
             'pagination' => $pagination,
             'title' => $title,
             'moduleTitle' => $this->moduleTitle,
-            'get' => $get
+            'get' => $get,
         ]);
     }
 
