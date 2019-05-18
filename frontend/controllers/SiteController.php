@@ -291,50 +291,52 @@ class SiteController extends Controller
         $res = ['result' => 'success'];
 
         if (!isset($post['agree'])) {
-            $res = ['result' => 'fail', 'info' => '请同意合约!'];
+            return ['result' => 'fail', 'info' => '请同意合约!'];
         }
 
         //账号
         $account = trim($post['account']);
+        RUser::find()->where(['account' => $account, 'is_delete' => 0])->asArray()->one();
+
         if (empty($account)) {
-            $res = ['result' => 'fail', 'info' => '请输入账号'];
+            return ['result' => 'fail', 'info' => '请输入账号'];
         }
         if (!preg_match('/^[A-Za-z0-9_]+$/', $post['account'])) {
-            $res = ['result' => 'fail', 'info' => '账号必须数字或字母或下划线组成'];
+            return ['result' => 'fail', 'info' => '账号必须数字或字母或下划线组成'];
         }
 
         //密码
         $pwd = trim($post['pwd']);
         if (empty($pwd)) {
-            $res = ['result' => 'fail', 'info' => '请输入密码'];
+            return ['result' => 'fail', 'info' => '请输入密码'];
         }
         if(strlen($pwd) < 6) {
-            $res = ['result' => 'fail', 'info' => '密码6位或6位以上'];
+            return ['result' => 'fail', 'info' => '密码6位或6位以上'];
         }
         $pwd_again = trim($post['pwd_again']);
         if (empty($pwd_again)) {
-            $res = ['result' => 'fail', 'info' => '请输入再次密码'];
+            return ['result' => 'fail', 'info' => '请输入再次密码'];
         }
         if ($pwd != $pwd_again) {
-            $res = ['result' => 'fail', 'info' => '两次密码输入不一致'];
+            return ['result' => 'fail', 'info' => '两次密码输入不一致'];
         }
 
         //取款密码
         $money_pwd = trim($post['money_pwd']);
         if (empty($money_pwd)) {
-            $res = ['result' => 'fail', 'info' => '请输入取款密码'];
+            return ['result' => 'fail', 'info' => '请输入取款密码'];
         }
         if(strlen($money_pwd) < 6) {
-            $res = ['result' => 'fail', 'info' => '取款密码6位或6位以上'];
+            return ['result' => 'fail', 'info' => '取款密码6位或6位以上'];
         }
 
         //手机
         $phone = trim($post['phone']);
         if (empty($phone)) {
-            $res = ['result' => 'fail', 'info' => '请输入手机号码'];
+            return ['result' => 'fail', 'info' => '请输入手机号码'];
         }
         if(strlen($phone) != 11) {
-            $res = ['result' => 'fail', 'info' => '手机号码格式错误'];
+            return ['result' => 'fail', 'info' => '手机号码格式错误'];
         }
         return $res;
     }

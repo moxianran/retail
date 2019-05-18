@@ -19,9 +19,9 @@ use yii\helpers\Url;
                 <li class="on"><a href="#">MG电子</a></li>
                 <li><a href="#">PT电子</a></li>
                 <li><a href="#">BBIN电子</a></li>
-                <li><a href="#">真人视讯</a></li>
-                <li><a href="#">体育赛事</a></li>
-                <li><a href="#">彩票游戏</a></li>
+                <li><a href="<?php echo Url::toRoute(['/site/casino']); ?>">真人视讯</a></li>
+                <li><a href="<?php echo Url::toRoute(['/site/sport']); ?>">体育赛事</a></li>
+                <li><a href="<?php echo Url::toRoute(['/site/lottery']); ?>">彩票游戏</a></li>
                 <li><a href="#">手机投注</a></li>
                 <li><a href="#">AG捕鱼王</a></li>
                 <li><a href="#">新霸老虎机</a></li>
@@ -91,15 +91,15 @@ use yii\helpers\Url;
                                     <input type="text" name="qq" placeholder="请输入您的QQ或者微信号，非微信昵称">
                                 </div>
                             </li>
-                            <li class="row">
-                                <div class="col-sm-3 col-md-2 name required">验证码</div>
-                                <div class="col-sm-9 col-md-4 col-lg-5 input ver-code">
-                                    <input type="text" placeholder="请输入验证码">
-                                    <a href="javascript:;" class="ver-img">
-                                        <img src="/images/ver-img.jpg">
-                                    </a>
-                                </div>
-                            </li>
+<!--                            <li class="row">-->
+<!--                                <div class="col-sm-3 col-md-2 name required">验证码</div>-->
+<!--                                <div class="col-sm-9 col-md-4 col-lg-5 input ver-code">-->
+<!--                                    <input type="text" placeholder="请输入验证码">-->
+<!--                                    <a href="javascript:;" class="ver-img">-->
+<!--                                        <img src="/images/ver-img.jpg">-->
+<!--                                    </a>-->
+<!--                                </div>-->
+<!--                            </li>-->
                             <li class="row">
                                 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 treaty">
                                     <input type="checkbox" id="Treaty" name="agree">
@@ -207,11 +207,11 @@ use yii\helpers\Url;
                 success:function(data){
                     if(data.result=="success"){
                         //禁用提交按钮。防止点击起来没完
-                        $('#register_btn').attr('disabled',true);
-                            $('.reg-success').fadeIn();
+                        $('#register_btn').attr('disabled',false);
+                        $('.reg-success').fadeIn();
                     }else{
                         //禁用提交按钮。防止点击起来没完
-                        $('#register_btn').attr('disabled',true);
+                        $('#register_btn').attr('disabled',false);
                         alert(data.info);
                     }
                 }
