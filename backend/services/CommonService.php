@@ -7,6 +7,8 @@ use app\models\RBet;
 use app\models\RRechargeRecord;
 use app\models\RResult;
 use app\models\RUser;
+use app\models\RGame;
+use app\models\RGameRecord;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
 class CommonService
@@ -58,7 +60,6 @@ class CommonService
 
         CommonService::export('会员列表',$data,$title);
     }
-
 
     /**
      * 导出代理
@@ -120,31 +121,89 @@ class CommonService
         CommonService::export('主管列表', $data, $title);
     }
 
-
     /**
      * 投注记录
      */
     public static function exportBet()
     {
-        $field = 'id,game_title,platform_id,series_id,game_id,user_id,bet_desc,bet_time,bet_money,bet_result,code_clear_num,settlement_time,';
-        $field .= 'settlement_money,account_money,area,other';
-        $data = RBet::find()->select($field)->asArray()->all();
+        $list = RBet::find()->asArray()->all();
 
-        $user = RUser::find()->asArray()->one();
+        $user = RUser::find()->asArray()->all();
         $real_name = array_column($user, 'real_name', 'id');
+        $newList = [];
+        if ($list) {
 
-        if ($data) {
-            foreach ($data as $k => $v) {
-                $data[$k]['user_id'] = $real_name[$v['user_id']] ?? '暂无';
+            //游戏名称
+            $game = RGame::find()->asArray()->all();
+            $game = array_column($game, 'name', 'id');
+
+            foreach ($list as $k => $v) {
+
+                $newList[$k]['id'] = $v['id'];
+
+                $gameRecord = RGameRecord::find()->where(['id' => $v['game_record_id']])->asArray()->one();
+                $newList[$k]['gameTitle'] = $game[$gameRecord['game_id']] ?? '--';
+
+                $newList[$k]['series_id'] = $gameRecord['series_id'];
+                $newList[$k]['platform_id'] = $gameRecord['platform_id'];
+                $newList[$k]['inning_id'] = $gameRecord['inning_id'];
+                $newList[$k]['user_id'] = $real_name[$v['user_id']] ?? '暂无';
+
+                $betDesc = '投注了';
+                if ($v['bet_door'] == 1) {
+                    $betDesc .= "庄";
+                } else if ($v['bet_door'] == 2) {
+                    $betDesc .= "闲";
+                } else if ($v['bet_door'] == 3) {
+                    $betDesc .= "平";
+                } else if ($v['bet_door'] == 4) {
+                    $betDesc .= "庄对";
+                } else if ($v['bet_door'] == 5) {
+                    $betDesc .= "闲对";
+                }
+                $betDesc .= $v['bet_money'] / 100 . "元";
+                $newList[$k]['bet_desc'] = $betDesc;
+                $newList[$k]['bet_time'] = date("Y-m-d H:i:s",$v['bet_time']);
+                $newList[$k]['bet_money'] = $v['bet_money'];
+
+                $bet_result = '';
+                if ($v['bet_result'] == 1) {
+                    $bet_result = "庄";
+                } else if ($v['bet_result'] == 2) {
+                    $bet_result = "闲";
+                } else if ($v['bet_result'] == 3) {
+                    $bet_result = "平";
+                } else if ($v['bet_result'] == 4) {
+                    $bet_result = "庄对";
+                } else if ($v['bet_result'] == 5) {
+                    $bet_result = "闲对";
+                }
+                $newList[$k]['bet_result'] = $bet_result;
+                $newList[$k]['code_clear_num'] = $v['code_clear_num'];
+
+                if($v['bet_result'] == '0') {
+                    $newList[$k]['bet_result'] = '平';
+                } else if($v['bet_result'] == '1'){
+                    $newList[$k]['bet_result'] = '胜';
+                } else if($v['bet_result'] == '2'){
+                    $newList[$k]['bet_result'] = '负';
+                }
+
+                $newList[$k]['settlement_time'] = date("Y-m-d H:i:s",$v['settlement_time']);
+                $newList[$k]['settlement_money'] = $v['settlement_money'] / 100;
+                $newList[$k]['account_money'] = $v['account_money'] / 100;
+                $newList[$k]['ip'] = $v['ip'];
             }
         }
         $title = [
             [
-                '序号', '游戏', '台号', '靴号', '局好', '会员', '投注信息', '投注时间', '投注金额',
-                '投注结果', '洗码量', '结算时间', '结算金额', '账号余额', '区域', '其他'
+                '序号', '游戏', '桌好', '场', '次', '会员', '投注信息', '投注时间', '投注金额',
+                '投注结果', '洗码量', '结算时间', '结算金额', '账号余额', '区域ip'
             ],
         ];
-        CommonService::export('投注记录', $data, $title);
+
+//        print_r($list);die;
+        CommonService::export('投注记录', $newList, $title);
     }
 
     /**
@@ -152,41 +211,44 @@ class CommonService
      */
     public static function exportRecharge()
     {
-
-        $gameTypeArr = [
-            '1' => '牌',
-            '2' => '彩票'
-        ];
         $settlementTypeArr = [
             '1' => '微信',
             '2' => '支付宝'
         ];
 
+        $game = RGame::find()->asArray()->all();
+        $game = array_column($game,'name','id');
+
+        $data = RRechargeRecord::find()->asArray()->all();
+
         $user = RUser::find()->where([])->asArray()->all();
-        $user = array_column($user, 'real_name', 'id');
+        $userName = array_column($user,'real_name','id');
 
-        $admin = RAdmin::find()->where([])->asArray()->all();
-        $admin = array_column($admin, 'real_name', 'id');
+        $upAgentIds = array_column($user,'agent_id','id');
 
-        $field = 'id,game_type,settlement_type,user_id,agent_id,operator_id,create_time';
-        $data = RRechargeRecord::find()->select($field)->asArray()->all();
+        $agent = RAdmin::find()->where([])->asArray()->all();
+        $agent = array_column($agent,'real_name','id');
+
 
         if ($data) {
+            $returnList = [];
             foreach ($data as $k => $v) {
-                $data[$k]['game_type'] = $gameTypeArr[$v['game_type']] ?? '暂无';
-                $data[$k]['settlement_type'] = $settlementTypeArr[$v['settlement_type']] ?? '暂无';
-                $data[$k]['user_id'] = $user[$v['user_id']] ?? '暂无';
-                $data[$k]['agent_id'] = $admin[$v['agent_id']] ?? '暂无';
-                $data[$k]['operator_id'] = $admin[$v['operator_id']] ?? '暂无';
-                $data[$k]['create_time'] = date("Y-m-d H:i:s", $v['create_time']);
+                $returnList[$k]['id'] = $v['id'];
+                $returnList[$k]['game'] = $game[$v['game_type']] ?? '暂无';
+                $returnList[$k]['settlement_type'] = $settlementTypeArr[$v['type']] ?? '暂无';
+                $returnList[$k]['userName'] = $userName[$v['user_id']] ?? '暂无';
+                $returnList[$k]['agentName'] = $agent[$upAgentIds[$v['user_id']]] ?? '暂无';
+                $returnList[$k]['operator_id'] = $agent[$v['operator_id']] ?? '暂无';
+                $returnList[$k]['create_time'] = date("Y-m-d H:i:s", $v['create_time']);
             }
         }
         $title = [
             [
-                '序号', '游戏类型', '结算类型', '用户名称', '代理名称', '操作员', '充值时间'
+                '序号', '游戏', '结算类型', '用户名称', '代理名称', '操作员', '充值时间'
             ],
         ];
-        CommonService::export('充值记录', $data, $title);
+
+        CommonService::export('充值记录', $returnList, $title);
     }
 
     /**

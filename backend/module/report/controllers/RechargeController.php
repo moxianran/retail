@@ -12,7 +12,7 @@ class RechargeController extends BaseController
 {
 
     public $enableCsrfValidation = false;
-    public $moduleTitle = "通知管理";
+    public $moduleTitle = "报表管理";
     public $adminInfo = [];
 
     public function init()
@@ -37,7 +37,6 @@ class RechargeController extends BaseController
         $agent = RAdmin::find()->where(['position_id' => 3])->asArray()->all();
 
 
-
         $pagination = new Pagination(['totalCount' => $data['count'], 'pageSize' => $data['pageSize']]);
 
         return $this->render('rechargeRecord', [
@@ -50,8 +49,8 @@ class RechargeController extends BaseController
             'agent' => $agent,
             'title' => $title,
             'moduleTitle' => $this->moduleTitle,
-            'game_type' => $data['game_type'],
-            'settlement_type' => $data['settlement_type'],
+            'game' => $data['game'],
+            'type' => $data['type'],
         ]);
     }
 

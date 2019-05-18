@@ -24,16 +24,16 @@
 
                     <div class="col-sm-3">
                         <div class="form-group">
-                            <label class="control-label" for="game_type">游戏类型</label>
-                            <select name="game_type" id="game_type" class="form-control">
-                                <option value="0" <?php if(!isset($get['game_type']) || $get['game_type'] == '0' ) { echo ' selected="selected"';}?>>全部</option>
+                            <label class="control-label" for="game">游戏类型</label>
+                            <select name="game" id="game" class="form-control">
+                                <option value="0" <?php if(!isset($get['game']) || $get['game'] == '0' ) { echo ' selected="selected"';}?>>全部</option>
 
                                 <?php
-                                if(isset($game_type) && !empty($game_type)) {
-                                    foreach($game_type as $k => $v) {
+                                if(isset($game) && !empty($game)) {
+                                    foreach($game as $k => $v) {
                                         ?>
                                         <option value="<?php echo $k ?>"  <?php
-                                        if(isset($get['game_type']) && $get['game_type'] == $k ) { echo ' selected="selected"';}?>
+                                        if(isset($get['game']) && $get['game'] == $k ) { echo ' selected="selected"';}?>
                                         ><?php echo $v; ?></option>
                                         <?php
                                     }}
@@ -44,16 +44,16 @@
 
                     <div class="col-sm-3">
                         <div class="form-group">
-                            <label class="control-label" for="settlement_type">结算类型</label>
-                            <select name="settlement_type" id="settlement_type" class="form-control">
-                                <option value="0" <?php if(!isset($get['settlement_type']) || $get['settlement_type'] == '0' ) { echo ' selected="selected"';}?>>全部</option>
+                            <label class="control-label" for="type">结算类型</label>
+                            <select name="type" id="type" class="form-control">
+                                <option value="0" <?php if(!isset($get['type']) || $get['type'] == '0' ) { echo ' selected="selected"';}?>>全部</option>
 
                                 <?php
                                 if(isset($settlement_type) && !empty($settlement_type)) {
                                     foreach($settlement_type as $k => $v) {
                                         ?>
                                         <option value="<?php echo $k; ?>"  <?php
-                                        if(isset($get['settlement_type']) && $get['settlement_type'] == $k ) { echo ' selected="selected"';}?>
+                                        if(isset($get['type']) && $get['type'] == $k ) { echo ' selected="selected"';}?>
                                         ><?php echo $v ?></option>
                                         <?php
                                     }}
@@ -147,10 +147,10 @@
                                         ?>
                                         <tr class="gradeX">
                                             <td><?php echo $v['id'] ?></td>
-                                            <td><?php echo $v['game_type'] ?></td>
-                                            <td><?php echo $v['settlement_type'] ?></td>
-                                            <td><?php echo $v['user_id'] ?></td>
-                                            <td><?php echo $v['agent_id'] ?></td>
+                                            <td><?php echo $v['gameName'] ?></td>
+                                            <td><?php echo $v['type'] ?></td>
+                                            <td><?php echo $v['userName'] ?></td>
+                                            <td><?php echo $v['agentName'] ?></td>
                                             <td><?php echo $v['operator_id'] ?></td>
                                             <td><?php echo date("Y-m-d H:i:s",$v['create_time']); ?></td>
                                         </tr>

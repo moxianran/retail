@@ -11,7 +11,7 @@ class AgentController extends BaseController
 
     public $pageSize = 10;
     public $enableCsrfValidation = false;
-    public $moduleTitle = "通知管理";
+    public $moduleTitle = "报表管理";
     public $adminInfo = [];
 
     public function init()

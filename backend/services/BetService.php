@@ -76,27 +76,13 @@ class BetService {
             $game = RGame::find()->asArray()->all();
             $game = array_column($game, 'name', 'id');
 
-
-
-
-
             $userIds = array_column($list,'user_id');
             $user = RUser::find('id,real_name')->where(['id' => $userIds])->asArray()->all();
             $user = array_column($user,'real_name','id');
 
-
-//            print_r($list);die;
             foreach ($list as $k=>$v) {
 
-
-                //用户游戏账号信息
-//                $userGame = RUserGame::find()->where(['user_id' => $v['user_id']])->asArray()->all();
-//                $userGame = array_column($userGame, 'game_account', 'game_id');
-
-
                 $gameRecord = RGameRecord::find()->where(['id' => $v['game_record_id']])->asArray()->one();
-//print_r($gameRecord);die;
-
 
                 $list[$k]['gameTitle'] = $game[$gameRecord['game_id']] ?? '--';
 

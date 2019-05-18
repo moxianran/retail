@@ -1,6 +1,7 @@
 <?php
 namespace backend\services;
 use app\models\RAdmin;
+use app\models\RGame;
 use app\models\RRechargeRecord;
 use app\models\RUser;
 
@@ -9,15 +10,13 @@ class RechargeService
 
     public static function getList($params)
     {
-        $gameTypeArr = [
-            '1' => '牌',
-            '2' => '彩票'
-        ];
-        $settlementTypeArr = [
-            '1' => '微信',
-            '2' => '支付宝'
-        ];
+        $game = RGame::find()->asArray()->all();
+        $game = array_column($game,'name','id');
 
+        $settlementTypeArr = [
+//            '1' => '微信',
+//            '2' => '支付宝'
+        ];
 
         $pageSize= 10;
 
@@ -36,11 +35,11 @@ class RechargeService
             $end = strtotime(date("Y-m-d H:i:s"));
         }
 
-        if (isset($params['game_type']) && $params['game_type'] > 0) {
-            $cond[] = ['=', 'game_type', $params['game_type']];
+        if (isset($params['game']) && $params['game'] > 0) {
+            $cond[] = ['=', 'game', $params['game']];
         }
-        if (isset($params['settlement_type']) && $params['settlement_type'] > 0) {
-            $cond[] = ['=', 'settlement_type', $params['settlement_type']];
+        if (isset($params['type']) && $params['type'] > 0) {
+            $cond[] = ['=', 'type', $params['type']];
         }
         if (isset($params['agent_id']) && $params['agent_id'] > 0) {
             $cond[] = ['=', 'agent_id', $params['agent_id']];
@@ -65,20 +64,22 @@ class RechargeService
         }
 
         $count = $query->count();
-        $list = $query->offset($offset)->limit($pageSize)->asArray()->all();
+        $list = $query->orderBy('id desc')->offset($offset)->limit($pageSize)->asArray()->all();
         if ($list) {
 
             $user = RUser::find()->where([])->asArray()->all();
-            $user = array_column($user,'real_name','id');
+            $userName = array_column($user,'real_name','id');
 
+            $upAgentIds = array_column($user,'agent_id','id');
             $agent = RAdmin::find()->where([])->asArray()->all();
             $agent = array_column($agent,'real_name','id');
 
             foreach ($list as $k => $v) {
-                $list[$k]['game_type'] = $gameTypeArr[$v['game_type']] ?? '暂无';
-                $list[$k]['settlement_type'] = $settlementTypeArr[$v['settlement_type']] ?? '暂无';
-                $list[$k]['user_id'] = $user[$v['user_id']] ?? '暂无';
-                $list[$k]['agent_id'] = $agent[$v['agent_id']] ?? '暂无';
+                $list[$k]['gameName'] = $game[$v['game_type']] ?? '暂无';
+                $list[$k]['settlement_type'] = $settlementTypeArr[$v['type']] ?? '暂无';
+                $list[$k]['userName'] = $userName[$v['user_id']] ?? '暂无';
+
+                $list[$k]['agentName'] = $agent[$upAgentIds[$v['user_id']]] ?? '暂无';
                 $list[$k]['operator_id'] = $agent[$v['operator_id']] ?? '暂无';
             }
         }
@@ -89,8 +90,8 @@ class RechargeService
             'pageSize' => $pageSize,
             'start' => $startDate,
             'end' => $endDate,
-            'game_type' => $gameTypeArr,
-            'settlement_type' => $settlementTypeArr
+            'game' => $game,
+            'type' => $settlementTypeArr
         ];
 
     }

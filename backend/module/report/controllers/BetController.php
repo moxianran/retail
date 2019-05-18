@@ -11,7 +11,7 @@ class BetController extends BaseController
 {
 
     public $pageSize = 10;
-    public $moduleTitle = "通知管理";
+    public $moduleTitle = "报表管理";
     public $adminInfo = [];
 
     public function init()
