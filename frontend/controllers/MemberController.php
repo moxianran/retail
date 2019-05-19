@@ -35,7 +35,7 @@ class MemberController extends Controller
         }
 
         $user = RUser::find()->where(['id' => $this->userInfo['id']])->asArray()->one();
-        if($user['is_stop'] == 1 || $user['is_delete'] == 1 || $user['status'] != 2) {
+        if($user['is_stop'] == 1 || $user['is_delete'] == 1 || $user['status'] != 2 || $user['expire_time'] < time()) {
             unset($session['userInfo']);
             return $this->redirect(['/']);
         }

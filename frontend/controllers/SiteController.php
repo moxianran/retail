@@ -260,15 +260,24 @@ class SiteController extends Controller
                 $res = ['result' => 'fail', 'info' => '账号已被锁定，请联系客服'];
                 return $this->asJson($res);
             }
+            
+            $expireTime = time()+3600;
 
             //设置session
             $session = \Yii::$app->session;
             $adminInfo = [
                 'id' => $user['id'],
                 'real_name' => $user['real_name'],
-                'expire_time' => time()+3600
+                'expire_time' => $expireTime
             ];
             $session->set('userInfo',$adminInfo);
+
+            //修改用户信息
+            $update_data = [
+                'expire_time' => $expireTime,
+                'update_time' => time(),
+            ];
+            RUser::updateAll($update_data,'id = '.$user['id']);
 
             //设置最后登录时间和ip
             $userLoginRecord = new RUserLoginRecord();

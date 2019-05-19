@@ -202,7 +202,6 @@ class CommonService
             ],
         ];
 
-//        print_r($list);die;
         CommonService::export('投注记录', $newList, $title);
     }
 

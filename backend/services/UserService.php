@@ -3,6 +3,7 @@ namespace backend\services;
 
 use app\models\RAdmin;
 use app\models\RUser;
+use app\models\RUserLoginRecord;
 
 class UserService {
 
@@ -139,6 +140,7 @@ class UserService {
 
         //删选数组
         $cond = [];
+        $cond[] = ['>', 'expire_time', time()];
 
         //姓名
         if(!empty($params['real_name'])) {
@@ -155,7 +157,7 @@ class UserService {
 
         $offset = ($page - 1) * $pageSize;
 
-        $query = RUser::find()->where(['status'=>1]);
+        $query = RUser::find()->where([]);
         if($cond) {
             foreach($cond as $k => $v) {
                 $query->andWhere($v);
@@ -165,6 +167,13 @@ class UserService {
         $count = $query->count();
         $list = $query->orderBy('id desc')->offset($offset)->limit($pageSize)->asArray()->all();
 
+        if ($list) {
+            foreach ($list as $k => $v) {
+                $login_record = RUserLoginRecord::find()->where(['user_id' => $v['id']])->orderBy('id desc')->asArray()->one();
+                $list[$k]['login_time'] = $login_record['login_time'];
+                $list[$k]['login_ip'] = $login_record['login_ip'];
+            }
+        }
 
         return [
             'list' => $list,

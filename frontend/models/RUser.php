@@ -27,6 +27,7 @@ use Yii;
  * @property int $status 状态 1 待审核 2通过 3拒绝
  * @property int $is_stop 是否停用 1是 2否
  * @property int $is_delete 是否删除 1是2否
+ * @property int $expire_time 超时时间
  */
 class RUser extends \yii\db\ActiveRecord
 {
@@ -45,7 +46,7 @@ class RUser extends \yii\db\ActiveRecord
     {
         return [
             [['account'], 'required'],
-            [['money', 'agent_id', 'create_time', 'update_time', 'create_person', 'update_person', 'status', 'is_stop', 'is_delete'], 'integer'],
+            [['money', 'agent_id', 'create_time', 'update_time', 'create_person', 'update_person', 'status', 'is_stop', 'is_delete', 'expire_time'], 'integer'],
             [['account', 'pwd', 'money_pwd', 'real_name', 'phone', 'email', 'qq', 'bank_id', 'create_ip', 'domain'], 'string', 'max' => 255],
         ];
     }
@@ -76,6 +77,7 @@ class RUser extends \yii\db\ActiveRecord
             'status' => 'Status',
             'is_stop' => 'Is Stop',
             'is_delete' => 'Is Delete',
+            'expire_time' => 'Expire Time',
         ];
     }
 }

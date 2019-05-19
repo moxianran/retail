@@ -27,8 +27,6 @@ class OnlineController extends BaseController
     {
         $title = '会员在线列表';
 
-//        $adminInfo = \Yii::$app->session->get('adminInfo');
-
         $get = \Yii::$app->request->get();
 
         $data = UserService::getOnlineList($get);
@@ -51,12 +49,15 @@ class OnlineController extends BaseController
         if (\Yii::$app->request->isPost) {
             $post = \Yii::$app->request->post();
 
+            $session = \Yii::$app->session;
+            $adminInfo = $session->get('adminInfo');
+
             $id = $post['id'];
 
             $update_data = [
-//                'is_login' => 2,
+                'expire_time' => 0,
                 'update_time' => time(),
-                'update_person' => 1,
+                'update_person' => $adminInfo['id'],
             ];
             $res = RUser::updateAll($update_data,'id = '.$id);
             if($res) {
