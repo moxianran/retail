@@ -24,6 +24,9 @@ AppAsset::register($this);
     <link href="/css/animate.css" rel="stylesheet">
     <link href="/css/style.css" rel="stylesheet">
     <link href="/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
+    <link href="http://cn.inspinia.cn/html/inspiniaen/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+    <link href="http://cn.inspinia.cn/html/inspiniaen/css/animate.css" rel="stylesheet">
+    <link href="http://cn.inspinia.cn/html/inspiniaen/css/style.css" rel="stylesheet">
 
 </head>
 
@@ -115,6 +118,29 @@ $adminInfo = Yii::$app->session->get('adminInfo');
 
 <script src="/js/inspinia.js"></script>
 <script src="/js/plugins/pace/pace.min.js"></script>
+<script src="http://cn.inspinia.cn/html/inspiniaen/js/plugins/toastr/toastr.min.js"></script>
+
+<script>
+    function checkTime(){
+
+        $.ajax({
+            url:"<?php echo Url::toRoute(['/center/notice/new-notice']); ?>",
+            type:"GET",
+            data:{},
+            dataType: 'json',
+            success:function(data){
+                if(data.result=="success"){
+                    var i = -1;
+                    var toastCount = 0;
+                    var $toastlast;
+                    toastr.success(data.info,'最新通知')
+                }
+            }
+        });
+    }
+    setInterval("checkTime()","5000");
+</script>
+
 </body>
 </html>
 <?php $this->endPage() ?>

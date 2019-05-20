@@ -2,6 +2,7 @@
 
 namespace backend\module\center\controllers;
 
+use app\models\RNotice;
 use backend\module\BaseController;
 use backend\services\CenterService;
 use yii\data\Pagination;
@@ -32,6 +33,34 @@ class NoticeController extends BaseController
             'title' => $title,
             'moduleTitle' => $this->moduleTitle,
         ]);
+    }
+
+    public function actionNewNotice()
+    {
+        $session = \Yii::$app->session;
+        $adminInfo = $session->get('adminInfo');
+
+        $where = [
+            'admin_id' => $adminInfo['id'],
+            'is_read' => 2
+        ];
+        $notice = RNotice::find()->where($where)->asArray()->one();
+
+        if ($notice) {
+            $update_data = [
+                'is_read' => 1,
+                'update_time' => time(),
+            ];
+            RNotice::updateAll($update_data, 'id = ' . $notice['id']);
+
+            $json =  ['result' => 'success', 'info' => $notice['content']];
+        } else {
+            $json =  ['result' => 'fail', 'info' => '操作失败'];
+        }
+        return $this->asJson($json);
+
+
+
     }
 
 
