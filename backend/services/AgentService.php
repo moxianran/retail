@@ -134,7 +134,7 @@ class AgentService {
     {
         $session = \Yii::$app->session;
         $adminInfo = $session->get('adminInfo');
-        
+
         if($params['up_agent_id'] > 0) {
             $upAgent = RAdmin::find()->where(['id'=>$params['up_agent_id']])->asArray()->one();
             $agent_level = $upAgent['agent_level'] + 1;
