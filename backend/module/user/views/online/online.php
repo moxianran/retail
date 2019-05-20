@@ -50,10 +50,17 @@ use yii\helpers\Url;
                                         <td><?php echo date("Y-m-d H:i:s",$v['login_time']) ?></td>
                                         <td><?php echo $v['login_ip'] ?></td>
                                         <td class="center">
-                                            <button class="btn btn-sm btn-primary m-t-n-xs" type="button"
-                                                    onclick="kickOut(<?php echo $v['id'] ?>)" >
-                                                <strong>踢出</strong>
-                                            </button>
+                                    <?php
+                                    if($this->params['position_id'] == 1 || in_array(23,$this->params['power_id'])
+                                    ) {
+                                        ?>
+                                        <button class="btn btn-sm btn-primary m-t-n-xs" type="button"
+                                                onclick="kickOut(<?php echo $v['id'] ?>)">
+                                            <strong>踢出</strong>
+                                        </button>
+                                        <?php
+                                    }
+                                        ?>
                                         </td>
                                     </tr>
                                     <?php

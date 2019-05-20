@@ -25,13 +25,11 @@ class ExportController extends BaseController
         return $this->render('list');
     }
 
-
     /**
      * 导出会员
      */
     public function actionExportUser()
     {
-        echo 99;die;
         CommonService::exportUser(['status' => 2]);
     }
 

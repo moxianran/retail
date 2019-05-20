@@ -20,9 +20,9 @@ class CommonService
      */
     public static function exportUser($where)
     {
+        $where['is_delete'] = 2;
         $field = 'id,account,money,real_name,phone,email,qq,bank_id,agent_id,domain,status,is_stop';
         $data = RUser::find()->where($where)->select($field)->asArray()->all();
-
 
         $agent = RAdmin::find()->where(['position_id' => 3])->asArray()->all();
         $agent = array_column($agent,'real_name','id');
@@ -67,6 +67,7 @@ class CommonService
      */
     public static function exportAgent($where)
     {
+        $where['is_delete'] = 2;
         $field = 'id,account,real_name,phone,email,qq,wechat,up_agent_id,domain,create_time,create_ip';
         $data = RAdmin::find()->select($field)->where($where)->asArray()->all();
 

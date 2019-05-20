@@ -20,8 +20,7 @@ class OnlineController extends BaseController
     }
 
     /**
-     * 会员在线列表???
-     * @return string
+     * 会员在线列表
      */
     public function actionOnline()
     {

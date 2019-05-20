@@ -7,15 +7,14 @@ use app\models\RUser;
 
 class RechargeService
 {
-
     public static function getList($params)
     {
         $game = RGame::find()->asArray()->all();
         $game = array_column($game,'name','id');
 
         $settlementTypeArr = [
-//            '1' => '微信',
-//            '2' => '支付宝'
+            '1' => '微信',
+            '2' => '支付宝'
         ];
 
         $pageSize= 10;
