@@ -2,11 +2,12 @@
 namespace frontend\controllers;
 
 use app\models\RAdmin;
+use app\models\RNotice;
 use app\models\RNoticeGame;
 use app\models\RUser;
 use app\models\RUserLoginRecord;
 use yii\web\Controller;
-
+use frontend\services\codeService;
 
 class SiteController extends Controller
 {
@@ -17,6 +18,11 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+
+        $codeService = new codeService();
+        $aa = $codeService->outImage();
+        var_dump($aa);
+        die;
         $gameNotice = $this->getGameNotice();
         return $this->render('index',[
             'gameNotice' => $gameNotice,
@@ -196,7 +202,27 @@ class SiteController extends Controller
             $user->qq = trim($post['qq']);
             $user->create_time = time();
             $res = $user->insert();
+
             if($res) {
+
+                //发送消息
+                $where = [
+                    'is_delete' => 2,
+                    'status' => 1,
+                ];
+                $admin = RAdmin::find()->where($where)->asArray()->all();
+                if($admin) {
+                    foreach ($admin as $k => $v) {
+                        $content = "新用户".trim($post['account'])."注册了";
+                        $notice = new RNotice();
+                        $notice->admin_id = $v['id'];
+                        $notice->content = $content;
+                        $notice->is_read = 2;
+                        $notice->create_time = time();
+                        $notice->insert();
+                    }
+                }
+
                 $json = ['result'=>'success','info' => '操作成功'];
             } else {
                 $json = ['result'=>'fail','info' => '操作失败'];
@@ -260,7 +286,7 @@ class SiteController extends Controller
                 $res = ['result' => 'fail', 'info' => '账号已被锁定，请联系客服'];
                 return $this->asJson($res);
             }
-            
+
             $expireTime = time()+3600;
 
             //设置session

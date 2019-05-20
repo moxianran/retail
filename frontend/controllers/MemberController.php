@@ -9,6 +9,7 @@ use app\models\RNoticeGame;
 use app\models\RNoticeSystem;
 use app\models\RRechargeRecord;
 use app\models\RUser;
+use app\models\RUserExecRecord;
 use app\models\RUserGame;
 use app\models\RUserLoginRecord;
 use yii\web\Controller;
@@ -39,8 +40,6 @@ class MemberController extends Controller
             unset($session['userInfo']);
             return $this->redirect(['/']);
         }
-
-
     }
 
     /**
@@ -96,6 +95,8 @@ class MemberController extends Controller
 
             if(in_array($field,$fields)) {
 
+                $userData = RUser::find()->where(['id'=> $this->userInfo['id']])->asArray()->one();
+
                 if($field == 'pwd' || $field == 'money_pwd') {
                     $newVal = base64_encode($newVal);
                 }
@@ -106,6 +107,45 @@ class MemberController extends Controller
                 ];
                 $res = RUser::updateAll($update_data,'id = '.$this->userInfo['id']);
                 if($res) {
+
+                    switch($field){
+                        case "real_name":
+                            $fieldName = "真实姓名";
+                            break;
+                        case "phone":
+                            $fieldName = "手机";
+                            break;
+                        case "email":
+                            $fieldName = "邮箱";
+                            break;
+                        case "qq":
+                            $fieldName = "社交账号";
+                            break;
+                        case "pwd":
+                            $fieldName = "密码";
+                            break;
+                        case "money_pwd":
+                            $fieldName = "取款密码";
+                            break;
+                        default:
+                            $fieldName = '---';
+                    }
+
+                    //操作记录
+                    $execRecord = new RUserExecRecord();
+
+                    if($field == 'pwd' || $field == 'money_pwd') {
+                        $oldVal = base64_encode($userData[$field]);
+                    } else {
+                        $oldVal = $userData[$field];
+                    }
+
+                    $content = $fieldName."修改:".$oldVal."->".$newVal;
+                    $execRecord->user_id = $this->userInfo['id'];
+                    $execRecord->content = $content;
+                    $execRecord->create_time = time();
+                    $execRecord->insert();
+
                     $json = ['result'=>'success','info' => '操作成功'];
                 } else {
                     $json = ['result'=>'fail','info' => '操作失败'];
