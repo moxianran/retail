@@ -18,11 +18,6 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-
-        $codeService = new codeService();
-        $aa = $codeService->outImage();
-        var_dump($aa);
-        die;
         $gameNotice = $this->getGameNotice();
         return $this->render('index',[
             'gameNotice' => $gameNotice,
@@ -376,6 +371,22 @@ class SiteController extends Controller
         return $res;
     }
 
+    /**
+     * 验证码
+     */
+    public function actionCode()
+    {
+        $session = \Yii::$app->session;
+        if (isset($session['code'])) {
+            unset($session['code']);
+        }
+
+        $codeService = new codeService();
+        $code = $codeService->getCode();
+        $session->set('code',$code);
+        $aa = $codeService->outImage();
+        print_r($aa);
+    }
     /**
      * 获取ip
      */
