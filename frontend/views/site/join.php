@@ -165,25 +165,25 @@ use yii\helpers\Url;
                                                 <li class="row">
                                                     <div class="col-sm-3 col-md-2 name required">代理帐号</div>
                                                     <div class="col-sm-9 col-md-4 col-lg-5 input">
-                                                        <input type="text" placeholder="2 - 15字符,字母开头,限字母,数字和底线" name="account">
+                                                        <input type="text" placeholder="2 - 15字符,字母开头,限字母,数字和底线" name="account" autocomplete="off">
                                                     </div>
                                                 </li>
                                                 <li class="row">
                                                     <div class="col-sm-3 col-md-2 name required">代理登录密码</div>
                                                     <div class="col-sm-9 col-md-4 col-lg-5 input">
-                                                        <input type="text" placeholder="6 个字符以上,须包含字母及数字" name="pwd">
+                                                        <input type="text" placeholder="6 个字符以上,须包含字母及数字" name="pwd" autocomplete="off">
                                                     </div>
                                                 </li>
                                                 <li class="row">
                                                     <div class="col-sm-3 col-md-2 name required">确认登录密码</div>
                                                     <div class="col-sm-9 col-md-4 col-lg-5 input">
-                                                        <input type="text" placeholder="请确认登录密​​码" name="pwd_again">
+                                                        <input type="text" placeholder="请确认登录密​​码" name="pwd_again" autocomplete="off">
                                                     </div>
                                                 </li>
                                                 <li class="row">
                                                     <div class="col-sm-3 col-md-2 name required">取款密​​码</div>
                                                     <div class="col-sm-9 col-md-4 col-lg-5 input">
-                                                        <input type="text" placeholder="请确认取款密​​码" name="money_pwd">
+                                                        <input type="text" placeholder="请确认取款密​​码" name="money_pwd" autocomplete="off">
                                                     </div>
                                                 </li>
                                             </ul>
@@ -194,30 +194,30 @@ use yii\helpers\Url;
                                                 <li class="row">
                                                     <div class="col-sm-3 col-md-2 name">真实姓名</div>
                                                     <div class="col-sm-9 col-md-4 col-lg-5 input">
-                                                        <input type="text" placeholder="必须与提款的银行户口相同,否则无法提款" name="real_name">
+                                                        <input type="text" placeholder="必须与提款的银行户口相同,否则无法提款" name="real_name" autocomplete="off">
                                                     </div>
                                                 </li>
                                                 <li class="row">
                                                     <div class="col-sm-3 col-md-2 name required">手机号码</div>
                                                     <div class="col-sm-9 col-md-4 col-lg-5 input">
-                                                        <input type="text" placeholder="请输入您的手机号码" name="phone">
+                                                        <input type="text" placeholder="请输入您的手机号码" name="phone" autocomplete="off">
                                                     </div>
                                                 </li>
                                                 <li class="row">
                                                     <div class="col-sm-3 col-md-2 name">QQ/微信</div>
                                                     <div class="col-sm-9 col-md-4 col-lg-5 input">
-                                                        <input type="text" placeholder="请输入您的QQ或者微信号,非微信昵称" name="qq">
+                                                        <input type="text" placeholder="请输入您的QQ或者微信号,非微信昵称" name="qq" autocomplete="off">
                                                     </div>
                                                 </li>
-<!--                                                <li class="row">-->
-<!--                                                    <div class="col-sm-3 col-md-2 name required">验证码</div>-->
-<!--                                                    <div class="col-sm-9 col-md-4 col-lg-5 input ver-code">-->
-<!--                                                        <input type="text" placeholder="请输入验证码" name="code">-->
-<!--                                                        <a href="javascript:;" class="ver-img">-->
-<!--                                                            <img src="/images/ver-img.jpg">-->
-<!--                                                        </a>-->
-<!--                                                    </div>-->
-<!--                                                </li>-->
+                                                <li class="row">
+                                                    <div class="col-sm-3 col-md-2 name required">验证码</div>
+                                                    <div class="col-sm-9 col-md-4 col-lg-5 input ver-code">
+                                                        <input type="text" placeholder="请输入验证码" name="code" autocomplete="off">
+                                                        <a href="javascript:;" class="ver-img">
+                                                            <img src="<?php echo Url::toRoute(['/site/code']); ?>">
+                                                        </a>
+                                                    </div>
+                                                </li>
                                                 <li class="row">
                                                     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 treaty">
                                                         <input type="checkbox" id="Treaty" name="agree">

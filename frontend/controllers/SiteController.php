@@ -368,6 +368,17 @@ class SiteController extends Controller
         if(strlen($phone) != 11) {
             return ['result' => 'fail', 'info' => '手机号码格式错误'];
         }
+
+
+        if(!isset($post['code']) || !$post['code']) {
+            return ['result' => 'fail', 'info' => '请输入验证码'];
+
+        }
+        $session = \Yii::$app->session;
+        $code = $session->get('code');
+        if($code != $post['code']) {
+            return ['result' => 'fail', 'info' => '验证码错误'];
+        }
         return $res;
     }
 

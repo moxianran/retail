@@ -47,25 +47,25 @@ use yii\helpers\Url;
                             <li class="row">
                                 <div class="col-sm-3 col-md-2 name required">会员帐号</div>
                                 <div class="col-sm-9 col-md-4 col-lg-5 input">
-                                    <input type="text" name="account" placeholder="2 - 15 字符，字母开头，限字母，数字和底线">
+                                    <input type="text" name="account" placeholder="2 - 15 字符，字母开头，限字母，数字和底线" autocomplete="off">
                                 </div>
                             </li>
                             <li class="row">
                                 <div class="col-sm-3 col-md-2 name required">会员密码</div>
                                 <div class="col-sm-9 col-md-4 col-lg-5 input">
-                                    <input type="text" name="pwd" placeholder="6 个字符以上，须包含字母及数字">
+                                    <input type="text" name="pwd" placeholder="6 个字符以上，须包含字母及数字" autocomplete="off">
                                 </div>
                             </li>
                             <li class="row">
                                 <div class="col-sm-3 col-md-2 name required">确认密码</div>
                                 <div class="col-sm-9 col-md-4 col-lg-5 input">
-                                    <input type="text" name="pwd_again" placeholder="请确认会员密​​码">
+                                    <input type="text" name="pwd_again" placeholder="请确认会员密​​码" autocomplete="off">
                                 </div>
                             </li>
                             <li class="row">
                                 <div class="col-sm-3 col-md-2 name required">取款密​​码</div>
                                 <div class="col-sm-9 col-md-4 col-lg-5 input">
-                                    <input type="text" name="money_pwd" placeholder="请确认取款密​​码">
+                                    <input type="text" name="money_pwd" placeholder="请确认取款密​​码" autocomplete="off">
                                 </div>
                             </li>
                         </ul>
@@ -76,30 +76,30 @@ use yii\helpers\Url;
                             <li class="row">
                                 <div class="col-sm-3 col-md-2 name">真实姓名</div>
                                 <div class="col-sm-9 col-md-4 col-lg-5 input">
-                                    <input type="text" name="real_name" placeholder="必须与提款的银行户口相同，否则无法提款">
+                                    <input type="text" name="real_name" placeholder="必须与提款的银行户口相同，否则无法提款" autocomplete="off">
                                 </div>
                             </li>
                             <li class="row">
                                 <div class="col-sm-3 col-md-2 name required">手机号码</div>
                                 <div class="col-sm-9 col-md-4 col-lg-5 input">
-                                    <input type="text" name="phone" placeholder="请输入您的手机号码">
+                                    <input type="text" name="phone" placeholder="请输入您的手机号码" autocomplete="off">
                                 </div>
                             </li>
                             <li class="row">
                                 <div class="col-sm-3 col-md-2 name">QQ/微信</div>
                                 <div class="col-sm-9 col-md-4 col-lg-5 input">
-                                    <input type="text" name="qq" placeholder="请输入您的QQ或者微信号，非微信昵称">
+                                    <input type="text" name="qq" placeholder="请输入您的QQ或者微信号，非微信昵称" autocomplete="off">
                                 </div>
                             </li>
-<!--                            <li class="row">-->
-<!--                                <div class="col-sm-3 col-md-2 name required">验证码</div>-->
-<!--                                <div class="col-sm-9 col-md-4 col-lg-5 input ver-code">-->
-<!--                                    <input type="text" placeholder="请输入验证码">-->
-<!--                                    <a href="javascript:;" class="ver-img">-->
-<!--                                        <img src="/images/ver-img.jpg">-->
-<!--                                    </a>-->
-<!--                                </div>-->
-<!--                            </li>-->
+                            <li class="row">
+                                <div class="col-sm-3 col-md-2 name required">验证码</div>
+                                <div class="col-sm-9 col-md-4 col-lg-5 input ver-code">
+                                    <input type="text" name="code" placeholder="请输入验证码" autocomplete="off">
+                                    <a href="javascript:;" class="ver-img">
+                                        <img src="<?php echo Url::toRoute(['/site/code']); ?>">
+                                    </a>
+                                </div>
+                            </li>
                             <li class="row">
                                 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 treaty">
                                     <input type="checkbox" id="Treaty" name="agree">

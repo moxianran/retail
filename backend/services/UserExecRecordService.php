@@ -31,7 +31,7 @@ class UserExecRecordService {
 
         $offset = ($page - 1) * $pageSize;
 
-        $query = RUser::find()->where(['status'=>1]);
+        $query = RUserExecRecord::find()->where([]);
         if($cond) {
             foreach($cond as $k => $v) {
                 $query->andWhere($v);
@@ -41,6 +41,12 @@ class UserExecRecordService {
         $count = $query->count();
         $list = $query->orderBy('id desc')->offset($offset)->limit($pageSize)->asArray()->all();
 
+        foreach ($list as $k => $v) {
+            $user = RUser::find()->where(['id' => $v['user_id']])->asArray()->one();
+            $list[$k]['userName'] = $user['real_name'];
+
+
+        }
 
         return [
             'list' => $list,

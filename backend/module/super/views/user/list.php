@@ -35,8 +35,8 @@ use yii\helpers\Url;
                             <thead>
                             <tr>
                                 <th>序号</th>
+                                <th>会员名称</th>
                                 <th>内容</th>
-                                <th>状态</th>
                                 <th>创建时间</th>
                             </tr>
                             </thead>
@@ -47,8 +47,8 @@ use yii\helpers\Url;
                                     ?>
                                     <tr class="gradeX">
                                         <td><?php echo $v['id'] ?></td>
+                                        <td><?php echo $v['userName'] ?></td>
                                         <td><?php echo $v['content'] ?></td>
-                                        <td><?php echo $v['is_read'] == 1 ? "已读" : '未读'; ?></td>
                                         <td><?php echo date("Y-m-d H:i:s", $v['create_time']) ?></td>
                                     </tr>
                                     <?php

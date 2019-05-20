@@ -19,11 +19,11 @@ class UserController extends BaseController
     }
 
     /**
-     * 操作记录
+     * 会员操作记录
      */
     public function actionList()
     {
-        $title = "消息中心";
+        $title = "会员操作记录";
 
         $get = \Yii::$app->request->get();
         $data = UserExecRecordService::getExecList($get);
