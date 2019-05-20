@@ -134,6 +134,13 @@ class AgentService {
     {
         $session = \Yii::$app->session;
         $adminInfo = $session->get('adminInfo');
+        
+        if($params['up_agent_id'] > 0) {
+            $upAgent = RAdmin::find()->where(['id'=>$params['up_agent_id']])->asArray()->one();
+            $agent_level = $upAgent['agent_level'] + 1;
+        } else {
+            $agent_level = 1;
+        }
 
         $admin = new RAdmin();
         $admin->account = $params['account'];
@@ -148,6 +155,7 @@ class AgentService {
         $admin->create_ip = $params['create_ip'];
         $admin->create_time = time();
         $admin->position_id = 3;
+        $admin->agent_level = $agent_level;
         $admin->create_person = $adminInfo['id'];
         $admin->domain = $params['domain'];
 

@@ -34,11 +34,7 @@ use yii\helpers\Url;
                     <div class="ibox-content profile-content">
                         <h4><strong><?php echo $adminInfo['real_name']; ?></strong></h4>
                         <p><i class="fa fa-map-marker"></i> 创建于 <?php echo date("Y-m-d H:i:s",$info['create_time']) ?></p>
-<!--                        <h5>-->
-<!--                            About me-->
-<!--                        </h5>-->
-<!--                        <p>-->
-<!--                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitat.-->
+
 <!--                        </p-->
                         <div class="user-button">
                             <div class="row">
@@ -47,11 +43,11 @@ use yii\helpers\Url;
                                         <i class="fa fa-envelope"></i> 修改资料
                                     </button>
                                 </div>
-                                <div class="col-md-6">
-                                    <button type="button" class="btn btn-default btn-sm btn-block">
-                                        <i class="fa fa-coffee"></i> 查看下级
-                                    </button>
-                                </div>
+<!--                                <div class="col-md-6">-->
+<!--                                    <button type="button" class="btn btn-default btn-sm btn-block">-->
+<!--                                        <i class="fa fa-coffee"></i> 查看下级-->
+<!--                                    </button>-->
+<!--                                </div>-->
                             </div>
                         </div>
                     </div>

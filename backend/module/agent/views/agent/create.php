@@ -95,10 +95,11 @@ use yii\helpers\Url;
                                     <?php
                                     if (isset($agentList) && $agentList) {
                                         foreach ($agentList as $k => $v) {
+                                            if($v['agent_level'] < 3) {
                                             ?>
                                             <option value="<?php echo $v['id'] ?>"><?php echo $v['real_name'] ?></option>
                                             <?php
-                                        }
+                                        }}
                                     }
                                     ?>
                                 </select>
