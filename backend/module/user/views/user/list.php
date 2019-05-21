@@ -188,6 +188,19 @@ use yii\helpers\Url;
                                             }
                                             ?>
 
+                                            <?php
+                                            if($this->params['position_id'] == 1 || in_array(153,$this->params['power_id'])
+                                            ) {
+                                                ?>
+
+                                                <button class="btn btn-sm btn-primary m-t-n-xs" type="button"
+                                                        onclick="goAddGameAccount(<?php echo $v['id'] ?>)" >
+                                                    <strong>添加游戏账号</strong>
+                                                </button>
+                                                <?php
+                                            }
+                                            ?>
+
                                         </td>
                                     </tr>
                                     <?php
@@ -232,16 +245,17 @@ use yii\helpers\Url;
 
 <script>
 
-
     $(function(){
         $("#export").click(function(){
             window.location.href="/user/user/export-user";
         })
     })
 
-
     function goEdit(id) {
         window.location.href="/user/user/edit?id="+id;
+    }
+    function goAddGameAccount(id) {
+        window.location.href="/user/user/add-game-account?id="+id;
     }
 
     function changeStop(id,isStop)

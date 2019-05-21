@@ -2,6 +2,8 @@
 
 namespace backend\module\user\controllers;
 
+use app\models\RGame;
+use app\models\RUserGame;
 use backend\module\BaseController;
 use backend\services\AgentService;
 use backend\services\CommonService;
@@ -122,6 +124,70 @@ class UserController extends BaseController
         $json = ['result' => $res['type'],'info'=>$res['msg']];
         return $this->asJson($json);
         }
+    }
+
+    /**
+     * 添加游戏账号
+     */
+    public function actionAddGameAccount()
+    {
+        $title = '添加游戏账号';
+
+        if (\Yii::$app->request->isPost) {
+            $post = \Yii::$app->request->post();
+
+            $session = \Yii::$app->session;
+            $adminInfo = $session->get('adminInfo');
+
+            $id = $post['id'];
+            foreach ($post as $k => $v) {
+                if($k != 'id') {
+
+                    $where = [
+                        'user_id' => $id,
+                        'game_id' => $k
+                    ];
+                    $userGame = RUserGame::find()->where($where)->asArray()->one();
+
+                    if($userGame) {
+
+                        $update_data = [
+                            'game_account' => $v,
+                            'update_time' => time(),
+                            'update_person' => $adminInfo['id'],
+                        ];
+                        RUserGame::updateAll($update_data,'id = '.$userGame['id']);
+
+                    } else {
+                        $user = new RUserGame();
+                        $user->user_id = $id;
+                        $user->game_id = $k;
+                        $user->game_account = $v;
+                        $user->create_time = time();
+                        $user->create_person = $adminInfo['id'];
+                        $user->insert();
+                    }
+                }
+            }
+
+            $json = ['result' => 'success','info'=>'添加成功'];
+            return $this->asJson($json);
+        }
+
+        $allGame = RGame::find()->where([])->asArray()->all();
+
+        $id = $request = \Yii::$app->request->get('id');
+        $data = RUserGame::find()->where(['user_id' => $id])->asArray()->all();
+        $data = array_column($data,'game_account','game_id');
+
+        return $this->render('addGameAccount', [
+            'allGame' => $allGame,
+            'data' => $data,
+            'title' => $title,
+            'moduleTitle' => $this->moduleTitle,
+            'id' => $id
+        ]);
+
     }
 
     
