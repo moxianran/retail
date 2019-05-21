@@ -26,19 +26,19 @@ use yii\helpers\Url;
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label class="control-label" for="real_name">姓名</label>
-                        <input type="text" name="real_name" value="<?php echo $get['real_name'] ?? '' ?>" class="form-control">
+                        <input type="text" name="real_name" value="<?php echo $get['real_name'] ?? '' ?>" class="form-control" autocomplete="off">
                     </div>
                 </div>
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label class="control-label" for="domain">域名</label>
-                        <input type="text" name="domain" value="<?php echo $get['domain'] ?? '' ?>" class="form-control">
+                        <input type="text" name="domain" value="<?php echo $get['domain'] ?? '' ?>" class="form-control" autocomplete="off">
                     </div>
                 </div>
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label class="control-label" for="phone">电话</label>
-                        <input type="text" name="phone" value="<?php echo $get['phone'] ?? '' ?>" class="form-control">
+                        <input type="text" name="phone" value="<?php echo $get['phone'] ?? '' ?>" class="form-control" autocomplete="off">
                     </div>
                 </div>
 

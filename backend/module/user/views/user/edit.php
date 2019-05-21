@@ -34,63 +34,63 @@ use yii\helpers\Url;
                         <div class="form-group  row"><label class="col-sm-2 col-form-label">会员账号</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" name="account"
-                                value="<?php echo $data['account']; ?>">
+                                value="<?php echo $data['account']; ?>" autocomplete="off">
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group  row"><label class="col-sm-2 col-form-label">登录密码</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" name="pwd"
-                                       value="<?php echo $data['pwd']; ?>">
+                                       value="<?php echo $data['pwd']; ?>" autocomplete="off">
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group  row"><label class="col-sm-2 col-form-label">取款密码</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" name="money_pwd"
-                                       value="<?php echo $data['money_pwd']; ?>">
+                                       value="<?php echo $data['money_pwd']; ?>" autocomplete="off">
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group  row"><label class="col-sm-2 col-form-label">真实姓名</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" name="real_name"
-                                       value="<?php echo $data['real_name']; ?>">
+                                       value="<?php echo $data['real_name']; ?>" autocomplete="off">
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group  row"><label class="col-sm-2 col-form-label">手机号码</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" name="phone"
-                                       value="<?php echo $data['phone']; ?>">
+                                       value="<?php echo $data['phone']; ?>" autocomplete="off">
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group  row"><label class="col-sm-2 col-form-label">电子邮箱</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" name="email"
-                                       value="<?php echo $data['email']; ?>">
+                                       value="<?php echo $data['email']; ?>" autocomplete="off">
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group  row"><label class="col-sm-2 col-form-label">qq/微信</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" name="qq"
-                                       value="<?php echo $data['qq']; ?>">
+                                       value="<?php echo $data['qq']; ?>" autocomplete="off">
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group  row"><label class="col-sm-2 col-form-label">银行卡号</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" name="bank_id"
-                                       value="<?php echo $data['bank_id']; ?>">
+                                       value="<?php echo $data['bank_id']; ?>" autocomplete="off">
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group  row"><label class="col-sm-2 col-form-label">注册域名</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" name="domain"
-                                       value="<?php echo $data['domain']; ?>">
+                                       value="<?php echo $data['domain']; ?>" autocomplete="off">
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>

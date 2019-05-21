@@ -24,19 +24,19 @@
                         <div class="col-sm-3">
                             <div class="form-group">
                                 <label class="control-label" for="product_name">桌号</label>
-                                <input type="text" name="series_id" value="<?php echo $get['series_id'] ?? '' ?>" class="form-control">
+                                <input type="text" name="series_id" value="<?php echo $get['series_id'] ?? '' ?>" class="form-control" autocomplete="off">
                             </div>
                         </div>
                         <div class="col-sm-3">
                             <div class="form-group">
                                 <label class="control-label" for="price">场</label>
-                                <input type="text" name="platform_id" value="<?php echo $get['platform_id'] ?? '' ?>" class="form-control">
+                                <input type="text" name="platform_id" value="<?php echo $get['platform_id'] ?? '' ?>" class="form-control" autocomplete="off">
                             </div>
                         </div>
                         <div class="col-sm-3">
                             <div class="form-group">
                                 <label class="control-label" for="quantity">次</label>
-                                <input type="text" name="inning_id" value="<?php echo $get['inning_id'] ?? '' ?>" class="form-control">
+                                <input type="text" name="inning_id" value="<?php echo $get['inning_id'] ?? '' ?>" class="form-control" autocomplete="off">
                             </div>
                         </div>
                         <div class="col-sm-3">

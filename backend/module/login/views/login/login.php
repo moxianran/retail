@@ -23,10 +23,10 @@ use yii\helpers\Url;
         <h3>欢迎来到后台</h3>
         <form class="m-t" role="form" id="saveForm">
             <div class="form-group">
-                <input type="email" class="form-control" name="account" required="" placeholder="请输入账号">
+                <input type="email" class="form-control" name="account" required="" placeholder="请输入账号" autocomplete="off">
             </div>
             <div class="form-group">
-                <input type="password" class="form-control" name="password" required="" placeholder="请输入密码">
+                <input type="password" class="form-control" name="password" required="" placeholder="请输入密码" autocomplete="off">
             </div>
             <button type="button" id="submit_btn" class="btn btn-primary block full-width m-b">Login</button>
         </form>

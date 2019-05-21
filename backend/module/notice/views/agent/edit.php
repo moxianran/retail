@@ -34,13 +34,13 @@ use yii\helpers\Url;
                         <input type="hidden" value="<?php echo isset($data['id']) ? $data['id'] : '' ; ?>" name="id" />
                         <div class="form-group  row"><label class="col-sm-2 col-form-label">标题</label>
                             <div class="col-sm-10"><input type="text" class="form-control" name="title"
-                                                          value="<?php echo isset($data['title']) ? $data['title'] : '' ; ?>"></div>
+                                                          value="<?php echo isset($data['title']) ? $data['title'] : '' ; ?>" autocomplete="off"></div>
                         </div>
                         <div class="hr-line-dashed"></div>
 
                         <div class="form-group  row"><label class="col-sm-2 col-form-label">内容</label>
                             <div class="col-sm-10"><input type="text" class="form-control" name="content"
-                                                          value="<?php echo isset($data['content']) ? $data['content'] : '' ; ?>"></div>
+                                                          value="<?php echo isset($data['content']) ? $data['content'] : '' ; ?>" autocomplete="off"></div>
                         </div>
                         <div class="hr-line-dashed"></div>
 

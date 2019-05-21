@@ -36,28 +36,28 @@ use yii\helpers\Url;
                         <div class="form-group  row"><label class="col-sm-2 col-form-label">手机号码</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" name="phone"
-                                       value="<?php echo $data['phone']; ?>">
+                                       value="<?php echo $data['phone']; ?>" autocomplete="off">
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group  row"><label class="col-sm-2 col-form-label">电子邮箱</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" name="email"
-                                       value="<?php echo $data['email']; ?>">
+                                       value="<?php echo $data['email']; ?>" autocomplete="off">
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group  row"><label class="col-sm-2 col-form-label">qq</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" name="qq"
-                                       value="<?php echo $data['qq']; ?>">
+                                       value="<?php echo $data['qq']; ?>" autocomplete="off">
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group  row"><label class="col-sm-2 col-form-label">微信</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" name="wechat"
-                                       value="<?php echo $data['wechat']; ?>">
+                                       value="<?php echo $data['wechat']; ?>" autocomplete="off">
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
