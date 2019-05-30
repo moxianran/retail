@@ -79,6 +79,10 @@ class UserService {
      */
     public static function getExamineList($params)
     {
+        $agent = RAdmin::find()->where(['position_id' => 3])->asArray()->all();
+        $agentNames = array_column($agent,'real_name','id');
+        $agentLevels = array_column($agent,'agent_level','id');
+
         $pageSize= 10;
 
         if(isset($params['page']) && !empty($params['page'])) {
@@ -114,7 +118,26 @@ class UserService {
 
         $count = $query->count();
         $list = $query->orderBy('id desc')->offset($offset)->limit($pageSize)->asArray()->all();
+        foreach ($list as $k => $v) {
 
+            if(isset($agentNames[$v['agent_id']]) && !empty($agentNames[$v['agent_id']])) {
+                $agentName = $agentNames[$v['agent_id']];
+
+                if($agentLevels[$v['agent_id']] == 1) {
+                    $agendLevel = '(一级)';
+                } else if($agentLevels[$v['agent_id']] == 2) {
+                    $agendLevel = '(二级)';
+                } else if($agentLevels[$v['agent_id']] == 3) {
+                    $agendLevel = '(三级)';
+                } else {
+                    $agendLevel = '';
+                }
+                $agentName.= $agendLevel;
+            } else {
+                $agentName = '暂无';
+            }
+            $list[$k]['agentName'] = $agentName;
+        }
 
         return [
             'list' => $list,
@@ -130,6 +153,10 @@ class UserService {
      */
     public static function getOnlineList($params)
     {
+        $agent = RAdmin::find()->where(['position_id' => 3])->asArray()->all();
+        $agentNames = array_column($agent,'real_name','id');
+        $agentLevels = array_column($agent,'agent_level','id');
+
         $pageSize= 10;
 
         if(isset($params['page']) && !empty($params['page'])) {
@@ -172,6 +199,25 @@ class UserService {
                 $login_record = RUserLoginRecord::find()->where(['user_id' => $v['id']])->orderBy('id desc')->asArray()->one();
                 $list[$k]['login_time'] = $login_record['login_time'];
                 $list[$k]['login_ip'] = $login_record['login_ip'];
+
+                if(isset($agentNames[$v['agent_id']]) && !empty($agentNames[$v['agent_id']])) {
+                    $agentName = $agentNames[$v['agent_id']];
+
+                    if($agentLevels[$v['agent_id']] == 1) {
+                        $agendLevel = '(一级)';
+                    } else if($agentLevels[$v['agent_id']] == 2) {
+                        $agendLevel = '(二级)';
+                    } else if($agentLevels[$v['agent_id']] == 3) {
+                        $agendLevel = '(三级)';
+                    } else {
+                        $agendLevel = '';
+                    }
+                    $agentName.= $agendLevel;
+                } else {
+                    $agentName = '暂无';
+                }
+                $list[$k]['agentName'] = $agentName;
+
             }
         }
 
@@ -210,7 +256,7 @@ class UserService {
         $user->create_person = $adminInfo['id'];
         $user->update_person = $adminInfo['id'];
         $user->status = 1;
-        $user->is_stop = 2;
+        $user->is_stop = $adminInfo['is_stop'];
         $res = $user->insert();
         if($res) {
             return ['type'=>'success','msg' => '操作成功'];
@@ -240,6 +286,7 @@ class UserService {
             'bank_id' => $params['bank_id'],
             'agent_id' => $params['agent_id'],
             'domain' => $params['domain'],
+            'is_stop' => $params['is_stop'],
             'update_time' => time(),
             'update_person' => $adminInfo['id'],
         ];

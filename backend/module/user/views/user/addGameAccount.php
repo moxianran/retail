@@ -104,6 +104,3 @@ use yii\helpers\Url;
         });
     });
 </script>
-</body>
-
-</html>

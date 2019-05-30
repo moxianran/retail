@@ -67,7 +67,7 @@ use yii\helpers\Url;
                                     </div>
                                 </div>
                                 <div class="hr-line-dashed"></div>
-                                <div class="form-group  row"><label class="col-sm-2 col-form-label">qq/微信</label>
+                                <div class="form-group  row"><label class="col-sm-2 col-form-label">社交账号</label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" name="qq" autocomplete="off">
                                     </div>
@@ -104,9 +104,20 @@ use yii\helpers\Url;
                                 </div>
                                 <div class="hr-line-dashed"></div>
 
+                                <div class="form-group row"><label class="col-sm-2 col-form-label">状态</label>
+                                    <div class="col-sm-10">
+                                        <select class="form-control m-b" name="is_stop">
+                                                <option value="1">正常</option>
+                                                <option value="2">停用</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="hr-line-dashed"></div>
+
                                 <div class="form-group row">
                                     <div class="col-sm-4 col-sm-offset-2">
                                         <button class="btn btn-primary btn-sm" type="button" id="btn_save">保存</button>
+                                        <button class="btn btn-primary btn-sm" type="button" onclick="history.go(-1)">返回</button>
                                     </div>
                                 </div>
                             </form>
@@ -158,6 +169,3 @@ use yii\helpers\Url;
         });
     });
 </script>
-</body>
-
-</html>

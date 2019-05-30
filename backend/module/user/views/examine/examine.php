@@ -69,7 +69,8 @@ use yii\helpers\Url;
                                 <th>真实姓名</th>
                                 <th>手机号码</th>
                                 <th>电子邮箱</th>
-                                <th>qq/微信</th>
+                                <th>社交账号</th>
+                                <th>上级代理</th>
                                 <th>注册域名</th>
                                 <th>注册时间</th>
                                 <th>注册区域IP</th>
@@ -88,6 +89,7 @@ use yii\helpers\Url;
                                         <td><?php echo $v['phone'] ?></td>
                                         <td><?php echo $v['email'] ?></td>
                                         <td><?php echo $v['qq'] ?></td>
+                                        <td><?php echo $v['agentName'] ?></td>
                                         <td><?php echo $v['domain'] ?></td>
                                         <td><?php echo date("Y-m-d H:i:s",$v['create_time']) ?></td>
                                         <td><?php echo $v['create_ip'] ?></td>
@@ -167,13 +169,5 @@ use yii\helpers\Url;
             }
         });
     }
-
-
-    $(document).ready(function(){
-        $('.i-checks').iCheck({
-            checkboxClass: 'icheckbox_square-green',
-            radioClass: 'iradio_square-green',
-        });
-    });
 </script>
 

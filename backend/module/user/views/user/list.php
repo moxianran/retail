@@ -28,19 +28,19 @@ use yii\helpers\Url;
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label class="control-label" for="real_name">姓名</label>
-                        <input type="text" name="real_name" value="<?php echo $get['real_name'] ?? '' ?>" class="form-control">
+                        <input autocomplete="off" type="text" name="real_name" value="<?php echo $get['real_name'] ?? '' ?>" class="form-control">
                     </div>
                 </div>
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label class="control-label" for="domain">域名</label>
-                        <input type="text" name="domain" value="<?php echo $get['domain'] ?? '' ?>" class="form-control">
+                        <input autocomplete="off" type="text" name="domain" value="<?php echo $get['domain'] ?? '' ?>" class="form-control">
                     </div>
                 </div>
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label class="control-label" for="phone">电话</label>
-                        <input type="text" name="phone" value="<?php echo $get['phone'] ?? '' ?>" class="form-control">
+                        <input autocomplete="off" type="text" name="phone" value="<?php echo $get['phone'] ?? '' ?>" class="form-control">
                     </div>
                 </div>
 
@@ -66,12 +66,12 @@ use yii\helpers\Url;
             <div class="ibox ">
                 <div class="ibox-title">
                     <h5><?php echo $title; ?></h5>
-                    <div class="ibox-tools">
+                    <div class="ibox-tools" style="top:10px">
                         <?php
                         if($this->params['position_id'] == 1 || in_array(18,$this->params['power_id'])
                         ) {
                         ?>
-                        <a class="btn-sm" href="<?php echo Url::toRoute(['/user/user/create']); ?>">新增</a>
+                        <a class="btn btn-primary btn-sm" href="<?php echo Url::toRoute(['/user/user/create']); ?>">新增</a>
                             <?php
                         }
                         ?>
@@ -97,7 +97,7 @@ use yii\helpers\Url;
                                 <th>真实姓名</th>
                                 <th>手机号码</th>
                                 <th>电子邮箱</th>
-                                <th>qq/微信</th>
+                                <th>社交账号</th>
                                 <?php
                                 if ($this->params['position_id'] != 3) {
                                     ?>

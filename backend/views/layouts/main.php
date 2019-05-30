@@ -99,7 +99,11 @@ $adminInfo = Yii::$app->session->get('adminInfo');
             </nav>
         </div>
 
-<?= $content ?>
+        <div class="alert alert-success">
+            时间是一切财富中最宝贵的财富。 <a class="alert-link" href="#">小明</a>.
+        </div>
+
+        <?= $content ?>
 
     </div>
 </div>
