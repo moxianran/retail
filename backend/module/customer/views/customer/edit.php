@@ -105,6 +105,8 @@ use yii\helpers\Url;
                         <div class="form-group row">
                             <div class="col-sm-4 col-sm-offset-2">
                                 <button class="btn btn-primary btn-sm" type="button" id="btn_save">保存</button>
+                                <button class="btn btn-primary btn-sm" type="button" onclick="history.go(-1)">返回</button>
+
                             </div>
                         </div>
                     </form>

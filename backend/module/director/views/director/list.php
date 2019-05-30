@@ -65,11 +65,11 @@ use yii\helpers\Url;
             <div class="ibox ">
                 <div class="ibox-title">
                     <h5><?php echo $title; ?></h5>
-                    <div class="ibox-tools">
+                    <div class="ibox-tools" style="top:10px">
                         <?php
                         if($this->params['position_id'] == 1 || in_array(34,$this->params['power_id'])) {
                             ?>
-                            <a class="btn-sm" href="<?php echo Url::toRoute(['/director/director/create']); ?>">新增</a>
+                            <a class="btn btn-primary btn-sm" href="<?php echo Url::toRoute(['/director/director/create']); ?>">新增</a>
                             <?php
                         }
                         ?>
@@ -222,13 +222,6 @@ use yii\helpers\Url;
             }
         });
     }
-
-    $(document).ready(function(){
-        $('.i-checks').iCheck({
-            checkboxClass: 'icheckbox_square-green',
-            radioClass: 'iradio_square-green',
-        });
-    });
 </script>
 
 
