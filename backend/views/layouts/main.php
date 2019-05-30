@@ -53,7 +53,7 @@ $adminInfo = Yii::$app->session->get('adminInfo');
                 </li>
 
                 <?php
-                    $list = $this->params['menu'] ;
+                    $list = $this->params['menu'];
                     $power_ids = $this->params['power_id'] ;
                     foreach ($list as $k => $v) {
                         if ($v['pid'] == 0 && (in_array($v['id'],$power_ids) || $adminInfo['position_id'] == 1)) {
@@ -99,12 +99,20 @@ $adminInfo = Yii::$app->session->get('adminInfo');
             </nav>
         </div>
 
+        <?php
+        if(isset($this->params['noticeAgent']) && $this->params['noticeAgent']){
+        ?>
         <div class="alert alert-success">
-            时间是一切财富中最宝贵的财富。 <a class="alert-link" href="#">小明</a>.
+            <marquee behavior="scroll" direction="left">
+                <?php
+                        echo $this->params['noticeAgent']['content'];
+                ?>
+            </marquee>
         </div>
-
+        <?php
+        }
+        ?>
         <?= $content ?>
-
     </div>
 </div>
 

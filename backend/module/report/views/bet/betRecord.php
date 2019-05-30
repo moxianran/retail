@@ -89,6 +89,7 @@
                                     <thead>
                                     <tr>
                                         <th>编号</th>
+                                        <th>游戏厅</th>
                                         <th>游戏</th>
                                         <th>桌号</th>
                                         <th>场</th>
@@ -112,6 +113,7 @@
                                             ?>
                                             <tr class="gradeX">
                                                 <td><?php echo $v['id'] ?></td>
+                                                <td><?php echo $v['gameTitle'] ?></td>
                                                 <td><?php echo $v['gameTitle'] ?></td>
                                                 <td><?php echo $v['series_id'] ?></td>
                                                 <td><?php echo $v['platform_id'] ?></td>

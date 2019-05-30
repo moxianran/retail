@@ -5,7 +5,6 @@ namespace backend\module\notice\controllers;
 use backend\module\BaseController;
 use backend\services\NoticeWebsiteService;
 use yii\data\Pagination;
-use yii\web\Controller;
 
 class WebsiteController extends BaseController
 {

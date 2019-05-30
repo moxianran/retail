@@ -1,6 +1,7 @@
 <?php
 namespace backend\module;
 
+use app\models\RNoticeAgent;
 use app\models\RPower;
 use yii\web\Controller;
 use backend\services\PowerService;
@@ -35,6 +36,10 @@ class BaseController extends Controller
 
         $positionPowerList = PowerService::getPowerList();
         $view->params['menu'] = $positionPowerList;
+
+        //代理后台消息
+        $noticeAgent = RNoticeAgent::find()->where(['status'=>1])->orderBy('id desc')->asArray()->one();
+        $view->params['noticeAgent'] = $noticeAgent;
 
         //判断是否有权限操作
 //        echo $this->module->id;
