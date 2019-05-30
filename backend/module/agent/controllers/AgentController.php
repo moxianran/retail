@@ -12,7 +12,6 @@ class AgentController extends BaseController
 {
     public $enableCsrfValidation = false;
     public $moduleTitle = "代理管理";
-    public $adminInfo = [];
 
     public function init()
     {
