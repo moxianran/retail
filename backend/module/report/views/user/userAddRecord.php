@@ -130,11 +130,6 @@ use yii\helpers\Url;
         window.location.href="/report/user/user-add-record?type="+type;
     }
 
-    $(document).ready(function(){
-        $('.i-checks').iCheck({
-            checkboxClass: 'icheckbox_square-green',
-            radioClass: 'iradio_square-green',
-        });
-    });
+    
 </script>
 

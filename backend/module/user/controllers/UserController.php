@@ -16,6 +16,11 @@ class UserController extends BaseController
     public $moduleTitle = "会员管理";
     public $adminInfo = [];
 
+    public function init()
+    {
+        parent::init();
+    }
+
     /**
      * 会员列表
      * @return string
