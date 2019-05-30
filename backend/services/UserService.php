@@ -98,6 +98,10 @@ class UserService {
         //删选数组
         $cond = [];
 
+        //账号
+        if(!empty($params['account'])) {
+            $cond[] = ['like', 'account', $params['account']];
+        }
         //姓名
         if(!empty($params['real_name'])) {
             $cond[] = ['like', 'real_name', $params['real_name']];

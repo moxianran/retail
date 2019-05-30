@@ -23,30 +23,35 @@ use yii\helpers\Url;
     <div class="ibox-content m-b-sm border-bottom">
         <form id="searchForm" action="" method="get">
             <div class="row">
-                <div class="col-sm-4">
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label class="control-label" for="real_name">账号</label>
+                        <input autocomplete="off" type="text" name="account" value="<?php echo $get['account'] ?? '' ?>" class="form-control">
+                    </div>
+                </div>
+                <div class="col-sm-2">
                     <div class="form-group">
                         <label class="control-label" for="real_name">姓名</label>
-                        <input type="text" name="real_name" value="<?php echo $get['real_name'] ?? '' ?>" class="form-control" autocomplete="off">
+                        <input autocomplete="off" type="text" name="real_name" value="<?php echo $get['real_name'] ?? '' ?>" class="form-control">
                     </div>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-2">
                     <div class="form-group">
                         <label class="control-label" for="domain">域名</label>
-                        <input type="text" name="domain" value="<?php echo $get['domain'] ?? '' ?>" class="form-control" autocomplete="off">
+                        <input autocomplete="off" type="text" name="domain" value="<?php echo $get['domain'] ?? '' ?>" class="form-control">
                     </div>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-2">
                     <div class="form-group">
                         <label class="control-label" for="phone">电话</label>
-                        <input type="text" name="phone" value="<?php echo $get['phone'] ?? '' ?>" class="form-control" autocomplete="off">
+                        <input autocomplete="off" type="text" name="phone" value="<?php echo $get['phone'] ?? '' ?>" class="form-control">
                     </div>
                 </div>
 
-                <div class="col-sm-3">
-                    <div class="input-group">
-                        <span class="input-group-append">
-                            <button type="submit" class="btn btn-sm btn-primary">查询</button>
-                        </span>
+                <div class="col-sm-4">
+                    <div style="margin-top:27px;">
+                        <button type="submit" class="btn btn-primary">查询</button>
+                        <button type="button" class="btn btn-primary" id="clear">清空</button>
                     </div>
                 </div>
             </div>
@@ -146,6 +151,12 @@ use yii\helpers\Url;
 <!-- iCheck -->
 
 <script>
+
+    $(function(){
+        $("#clear").click(function(){
+            $(".form-control").val("");
+        })
+    })
 
     function changeStatus(id,status)
     {
