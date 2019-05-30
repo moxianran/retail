@@ -8,11 +8,8 @@ use yii\data\Pagination;
 
 class UserController extends BaseController
 {
-
-    public $pageSize = 10;
     public $enableCsrfValidation = false;
     public $moduleTitle = "报表管理";
-    public $adminInfo = [];
 
     public function init()
     {

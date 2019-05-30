@@ -390,6 +390,11 @@ class UserService {
      */
     public static function getUserAddRecord($params)
     {
+
+        $agent = RAdmin::find()->where(['position_id' => 3])->asArray()->all();
+        $agentNames = array_column($agent,'real_name','id');
+        $agentLevels = array_column($agent,'agent_level','id');
+
         if(isset($params['type']) && !empty($params['type'])) {
             $type = (int) $params['type'];
         } else {
@@ -483,6 +488,28 @@ class UserService {
 
         $count = $query->count();
         $list = $query->orderBy('id desc')->offset($offset)->limit($pageSize)->asArray()->all();
+
+        foreach ($list as $k => $v) {
+            if(isset($agentNames[$v['agent_id']]) && !empty($agentNames[$v['agent_id']])) {
+                $agentName = $agentNames[$v['agent_id']];
+
+                if($agentLevels[$v['agent_id']] == 1) {
+                    $agendLevel = '(一级)';
+                } else if($agentLevels[$v['agent_id']] == 2) {
+                    $agendLevel = '(二级)';
+                } else if($agentLevels[$v['agent_id']] == 3) {
+                    $agendLevel = '(三级)';
+                } else {
+                    $agendLevel = '';
+                }
+                $agentName.= $agendLevel;
+            } else {
+                $agentName = '暂无';
+            }
+            $list[$k]['agentName'] = $agentName;
+
+        }
+
         return [
             'list' => $list,
             'count' => $count,

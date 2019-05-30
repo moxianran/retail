@@ -60,10 +60,10 @@ use yii\helpers\Url;
                         <table class="table table-striped">
                             <thead>
                             <tr>
-                                <th>会员账号</th>
+                                <th>代理账号</th>
                                 <th>真实姓名</th>
-                                <th>手机号码</th>
-                                <th>邮箱</th>
+                                <th>上级代理</th>
+                                <th>注册域名</th>
                                 <th>注册时间</th>
                                 <th>注册ip</th>
                             </tr>
@@ -74,10 +74,10 @@ use yii\helpers\Url;
                                 foreach ($list as $k=>$v) {
                                     ?>
                                     <tr class="gradeX">
-                                        <td><?php echo $v['id'] ?></td>
                                         <td><?php echo $v['account'] ?></td>
                                         <td><?php echo $v['real_name'] ?></td>
-                                        <td><?php echo $v['phone'] ?></td>
+                                        <td><?php echo $v['agentName'] ?></td>
+                                        <td><?php echo $v['domain'] ?></td>
                                         <td><?php echo date("Y-m-d H:i:s",$v['create_time']) ?></td>
                                         <td><?php echo $v['create_ip'] ?></td>
                                     </tr>

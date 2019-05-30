@@ -9,10 +9,8 @@ use yii\data\Pagination;
 class AgentController extends BaseController
 {
 
-    public $pageSize = 10;
     public $enableCsrfValidation = false;
     public $moduleTitle = "报表管理";
-    public $adminInfo = [];
 
     public function init()
     {
