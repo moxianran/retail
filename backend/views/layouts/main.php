@@ -24,9 +24,9 @@ AppAsset::register($this);
     <link href="/css/animate.css" rel="stylesheet">
     <link href="/css/style.css" rel="stylesheet">
     <link href="/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
-    <link href="http://cn.inspinia.cn/html/inspiniaen/css/plugins/toastr/toastr.min.css" rel="stylesheet">
-    <link href="http://cn.inspinia.cn/html/inspiniaen/css/animate.css" rel="stylesheet">
-    <link href="http://cn.inspinia.cn/html/inspiniaen/css/style.css" rel="stylesheet">
+<!--    <link href="http://cn.inspinia.cn/html/inspiniaen/css/plugins/toastr/toastr.min.css" rel="stylesheet">-->
+<!--    <link href="http://cn.inspinia.cn/html/inspiniaen/css/animate.css" rel="stylesheet">-->
+<!--    <link href="http://cn.inspinia.cn/html/inspiniaen/css/style.css" rel="stylesheet">-->
 
 </head>
 

@@ -27,11 +27,11 @@ use yii\helpers\Url;
             <div class="ibox ">
                 <div class="ibox-title">
                     <h5><?php echo $title; ?></h5>
-                    <div class="ibox-tools">
+                    <div class="ibox-tools" style="top:10px">
                         <?php
                         if($this->params['position_id'] == 1 || in_array(2,$this->params['power_id'])) {
                             ?>
-                            <a class="btn-sm" href="<?php echo Url::toRoute(['/notice/website/create']); ?>">新增消息</a>
+                            <a class="btn btn-primary btn-sm" href="<?php echo Url::toRoute(['/notice/website/create']); ?>">新增消息</a>
                             <?php
                         }
                         ?>

@@ -37,9 +37,11 @@ use yii\helpers\Url;
                         </div>
                         <div class="hr-line-dashed"></div>
 
-                        <div class="form-group  row"><label class="col-sm-2 col-form-label">内容</label>
-                            <div class="col-sm-10"><input type="text" class="form-control" name="content"
-                                                          value=""> autocomplete="off"</div>
+                        <div class="form-group  row">
+                            <label class="col-sm-2 col-form-label">内容</label>
+                            <div class="col-sm-10">
+                                <textarea class="form-control" name="content"></textarea>
+                            </div>
                         </div>
                         <div class="hr-line-dashed"></div>
 
@@ -57,6 +59,7 @@ use yii\helpers\Url;
                         <div class="form-group row">
                             <div class="col-sm-4 col-sm-offset-2">
                                 <button class="btn btn-primary btn-sm" type="button" id="btn_save">保存</button>
+                                <button class="btn btn-primary btn-sm" type="button" onclick="history.go(-1)">返回</button>
                             </div>
                         </div>
                     </form>
