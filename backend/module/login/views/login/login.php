@@ -28,7 +28,7 @@ use yii\helpers\Url;
             <div class="form-group">
                 <input type="password" class="form-control" name="password" required="" placeholder="请输入密码" autocomplete="off">
             </div>
-            <button type="button" id="submit_btn" class="btn btn-primary block full-width m-b">Login</button>
+            <button type="button" id="submit_btn" class="btn btn-primary block full-width m-b">登录</button>
         </form>
     </div>
 </div>

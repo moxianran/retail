@@ -56,10 +56,9 @@ use yii\helpers\Url;
                         <div class="hr-line-dashed"></div>
 
                         <div class="form-group row">
-                            <div class="col-sm-4 col-sm-offset-2">
+                            <div class="col-sm-12 col-sm-offset-2" style="text-align: right">
                                 <button class="btn btn-primary btn-sm" type="button" id="btn_save">保存</button>
                                 <button class="btn btn-primary btn-sm" type="button" onclick="history.go(-1)">返回</button>
-
                             </div>
                         </div>
                     </form>
@@ -83,8 +82,6 @@ use yii\helpers\Url;
 <!-- iCheck -->
 <script src="/js/plugins/iCheck/icheck.min.js"></script>
 <script>
-
-
     $(function(){
         $("#btn_save").click(function(){
             $.ajax({
@@ -105,14 +102,4 @@ use yii\helpers\Url;
             });
         })
     })
-
-    $(document).ready(function () {
-        $('.i-checks').iCheck({
-            checkboxClass: 'icheckbox_square-green',
-            radioClass: 'iradio_square-green',
-        });
-    });
 </script>
-</body>
-
-</html>
