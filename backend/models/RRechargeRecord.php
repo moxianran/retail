@@ -14,6 +14,7 @@ use Yii;
  * @property int $money 充值金额
  * @property int $balance 余额
  * @property int $operator_id 操作员
+ * @property string $ip ip
  * @property int $create_time
  * @property int $update_time
  * @property int $create_person
@@ -36,6 +37,8 @@ class RRechargeRecord extends \yii\db\ActiveRecord
     {
         return [
             [['game_type', 'user_id', 'type', 'money', 'balance', 'operator_id', 'create_time', 'update_time', 'create_person', 'update_person'], 'integer'],
+            [['ip'], 'required'],
+            [['ip'], 'string', 'max' => 255],
         ];
     }
 
@@ -52,6 +55,7 @@ class RRechargeRecord extends \yii\db\ActiveRecord
             'money' => 'Money',
             'balance' => 'Balance',
             'operator_id' => 'Operator ID',
+            'ip' => 'Ip',
             'create_time' => 'Create Time',
             'update_time' => 'Update Time',
             'create_person' => 'Create Person',

@@ -22,7 +22,7 @@
             <form id="searchForm" action="" method="get">
                 <div class="row">
 
-                    <div class="col-sm-3">
+                    <div class="col-sm-2">
                         <div class="form-group">
                             <label class="control-label" for="game">游戏类型</label>
                             <select name="game" id="game" class="form-control">
@@ -42,7 +42,7 @@
                         </div>
                     </div>
 
-                    <div class="col-sm-3">
+                    <div class="col-sm-2">
                         <div class="form-group">
                             <label class="control-label" for="type">结算类型</label>
                             <select name="type" id="type" class="form-control">
@@ -62,7 +62,7 @@
                         </div>
                     </div>
 
-                    <div class="col-sm-3">
+                    <div class="col-sm-2">
                         <div class="form-group">
                             <label class="control-label" for="user_id">代理</label>
                             <select name="agent_id" id="agent_id" class="form-control">
@@ -82,7 +82,7 @@
                         </div>
                     </div>
 
-                    <div class="col-sm-3">
+                    <div class="col-sm-2">
                         <div class="form-group">
                             <label class="control-label" for="user_id">会员</label>
                             <select name="user_id" id="user_id" class="form-control">
@@ -103,17 +103,23 @@
                     </div>
 
                     <div class="col-sm-3 m-b-xs">
-                        <div class="input-daterange input-group" id="datepicker">
-                            <input type="text" class="input-sm form-control" name="start" value="<?php echo $start; ?>">
-                            <span class="input-group-addon">至</span>
-                            <input type="text" class="input-sm form-control" name="end" value="<?php echo $end; ?>">
+                        <div class="form-group">
+                            <label class="control-label" for="user_id">充值时间</label>
+                            <div class="input-daterange input-group" id="datepicker">
+                                <input type="text" class="input-sm form-control" name="start" value="<?php echo $start; ?>">
+                                <span class="input-group-addon">至</span>
+                                <input type="text" class="input-sm form-control" name="end" value="<?php echo $end; ?>">
+                            </div>
                         </div>
                     </div>
-                    <div class="col-sm-3">
-                        <div class="input-group">
+                    <div class="col-sm-1">
+                        <div class="form-group">
+                            <label class="control-label" for="user_id">.</label>
+                            <div class="input-group">
                                 <span class="input-group-append">
                                     <button type="submit" class="btn btn-sm btn-primary">查询</button>
                                 </span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -132,29 +138,32 @@
                                 <thead>
                                 <tr>
                                     <th>编号</th>
-                                    <th>游戏类型</th>
+                                    <th>会员账号</th>
+                                    <th>游戏厅</th>
                                     <th>结算类型</th>
-                                    <th>用户名称</th>
-                                    <th>代理名称</th>
+                                    <th>上级代理</th>
                                     <th>操作员</th>
                                     <th>充值时间</th>
+                                    <th>操作ip</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <?php
                                 if(isset($list) && $list) {
                                     foreach ($list as $k=>$v) {
-                                        ?>
+                                ?>
                                         <tr class="gradeX">
                                             <td><?php echo $v['id'] ?></td>
+                                            <td><?php echo $v['userAccount'] ?></td>
                                             <td><?php echo $v['gameName'] ?></td>
-                                            <td><?php echo $v['type'] ?></td>
-                                            <td><?php echo $v['userName'] ?></td>
-                                            <td><?php echo $v['agentName'] ?></td>
+                                            <td><?php echo $v['settlement_type'] ?></td>
+                                            <td><?php echo $v['agentAccount'] ?></td>
                                             <td><?php echo $v['operator_id'] ?></td>
                                             <td><?php echo date("Y-m-d H:i:s",$v['create_time']); ?></td>
+                                            <td><?php echo $v['ip'] ?></td>
+
                                         </tr>
-                                        <?php
+                                <?php
                                     }}
                                 ?>
                                 </tbody>

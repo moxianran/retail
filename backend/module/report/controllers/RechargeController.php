@@ -36,7 +36,6 @@ class RechargeController extends BaseController
         //全部代理
         $agent = RAdmin::find()->where(['position_id' => 3])->asArray()->all();
 
-
         $pagination = new Pagination(['totalCount' => $data['count'], 'pageSize' => $data['pageSize']]);
 
         return $this->render('rechargeRecord', [

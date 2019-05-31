@@ -13,8 +13,9 @@ class RechargeService
         $game = array_column($game,'name','id');
 
         $settlementTypeArr = [
-            '1' => '微信',
-            '2' => '支付宝'
+            '0' => '游戏上分',
+            '1' => '游戏上分',
+            '2' => '游戏上分'
         ];
 
         $pageSize= 10;
@@ -67,19 +68,20 @@ class RechargeService
         if ($list) {
 
             $user = RUser::find()->where([])->asArray()->all();
-            $userName = array_column($user,'real_name','id');
+            $userAccount = array_column($user,'account','id');
 
             $upAgentIds = array_column($user,'agent_id','id');
-            $agent = RAdmin::find()->where([])->asArray()->all();
-            $agent = array_column($agent,'real_name','id');
+
+            $admin = RAdmin::find()->where([])->asArray()->all();
+            $adminAccount = array_column($admin,'account','id');
 
             foreach ($list as $k => $v) {
+//                print_r($upAgentIds[$v['user_id']]);die;
+                $list[$k]['userAccount'] = $userAccount[$v['user_id']] ?? '暂无';
                 $list[$k]['gameName'] = $game[$v['game_type']] ?? '暂无';
                 $list[$k]['settlement_type'] = $settlementTypeArr[$v['type']] ?? '暂无';
-                $list[$k]['userName'] = $userName[$v['user_id']] ?? '暂无';
-
-                $list[$k]['agentName'] = $agent[$upAgentIds[$v['user_id']]] ?? '暂无';
-                $list[$k]['operator_id'] = $agent[$v['operator_id']] ?? '暂无';
+                $list[$k]['agentAccount'] = $adminAccount[1] ?? '暂无';
+                $list[$k]['operator_id'] = $adminAccount[$v['operator_id']] ?? '暂无';
             }
         }
 
