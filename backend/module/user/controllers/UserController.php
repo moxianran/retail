@@ -100,7 +100,8 @@ class UserController extends BaseController
             'moduleTitle' => $this->moduleTitle,
             'agentList1' => $agentList1,
             'agentList2' => $agentList2,
-            'agentList3' => $agentList3,        ]);
+            'agentList3' => $agentList3,
+        ]);
     }
 
     /**

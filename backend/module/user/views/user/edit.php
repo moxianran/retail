@@ -148,7 +148,7 @@ use yii\helpers\Url;
                         <div class="hr-line-dashed"></div>
 
                         <div class="form-group row"><label class="col-sm-2 col-form-label">状态</label>
-                            <div class="col-sm-10">
+                            <div class="col-sm-2">
                                 <select class="form-control m-b" name="is_stop">
                                     <option value="2" <?php if(2 == $data['is_stop']){ echo 'selected="selected"';} ?>>正常</option>
                                     <option value="1" <?php if(1 == $data['is_stop']){ echo 'selected="selected"';} ?>>停用</option>
