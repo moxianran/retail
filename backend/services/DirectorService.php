@@ -25,6 +25,10 @@ class DirectorService
         $cond = [];
 
         //姓名
+        if (!empty($params['account'])) {
+            $cond[] = ['like', 'account', $params['account']];
+        }
+        //姓名
         if (!empty($params['real_name'])) {
             $cond[] = ['like', 'real_name', $params['real_name']];
         }
