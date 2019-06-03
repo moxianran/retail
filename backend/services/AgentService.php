@@ -297,13 +297,24 @@ class AgentService {
 
     /**
      * 获取代理列表
+     * @param int $agent_level
      * @return array|\yii\db\ActiveRecord[]
      */
-    public static function getAgentList()
+    public static function getAgentList($agent_level = 0)
     {
-        $list = RAdmin::find()->where(['position_id'=>3,'is_delete'=>2,'examine_status'=>2])->asArray()->all();
+        $where = [
+            'position_id'=>3,
+            'is_delete'=>2,
+            'examine_status'=>2
+        ];
+        if($agent_level != 0) {
+            $where['agent_level'] = $agent_level;
+        }
+
+        $list = RAdmin::find()->where($where)->asArray()->all();
         return $list;
     }
+
 
     /**
      * 代理新增记录
