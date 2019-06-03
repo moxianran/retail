@@ -138,8 +138,8 @@ use yii\helpers\Url;
                                 <div class="form-group row"><label class="col-sm-2 col-form-label">状态</label>
                                     <div class="col-sm-10">
                                         <select class="form-control m-b" name="is_stop">
-                                                <option value="1">正常</option>
-                                                <option value="2">停用</option>
+                                                <option value="2">正常</option>
+                                                <option value="1">停用</option>
                                         </select>
                                     </div>
                                 </div>

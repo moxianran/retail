@@ -90,14 +90,17 @@ class UserController extends BaseController
         $data = UserService::getOne($id);
 
         //获取代理列表
-        $agentList = AgentService::getAgentList();
+        $agentList1 = AgentService::getAgentList(1);
+        $agentList2 = AgentService::getAgentList(2);
+        $agentList3 = AgentService::getAgentList(3);
 
         return $this->render('edit', [
             'data' => $data,
             'title' => $title,
             'moduleTitle' => $this->moduleTitle,
-            'agentList' => $agentList,
-        ]);
+            'agentList1' => $agentList1,
+            'agentList2' => $agentList2,
+            'agentList3' => $agentList3,        ]);
     }
 
     /**

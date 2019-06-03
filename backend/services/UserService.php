@@ -317,12 +317,38 @@ class UserService {
             'email' => $params['email'],
             'qq' => $params['qq'],
             'bank_id' => $params['bank_id'],
-            'agent_id' => $params['agent_id'],
             'domain' => $params['domain'],
             'is_stop' => $params['is_stop'],
             'update_time' => time(),
             'update_person' => $adminInfo['id'],
         ];
+
+
+        $agent_id = 0;
+
+        if($params['agent_id1'] != 0 && $params['agent_id2'] != 0) {
+            return ['type'=>'fail','msg' => '上级代理只能选一个'];
+        }
+        if($params['agent_id2'] != 0 && $params['agent_id3'] != 0) {
+            return ['type'=>'fail','msg' => '上级代理只能选一个'];
+        }
+        if($params['agent_id1'] != 0 && $params['agent_id3'] != 0) {
+            return ['type'=>'fail','msg' => '上级代理只能选一个'];
+        }
+
+        if($params['agent_id1'] == 0 && $params['agent_id2'] == 0 && $params['agent_id3'] == 0) {
+            $agent_id = 0;
+        } else {
+            if($params['agent_id1'] != 0) {
+                $agent_id = $params['agent_id1'];
+            } else if($params['agent_id2'] != 0) {
+                $agent_id = $params['agent_id2'];
+            } else if($params['agent_id3'] != 0) {
+                $agent_id = $params['agent_id3'];
+            }
+        }
+        $update_data['agent_id'] = $agent_id;
+
         $res = RUser::updateAll($update_data,'id = '.$params['id']);
         if($res) {
             return ['type'=>'success','msg' => '操作成功'];
