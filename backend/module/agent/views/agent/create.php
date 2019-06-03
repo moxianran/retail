@@ -89,17 +89,30 @@ use yii\helpers\Url;
                         <div class="hr-line-dashed"></div>
 
                         <div class="form-group row"><label class="col-sm-2 col-form-label">上级代理</label>
-                            <div class="col-sm-10">
-                                <select class="form-control m-b" name="up_agent_id">
+                            <div class="col-sm-3">
+                                <select class="form-control m-b" name="up_agent_id1">
                                     <option value="0">暂无</option>
                                     <?php
-                                    if (isset($agentList) && $agentList) {
-                                        foreach ($agentList as $k => $v) {
-                                            if($v['agent_level'] < 3) {
+                                    if (isset($agentList1) && $agentList1) {
+                                        foreach ($agentList1 as $k => $v) {
                                             ?>
                                             <option value="<?php echo $v['id'] ?>"><?php echo $v['real_name'] ?></option>
                                             <?php
-                                        }}
+                                        }
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="col-sm-3">
+                                <select class="form-control m-b" name="up_agent_id2">
+                                    <option value="0">暂无</option>
+                                    <?php
+                                    if (isset($agentList2) && $agentList2) {
+                                        foreach ($agentList2 as $k => $v) {
+                                            ?>
+                                            <option value="<?php echo $v['id'] ?>"><?php echo $v['real_name'] ?></option>
+                                            <?php
+                                        }
                                     }
                                     ?>
                                 </select>
@@ -149,10 +162,10 @@ use yii\helpers\Url;
                     if(data.result=="success"){
                         //禁用提交按钮。防止点击起来没完
                         $('#formSubmit').attr('disabled',true);
-                        window.location.href = "<?php echo Url::toRoute(['/agent/agent/examine']); ?>";
+                        window.location.href = "<?php echo Url::toRoute(['/agent/examine/examine']); ?>";
                     }else{
                         //禁用提交按钮。防止点击起来没完
-                        $('#formSubmit').attr('disabled',true);
+                        alert(data.info);
                     }
                 }
             });

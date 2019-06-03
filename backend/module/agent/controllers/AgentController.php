@@ -83,12 +83,14 @@ class AgentController extends BaseController
         }
 
         //代理列表
-        $agentList = AgentService::getAgentList();
+        $agentList1 = AgentService::getAgentList(1);
+        $agentList2 = AgentService::getAgentList(2);
 
         return $this->render('create',[
             'title' => $title,
             'moduleTitle' => $this->moduleTitle,
-            'agentList' => $agentList,
+            'agentList1' => $agentList1,
+            'agentList2' => $agentList2,
         ]);
     }
 
@@ -107,7 +109,8 @@ class AgentController extends BaseController
         }
 
         //代理列表
-        $agentList = AgentService::getAgentList();
+        $agentList1 = AgentService::getAgentList(1);
+        $agentList2 = AgentService::getAgentList(2);
 
         $id = $request = \Yii::$app->request->get('id');
         $data = AgentService::getOne($id);
@@ -116,7 +119,8 @@ class AgentController extends BaseController
             'data' => $data,
             'title' => $title,
             'moduleTitle' => $this->moduleTitle,
-            'agentList' => $agentList,
+            'agentList1' => $agentList1,
+            'agentList2' => $agentList2,
         ]);
     }
 

@@ -143,8 +143,23 @@ class AgentService {
         $session = \Yii::$app->session;
         $adminInfo = $session->get('adminInfo');
 
-        if($params['up_agent_id'] > 0) {
-            $upAgent = RAdmin::find()->where(['id'=>$params['up_agent_id']])->asArray()->one();
+        $agent_id = 0;
+        if($params['up_agent_id1'] != 0 && $params['up_agent_id2'] != 0) {
+            return ['type'=>'fail','msg' => '上级代理只能选一个'];
+        }
+
+        if($params['up_agent_id1'] == 0 && $params['up_agent_id2'] == 0) {
+            $agent_id = 0;
+        } else {
+            if($params['up_agent_id1'] != 0) {
+                $agent_id = $params['up_agent_id1'];
+            } else if($params['up_agent_id2'] != 0) {
+                $agent_id = $params['up_agent_id2'];
+            }
+        }
+
+        if($agent_id > 0) {
+            $upAgent = RAdmin::find()->where(['id'=>$agent_id])->asArray()->one();
             $agent_level = $upAgent['agent_level'] + 1;
         } else {
             $agent_level = 1;
@@ -159,7 +174,7 @@ class AgentService {
         $admin->qq = $params['qq'];
         $admin->wechat = $params['wechat'];
         $admin->bank_id = $params['bank_id'];
-        $admin->up_agent_id = $params['up_agent_id'];
+        $admin->up_agent_id = $agent_id;
         $admin->create_ip = $params['create_ip'];
         $admin->create_time = time();
         $admin->position_id = 3;
@@ -236,6 +251,22 @@ class AgentService {
         $session = \Yii::$app->session;
         $adminInfo = $session->get('adminInfo');
 
+        $agent_id = 0;
+
+        if($params['up_agent_id1'] != 0 && $params['up_agent_id2'] != 0) {
+            return ['type'=>'fail','msg' => '上级代理只能选一个'];
+        }
+
+        if($params['up_agent_id1'] == 0 && $params['up_agent_id2'] == 0) {
+            $agent_id = 0;
+        } else {
+            if($params['up_agent_id1'] != 0) {
+                $agent_id = $params['up_agent_id1'];
+            } else if($params['up_agent_id2'] != 0) {
+                $agent_id = $params['up_agent_id2'];
+            }
+        }
+
         $update_data = [
             'account' => $params['account'],
             'pwd' => base64_encode($params['pwd']),
@@ -245,11 +276,13 @@ class AgentService {
             'qq' => $params['qq'],
             'wechat' => $params['wechat'],
             'bank_id' => $params['bank_id'],
-            'up_agent_id' => $params['up_agent_id'],
             'domain' => $params['domain'],
             'update_time' => time(),
             'update_person' => $adminInfo['id'],
         ];
+
+        $update_data['up_agent_id'] = $agent_id;
+
         $res = RAdmin::updateAll($update_data, 'id = ' . $params['id']);
         if ($res) {
             return ['type' => 'success', 'msg' => '操作成功'];

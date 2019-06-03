@@ -177,19 +177,6 @@ class UserService {
         $cond = [];
         $cond[] = ['>', 'expire_time', time()];
 
-        //姓名
-        if(!empty($params['real_name'])) {
-            $cond[] = ['like', 'real_name', $params['real_name']];
-        }
-        //域名
-        if(!empty($params['domain'])) {
-            $cond[] = ['like', 'domain', $params['domain']];
-        }
-        //手机
-        if(!empty($params['phone'])) {
-            $cond[] = ['=', 'phone', $params['phone']];
-        }
-
         $offset = ($page - 1) * $pageSize;
 
         $query = RUser::find()->where([]);

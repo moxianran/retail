@@ -32,10 +32,10 @@ use yii\helpers\Url;
                             <tr>
                                 <th>序号</th>
                                 <th>会员帐号</th>
+                                <th>上级代理</th>
                                 <th>真实姓名</th>
                                 <th>登录时间</th>
                                 <th>登录ip</th>
-                                <th>上级代理</th>
                                 <th>操作</th>
                             </tr>
                             </thead>
@@ -47,10 +47,10 @@ use yii\helpers\Url;
                                     <tr class="gradeX">
                                         <td><?php echo $v['id'] ?></td>
                                         <td><?php echo $v['account'] ?></td>
+                                        <td><?php echo $v['agentName'] ?></td>
                                         <td><?php echo $v['real_name'] ?></td>
                                         <td><?php echo date("Y-m-d H:i:s",$v['login_time']) ?></td>
                                         <td><?php echo $v['login_ip'] ?></td>
-                                        <td><?php echo $v['agentName'] ?></td>
                                         <td class="center">
                                     <?php
                                     if($this->params['position_id'] == 1 || in_array(23,$this->params['power_id'])
