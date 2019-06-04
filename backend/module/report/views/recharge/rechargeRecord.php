@@ -22,7 +22,7 @@
             <form id="searchForm" action="" method="get">
                 <div class="row">
 
-                    <div class="col-sm-2">
+                    <div class="col-sm-1">
                         <div class="form-group">
                             <label class="control-label" for="game">游戏类型</label>
                             <select name="game" id="game" class="form-control">
@@ -42,15 +42,15 @@
                         </div>
                     </div>
 
-                    <div class="col-sm-2">
+                    <div class="col-sm-1">
                         <div class="form-group">
                             <label class="control-label" for="type">结算类型</label>
                             <select name="type" id="type" class="form-control">
                                 <option value="0" <?php if(!isset($get['type']) || $get['type'] == '0' ) { echo ' selected="selected"';}?>>全部</option>
 
                                 <?php
-                                if(isset($settlement_type) && !empty($settlement_type)) {
-                                    foreach($settlement_type as $k => $v) {
+                                if(isset($settlementTypeArr) && !empty($settlementTypeArr)) {
+                                    foreach($settlementTypeArr as $k => $v) {
                                         ?>
                                         <option value="<?php echo $k; ?>"  <?php
                                         if(isset($get['type']) && $get['type'] == $k ) { echo ' selected="selected"';}?>
@@ -74,7 +74,7 @@
                                         ?>
                                         <option value="<?php echo $v['id'] ?>"  <?php
                                         if(isset($get['agent_id']) && $get['agent_id'] == $v['id'] ) { echo ' selected="selected"';}?>
-                                        ><?php echo $v['real_name'] ?></option>
+                                        ><?php echo $v['account'] ?></option>
                                         <?php
                                     }}
                                 ?>
@@ -94,7 +94,7 @@
                                         ?>
                                         <option value="<?php echo $v['id'] ?>"  <?php
                                         if(isset($get['user_id']) && $get['user_id'] == $v['id'] ) { echo ' selected="selected"';}?>
-                                        ><?php echo $v['real_name'] ?></option>
+                                        ><?php echo $v['account'] ?></option>
                                         <?php
                                     }}
                                 ?>
@@ -112,14 +112,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-1">
-                        <div class="form-group">
-                            <label class="control-label" for="user_id">.</label>
-                            <div class="input-group">
-                                <span class="input-group-append">
-                                    <button type="submit" class="btn btn-sm btn-primary">查询</button>
-                                </span>
-                            </div>
+                    <div class="col-sm-2">
+                        <div style="margin-top:27px;">
+                            <button type="submit" class="btn btn-sm btn-primary">查询</button>
+                            <button type="button" id="clear" class="btn btn-sm btn-primary">清空</button>
                         </div>
                     </div>
                 </div>
@@ -210,6 +206,12 @@
 
 
 <script>
+
+    $(function(){
+        $("#clear").click(function(){
+            $(".form-control").val("");
+        })
+    })
 
     $('.input-daterange').datepicker({
         keyboardNavigation: false,

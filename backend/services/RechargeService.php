@@ -13,9 +13,7 @@ class RechargeService
         $game = array_column($game,'name','id');
 
         $settlementTypeArr = [
-            '0' => '游戏上分',
             '1' => '游戏上分',
-            '2' => '游戏上分'
         ];
 
         $pageSize= 10;
@@ -35,19 +33,24 @@ class RechargeService
             $end = strtotime(date("Y-m-d H:i:s"));
         }
 
-        if (isset($params['game']) && $params['game'] > 0) {
-            $cond[] = ['=', 'game', $params['game']];
+        if (isset($params['game_id']) && $params['game_id'] > 0) {
+            $cond[] = ['=', 'game_id', $params['game_id']];
         }
         if (isset($params['type']) && $params['type'] > 0) {
             $cond[] = ['=', 'type', $params['type']];
         }
-        if (isset($params['agent_id']) && $params['agent_id'] > 0) {
-            $cond[] = ['=', 'agent_id', $params['agent_id']];
-        }
+
         if (isset($params['user_id']) && $params['user_id'] > 0) {
             $cond[] = ['=', 'user_id', $params['user_id']];
         }
+        if (isset($params['agent_id']) && $params['agent_id'] > 0) {
 
+            $u = RUser::find()->where(['agent_id' =>$params['agent_id'] ])->asArray()->all();
+            $uid = array_column($u,'id');
+            $cond[] = ['in', 'user_id', $uid];
+        }
+
+//        print_r($cond);die;
         $cond[] = ['>', 'create_time', $start];
         $cond[] = ['<', 'create_time', $end];
 
@@ -76,9 +79,8 @@ class RechargeService
             $adminAccount = array_column($admin,'account','id');
 
             foreach ($list as $k => $v) {
-//                print_r($upAgentIds[$v['user_id']]);die;
                 $list[$k]['userAccount'] = $userAccount[$v['user_id']] ?? '暂无';
-                $list[$k]['gameName'] = $game[$v['game_type']] ?? '暂无';
+                $list[$k]['gameName'] = $game[$v['game_id']] ?? '暂无';
                 $list[$k]['settlement_type'] = $settlementTypeArr[$v['type']] ?? '暂无';
                 $list[$k]['agentAccount'] = $adminAccount[1] ?? '暂无';
                 $list[$k]['operator_id'] = $adminAccount[$v['operator_id']] ?? '暂无';
@@ -92,7 +94,7 @@ class RechargeService
             'start' => $startDate,
             'end' => $endDate,
             'game' => $game,
-            'type' => $settlementTypeArr
+            'settlementTypeArr' => $settlementTypeArr
         ];
 
     }

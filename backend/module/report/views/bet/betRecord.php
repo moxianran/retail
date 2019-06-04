@@ -60,7 +60,7 @@
                                 </select>
                             </div>
                         </div>
-                        
+
                         <div class="col-sm-1">
                             <div class="form-group">
                                 <label class="control-label" for="product_name">桌号</label>

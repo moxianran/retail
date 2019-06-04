@@ -8,12 +8,13 @@ use Yii;
  * This is the model class for table "r_recharge_record".
  *
  * @property int $id
- * @property int $game_type 游戏类型
+ * @property int $game_id 游戏类型
  * @property int $user_id 用户id
  * @property int $type 充值类型
  * @property int $money 充值金额
  * @property int $balance 余额
  * @property int $operator_id 操作员
+ * @property string $ip ip
  * @property int $create_time
  * @property int $update_time
  * @property int $create_person
@@ -35,7 +36,9 @@ class RRechargeRecord extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['game_type', 'user_id', 'type', 'money', 'balance', 'operator_id', 'create_time', 'update_time', 'create_person', 'update_person'], 'integer'],
+            [['game_id', 'user_id', 'type', 'money', 'balance', 'operator_id', 'create_time', 'update_time', 'create_person', 'update_person'], 'integer'],
+            [['ip'], 'required'],
+            [['ip'], 'string', 'max' => 255],
         ];
     }
 
@@ -46,12 +49,13 @@ class RRechargeRecord extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'game_type' => 'Game Type',
+            'game_id' => 'Game ID',
             'user_id' => 'User ID',
             'type' => 'Type',
             'money' => 'Money',
             'balance' => 'Balance',
             'operator_id' => 'Operator ID',
+            'ip' => 'Ip',
             'create_time' => 'Create Time',
             'update_time' => 'Update Time',
             'create_person' => 'Create Person',

@@ -49,7 +49,7 @@ class RechargeController extends BaseController
             'title' => $title,
             'moduleTitle' => $this->moduleTitle,
             'game' => $data['game'],
-            'type' => $data['type'],
+            'settlementTypeArr' => $data['settlementTypeArr'],
         ]);
     }
 
