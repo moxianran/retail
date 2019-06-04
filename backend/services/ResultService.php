@@ -1,5 +1,6 @@
 <?php
 namespace backend\services;
+use app\models\RGame;
 use app\models\RResult;
 use app\models\RUser;
 
@@ -8,11 +9,15 @@ class ResultService
 
     public static function getList($params)
     {
-
-        $gameTypeArr = [
-            '1' => '牌',
-            '2' => '彩票'
+        //游戏厅列表
+        $gameArea = [
+            '1' => '腾龙厅',
+            '2' => '百胜厅',
         ];
+
+        $gameTypeArr = RGame::find()->asArray()->all();
+        $gameTypeArr = array_column($gameTypeArr,'name','id');
+
         $settlementTypeArr = [
             '1' => '微信',
             '2' => '支付宝'
@@ -38,8 +43,11 @@ class ResultService
         $cond[] = ['>', 'create_time', $start];
         $cond[] = ['<', 'create_time', $end];
 
-        if (isset($params['game_type']) && $params['game_type'] > 0) {
-            $cond[] = ['=', 'game_type', $params['game_type']];
+        if (isset($params['game_area_id']) && $params['game_area_id'] > 0) {
+            $cond[] = ['=', 'game_area_id', $params['game_area_id']];
+        }
+        if (isset($params['game_id']) && $params['game_id'] > 0) {
+            $cond[] = ['=', 'game_id', $params['game_id']];
         }
         if (isset($params['user_id']) && $params['user_id'] > 0) {
             $cond[] = ['=', 'user_id', $params['user_id']];
@@ -66,7 +74,8 @@ class ResultService
             foreach ($list as $k => $v) {
                 $list[$k]['account'] = $account[$v['user_id']] ?? '暂无';
                 $list[$k]['real_name'] = $real_name[$v['user_id']] ?? '暂无';
-                $list[$k]['game_type'] = $gameTypeArr[$v['game_type']] ?? '暂无';
+                $list[$k]['game_id'] = $gameTypeArr[$v['game_id']] ?? '暂无';
+                $list[$k]['gameArea'] = $gameArea[$v['game_area_id']] ?? '暂无';
             }
         }
 
@@ -77,7 +86,8 @@ class ResultService
             'start' => $startDate,
             'end' => $endDate,
             'game_type' => $gameTypeArr,
-            'settlement_type' => $settlementTypeArr
+            'settlement_type' => $settlementTypeArr,
+            'gameArea' => $gameArea
         ];
 
     }

@@ -34,7 +34,6 @@ class ResultController extends BaseController
         $user = RUser::find('id,real_name')->where(['status' => 2])->asArray()->all();
 
         $pagination = new Pagination(['totalCount' => $data['count'], 'pageSize' => $data['pageSize']]);
-
         return $this->render('resultRecord', [
             'list' => $data['list'],
             'pagination' => $pagination,
@@ -45,6 +44,7 @@ class ResultController extends BaseController
             'title' => $title,
             'moduleTitle' => $this->moduleTitle,
             'game_type' => $data['game_type'],
+            'gameArea' => $data['gameArea'],
             'settlement_type' => $data['settlement_type'],
         ]);
     }
