@@ -2,6 +2,7 @@
 
 namespace backend\module\report\controllers;
 
+use app\models\RGame;
 use app\models\RUser;
 use backend\module\BaseController;
 use backend\services\BetService;
@@ -33,6 +34,17 @@ class BetController extends BaseController
         //用户下拉列表
         $user = RUser::find()->where([])->asArray()->all();
 
+        //游戏列表
+        $game = RGame::find()->asArray()->all();
+        $game = array_column($game,'name','id');
+
+        //游戏厅列表
+        $gameArea = [
+            '1' => '腾龙厅',
+            '2' => '百胜厅',
+        ];
+
+
         return $this->render('betRecord', [
             'list' => $data['list'],
             'pagination' => $pagination,
@@ -42,6 +54,8 @@ class BetController extends BaseController
             'title' => $title,
             'moduleTitle' => $this->moduleTitle,
             'user' => $user,
+            'game' => $game,
+            'gameArea' => $gameArea,
         ]);
     }
 

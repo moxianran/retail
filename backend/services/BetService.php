@@ -15,6 +15,12 @@ class BetService {
      */
     public static function getList($params)
     {
+        //游戏厅列表
+        $gameArea = [
+            '1' => '腾龙厅',
+            '2' => '百胜厅',
+        ];
+
         $pageSize= 10;
 
         if(isset($params['page']) && !empty($params['page'])) {
@@ -41,18 +47,46 @@ class BetService {
         $startDate = date("m/d/Y",$start);
         $endDate = date("m/d/Y",$end);
 
-        //桌号
-        if(!empty($params['platform_id'])) {
-            $cond[] = ['=', 'platform_id', $params['platform_id']];
+
+        if(!empty($params['game_id'])) {
+
+            $game_record = RGameRecord::find()->where(['game_id'=>$params['game_id']])->asArray()->all();
+            $ids = array_column($game_record,'id');
+            $cond[] = ['in', 'id', $ids];
+
         }
-        //场
+
+        if(!empty($params['gameArea'])) {
+
+            $game_record = RGameRecord::find()->where(['game_area_id'=>$params['gameArea']])->asArray()->all();
+            $ids = array_column($game_record,'id');
+            $cond[] = ['in', 'id', $ids];
+
+        }
+
+
+
+        //桌
         if(!empty($params['series_id'])) {
-            $cond[] = ['=', 'series_id', $params['series_id']];
+
+            $game_record = RGameRecord::find()->where(['series_id'=>$params['series_id']])->asArray()->all();
+            $ids = array_column($game_record,'id');
+            $cond[] = ['in', 'id', $ids];
+        }
+
+        //场
+        if(!empty($params['platform_id'])) {
+            $game_record = RGameRecord::find()->where(['platform_id'=>$params['platform_id']])->asArray()->all();
+            $ids = array_column($game_record,'id');
+            $cond[] = ['in', 'id', $ids];
         }
         //次
-        if(!empty($params['game_id'])) {
-            $cond[] = ['=', 'game_id', $params['game_id']];
+        if(!empty($params['inning_id'])) {
+            $game_record = RGameRecord::find()->where(['inning_id'=>$params['inning_id']])->asArray()->all();
+            $ids = array_column($game_record,'id');
+            $cond[] = ['in', 'id', $ids];
         }
+
         //会员
         if(!empty($params['user_id'])) {
             $cond[] = ['=', 'user_id', $params['user_id']];
@@ -129,6 +163,9 @@ class BetService {
                 } else if($v['bet_result'] == '2'){
                     $list[$k]['bet_result'] = '负';
                 }
+
+                $list[$k]['gameArea'] = $gameArea[$gameRecord['game_area_id']] ?? '暂无';
+
             }
         }
 

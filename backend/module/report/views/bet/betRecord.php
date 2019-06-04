@@ -21,6 +21,46 @@
             <div class="ibox-content m-b-sm border-bottom">
                 <form id="searchForm" action="" method="get">
                     <div class="row">
+
+
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                <label class="control-label" for="user_id">游戏厅</label>
+                                <select name="gameArea" id="gameArea" class="form-control">
+                                    <option value="0" <?php if(!isset($get['gameArea']) || $get['gameArea'] == '0' ) { echo ' selected="selected"';}?>>全部</option>
+                                    <?php
+                                    if(isset($gameArea) && !empty($gameArea)) {
+                                        foreach($gameArea as $k => $v) {
+                                            ?>
+                                            <option value="<?php echo $k ?>"  <?php
+                                            if(isset($get['gameArea']) && $get['gameArea'] == $k ) { echo ' selected="selected"';}?>
+                                            ><?php echo $v ?></option>
+                                            <?php
+                                        }}
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                <label class="control-label" for="user_id">游戏</label>
+                                <select name="game_id" id="game_id" class="form-control">
+                                    <option value="0" <?php if(!isset($get['game_id']) || $get['game_id'] == '0' ) { echo ' selected="selected"';}?>>全部</option>
+                                    <?php
+                                    if(isset($game) && !empty($game)) {
+                                        foreach($game as $k => $v) {
+                                            ?>
+                                            <option value="<?php echo $k ?>"  <?php
+                                            if(isset($get['game_id']) && $get['game_id'] == $k ) { echo ' selected="selected"';}?>
+                                            ><?php echo $v ?></option>
+                                            <?php
+                                        }}
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+                        
                         <div class="col-sm-1">
                             <div class="form-group">
                                 <label class="control-label" for="product_name">桌号</label>
@@ -68,14 +108,10 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-1">
-                            <div class="form-group">
-                                <label class="control-label">.</label>
-                                <div class="input-group">
-                                    <span class="input-group-append">
-                                        <button type="submit" class="btn btn-sm btn-primary">查询</button>
-                                    </span>
-                                </div>
+                        <div class="col-sm-2">
+                            <div style="margin-top:27px;">
+                                <button type="submit" class="btn btn-sm btn-primary">查询</button>
+                                <button type="button" id="clear" class="btn btn-sm btn-primary">清空</button>
                             </div>
                         </div>
                     </div>
@@ -118,7 +154,7 @@
                                             ?>
                                             <tr class="gradeX">
                                                 <td><?php echo $v['id'] ?></td>
-                                                <td><?php echo $v['gameTitle'] ?></td>
+                                                <td><?php echo $v['gameArea'] ?></td>
                                                 <td><?php echo $v['gameTitle'] ?></td>
                                                 <td><?php echo $v['series_id'] ?></td>
                                                 <td><?php echo $v['platform_id'] ?></td>
@@ -181,6 +217,12 @@
 
 
 <script>
+
+    $(function(){
+        $("#clear").click(function(){
+            $(".form-control").val("");
+        })
+    })
 
     $('.input-daterange').datepicker({
         keyboardNavigation: false,

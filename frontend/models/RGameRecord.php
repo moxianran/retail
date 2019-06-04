@@ -9,6 +9,7 @@ use Yii;
  *
  * @property int $id
  * @property int $game_id 游戏类型id
+ * @property int $game_area_id 游戏厅id
  * @property int $series_id 卓号
  * @property int $platform_id 场号
  * @property int $inning_id 次号
@@ -32,7 +33,7 @@ class RGameRecord extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['game_id', 'series_id', 'platform_id', 'inning_id', 'create_time'], 'integer'],
+            [['game_id', 'game_area_id', 'series_id', 'platform_id', 'inning_id', 'create_time'], 'integer'],
             [['banker', 'player'], 'string', 'max' => 255],
         ];
     }
@@ -45,6 +46,7 @@ class RGameRecord extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'game_id' => 'Game ID',
+            'game_area_id' => 'Game Area ID',
             'series_id' => 'Series ID',
             'platform_id' => 'Platform ID',
             'inning_id' => 'Inning ID',
