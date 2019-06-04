@@ -43,7 +43,7 @@ class UserExecRecordService {
 
         foreach ($list as $k => $v) {
             $user = RUser::find()->where(['id' => $v['user_id']])->asArray()->one();
-            $list[$k]['userName'] = $user['real_name'];
+            $list[$k]['account'] = $user['account'];
 
 
         }

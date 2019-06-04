@@ -57,6 +57,7 @@ class MemberController extends Controller
 
         //用户游戏账号信息
         $userGame = RUserGame::find()->where(['user_id' => $this->userInfo['id']])->asArray()->all();
+
         $userGame = array_column($userGame, 'game_account', 'game_id');
 
         $gameInfo = '';
@@ -144,6 +145,8 @@ class MemberController extends Controller
                     $execRecord->user_id = $this->userInfo['id'];
                     $execRecord->content = $content;
                     $execRecord->create_time = time();
+                    $execRecord->ip = $this->getRealIp();
+                    $execRecord->type = 2;
                     $execRecord->insert();
 
                     $json = ['result'=>'success','info' => '操作成功'];
@@ -327,5 +330,25 @@ class MemberController extends Controller
         }
     }
 
+    /**
+     * 获取ip
+     */
+    private function getRealIp(){
+        $ip=false;
+        if(!empty($_SERVER['HTTP_CLIENT_IP'])){
+            $ip=$_SERVER['HTTP_CLIENT_IP'];
+        }
+        if(!empty($_SERVER['HTTP_X_FORWARDED_FOR'])){
+            $ips=explode (', ', $_SERVER['HTTP_X_FORWARDED_FOR']);
+            if($ip){ array_unshift($ips, $ip); $ip=FALSE; }
+            for ($i=0; $i < count($ips); $i++){
+                if(!eregi ('^(10│172.16│192.168).', $ips[$i])){
+                    $ip=$ips[$i];
+                    break;
+                }
+            }
+        }
+        return ($ip ? $ip : $_SERVER['REMOTE_ADDR']);
+    }
 
 }

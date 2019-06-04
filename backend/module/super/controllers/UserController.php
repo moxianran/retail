@@ -23,7 +23,7 @@ class UserController extends BaseController
      */
     public function actionList()
     {
-        $title = "会员操作记录";
+        $title = "操作记录";
 
         $get = \Yii::$app->request->get();
         $data = UserExecRecordService::getExecList($get);
