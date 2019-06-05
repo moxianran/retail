@@ -2,14 +2,12 @@
 
 namespace backend\components;
 
-use Yii;
-use yii\helpers\Url;
+use yii\db\ActiveRecord;
 
 class Logs
 {
     public static function write($event)
     {
-
         $ip=false;
         if(!empty($_SERVER['HTTP_CLIENT_IP'])){
             $ip=$_SERVER['HTTP_CLIENT_IP'];
@@ -29,28 +27,41 @@ class Logs
         $session = \Yii::$app->session;
         $adminInfo = $session->get('adminInfo');
 
-        // 具体要记录什么东西，自己来优化$description
+        if ($event->name == ActiveRecord::EVENT_AFTER_INSERT) {
+            $description = "%s新增了表%s %s:%s的%s";
+        } else if ($event->name == ActiveRecord::EVENT_AFTER_UPDATE) {
+            $description = "%s修改了表%s %s:%s的%s";
+        } else {
+            $description = "%s删除了表%s %s:%s%s";
+        }
+
         if (!empty($event->changedAttributes)) {
             $desc = '';
+
             foreach ($event->changedAttributes as $name => $value) {
                 $desc .= $name . ' : ' . $value . '=>' . $event->sender->getAttribute($name) . ',';
             }
             $desc = substr($desc, 0, -1);
+        } else {
+            $desc = '';
+        }
 
-            if(isset($adminInfo) && !empty($adminInfo)) {
-                $description = $adminInfo['real_name'] . '修改了' . $event->sender->className() . 'id:' . $event->sender->primaryKey()[0] . '的' . $desc;
-                $data = [
-                    'type' => 1,
-                    'ip' => $ip,
-                    'content' => $description,
-                    'create_time' => time(),
-                    'user_id' => $adminInfo['id'],
-                ];
-                $model = new \app\models\RUserExecRecord();
-                $model->setAttributes($data);
-                $model->save();
+        if (isset($adminInfo) && !empty($adminInfo)) {
 
-            }
+            $tableName = $event->sender->tableSchema->name;
+            $description = sprintf($description, '', $tableName, $event->sender->primaryKey()[0], $event->sender->getPrimaryKey(), $desc);
+
+            $data = [
+                'type' => 1,
+                'ip' => $ip,
+                'content' => $description,
+                'create_time' => time(),
+                'user_id' => $adminInfo['id'],
+            ];
+            $model = new \app\models\RUserExecRecord();
+            $model->setAttributes($data);
+            $model->save();
+
         }
     }
 }

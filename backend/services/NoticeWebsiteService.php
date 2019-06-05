@@ -2,6 +2,7 @@
 
 namespace backend\services;
 
+use app\models\RNoticeAgent;
 use app\models\RNoticeWebsite;
 
 class NoticeWebsiteService
@@ -74,6 +75,10 @@ class NoticeWebsiteService
     {
         $session = \Yii::$app->session;
         $adminInfo = $session->get('adminInfo');
+
+        $model = RNoticeWebsite::findOne($params['id']);
+        $model->title = 'fff';
+        $model->save();
 
         $update_data = [
             'title' => $params['title'],
