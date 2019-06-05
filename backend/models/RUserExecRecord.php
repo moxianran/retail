@@ -8,11 +8,11 @@ use Yii;
  * This is the model class for table "r_user_exec_record".
  *
  * @property int $id
- * @property int $user_id 会员id
+ * @property int $type 1管理 2会员
+ * @property int $user_id 会员/管理id
  * @property string $content 内容
  * @property string $ip
  * @property int $create_time
- * @property int $type 1管理 2会员
  */
 class RUserExecRecord extends \yii\db\ActiveRecord
 {
@@ -30,8 +30,7 @@ class RUserExecRecord extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'create_time', 'type'], 'integer'],
-            [['content'], 'required'],
+            [['type', 'user_id', 'create_time'], 'integer'],
             [['content', 'ip'], 'string', 'max' => 255],
         ];
     }
@@ -43,11 +42,11 @@ class RUserExecRecord extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'type' => 'Type',
             'user_id' => 'User ID',
             'content' => 'Content',
             'ip' => 'Ip',
             'create_time' => 'Create Time',
-            'type' => 'Type',
         ];
     }
 }
