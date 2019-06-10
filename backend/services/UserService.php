@@ -258,7 +258,6 @@ class UserService {
             }
         }
 
-
         $user = new RUser();
         $user->account = $params['account'];
         $user->pwd = base64_encode($params['pwd']);
@@ -279,6 +278,10 @@ class UserService {
         $user->is_stop = $params['is_stop'];
         $res = $user->insert();
         if($res) {
+
+            $content = '创建了序号为'.$user->id."的会员";
+            LogService::writeLog($content);
+
             return ['type'=>'success','msg' => '操作成功'];
         } else {
             return ['type'=>'fail','msg' => '操作失败'];
@@ -295,6 +298,8 @@ class UserService {
         $session = \Yii::$app->session;
         $adminInfo = $session->get('adminInfo');
 
+        $userInfo = RUser::findOne($params['id']);
+
         $update_data = [
             'account' => $params['account'],
             'pwd' => base64_encode($params['pwd']),
@@ -309,7 +314,6 @@ class UserService {
             'update_time' => time(),
             'update_person' => $adminInfo['id'],
         ];
-
 
         $agent_id = 0;
 
@@ -338,6 +342,38 @@ class UserService {
 
         $res = RUser::updateAll($update_data,'id = '.$params['id']);
         if($res) {
+
+            $content = '编辑了序号为' . $params['id'] . "的会员:";
+
+            $updateText = [
+                'account' => '会员账号',
+                'pwd' => '会员密码',
+                'money_pwd' => '取款密码',
+                'real_name' => '真实姓名',
+                'phone' => '手机号码',
+                'email' => '邮箱',
+                'qq' => '社交账号',
+                'bank_id' => '银行账号',
+                'domain' => '域名',
+                'is_stop' => '状态',
+            ];
+
+            $editContent = '';
+            foreach ($updateText as $k => $v) {
+                if($userInfo[$k] != $update_data[$k]) {
+                    if($k == 'pwd' || $k == 'money_pwd') {
+                        $editContent.= $v.'修改为'.base64_decode($update_data[$k]).",";
+                    } else if ($k == 'is_stop'){
+                        $is_stop = $update_data[$k] == 1 ? '正常' : '停用';
+                        $editContent.= $v.'修改为'.$is_stop.",";
+                    } else {
+                        $editContent.= $v.'修改为'.$update_data[$k].",";
+                    }
+                }
+            }
+
+            LogService::writeLog($content.$editContent);
+
             return ['type'=>'success','msg' => '操作成功'];
         } else {
             return ['type'=>'fail','msg' => '操作失败'];
@@ -364,6 +400,11 @@ class UserService {
         ];
         $res = RUser::updateAll($update_data,'id = '.$id);
         if($res) {
+
+            $status = $status == 2 ? '通过' : '拒绝';
+            $content = '审核了序号为' . $params['id'] . "的会员:审核状态修改为".$status;
+            LogService::writeLog($content);
+
             return ['type'=>'success','msg' => '操作成功'];
         } else {
             return ['type'=>'fail','msg' => '操作失败'];
@@ -390,6 +431,11 @@ class UserService {
         ];
         $res = RUser::updateAll($update_data,'id = '.$id);
         if($res) {
+
+            $status = $isStop == 1 ? '正常' : '禁用';
+            $content = '修改了序号为' . $params['id'] . "的会员:状态修改为".$status;
+            LogService::writeLog($content);
+
             return ['type'=>'success','msg' => '操作成功'];
         } else {
             return ['type'=>'fail','msg' => '操作失败'];
@@ -409,6 +455,9 @@ class UserService {
         ];
         $res = RUser::updateAll($update_data, 'id = ' . $id);
         if ($res) {
+            $content = '删除了序号为' . $params['id'] . "的会员";
+            LogService::writeLog($content);
+
             return ['type' => 'success', 'msg' => '操作成功'];
         } else {
             return ['type' => 'fail', 'msg' => '操作失败'];

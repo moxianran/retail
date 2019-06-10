@@ -3,8 +3,6 @@
 namespace backend\services;
 
 use app\models\RNoticeWebsite;
-use app\models\RUserExecRecord;
-use backend\services\LogService;
 
 class NoticeWebsiteService
 {
@@ -62,7 +60,7 @@ class NoticeWebsiteService
         $res = $notice->insert();
         if ($res) {
 
-            $content = '创建了序号为'.$notice->id."的网站公告";
+            $content = '创建了序号为' . $notice->id . "的网站公告通知";
             LogService::writeLog($content);
 
             return ['type' => 'success', 'msg' => '操作成功'];
@@ -96,7 +94,7 @@ class NoticeWebsiteService
         if ($res) {
 
             $status = $params['status'] == 1 ? '正常' : '禁用';
-            $content = '编辑了序号为'.$params['id']."的网站公告:标题修改为".$params['title'].",内容修改为:".$params['content'];
+            $content = '编辑了序号为' . $params['id'] . "的网站公告通知:标题修改为" . $params['title'] . ",内容修改为:" . $params['content'];
             $content.=',状态修改为'.$status;
             LogService::writeLog($content);
 
@@ -105,7 +103,6 @@ class NoticeWebsiteService
             return ['type' => 'fail', 'msg' => '操作失败'];
         }
     }
-
 
     /**
      * 获取单条信息
@@ -140,7 +137,7 @@ class NoticeWebsiteService
             } else if($params['status'] == 3) {
                 $status = '删除';
             }
-            $content = '编辑了序号为'.$params['id']."的网站公告:";
+            $content = '编辑了序号为' . $params['id'] . "的网站公告通知:";
             $content.='状态修改为'.$status;
             LogService::writeLog($content);
 
@@ -149,10 +146,4 @@ class NoticeWebsiteService
             return ['type' => 'fail', 'msg' => '操作失败'];
         }
     }
-
-
-
-
-
-
 }

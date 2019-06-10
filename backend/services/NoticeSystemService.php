@@ -59,6 +59,10 @@ class NoticeSystemService
         $notice->status = $params['status'];
         $res = $notice->insert();
         if ($res) {
+
+            $content = '创建了序号为'.$notice->id."的会员后台通知";
+            LogService::writeLog($content);
+
             return ['type' => 'success', 'msg' => '操作成功'];
         } else {
             return ['type' => 'fail', 'msg' => '操作失败'];
@@ -84,6 +88,13 @@ class NoticeSystemService
         ];
         $res = RNoticeSystem::updateAll($update_data, 'id = ' . $params['id']);
         if ($res) {
+
+
+            $status = $params['status'] == 1 ? '正常' : '禁用';
+            $content = '编辑了序号为'.$params['id']."的会员后台通知:标题修改为".$params['title'].",内容修改为:".$params['content'];
+            $content.=',状态修改为'.$status;
+            LogService::writeLog($content);
+
             return ['type' => 'success', 'msg' => '操作成功'];
         } else {
             return ['type' => 'fail', 'msg' => '操作失败'];
@@ -116,6 +127,18 @@ class NoticeSystemService
         ];
         $res = RNoticeSystem::updateAll($update_data,'id = '.$params['id']);
         if ($res) {
+
+            if($params['status'] == 1) {
+                $status = '正常';
+            } else if($params['status'] == 2) {
+                $status = '禁用';
+            } else if($params['status'] == 3) {
+                $status = '删除';
+            }
+            $content = '编辑了序号为'.$params['id']."的会员后台通知:";
+            $content.='状态修改为'.$status;
+            LogService::writeLog($content);
+
             return ['type' => 'success', 'msg' => '操作成功'];
         } else {
             return ['type' => 'fail', 'msg' => '操作失败'];
