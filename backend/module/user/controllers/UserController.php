@@ -62,12 +62,15 @@ class UserController extends BaseController
         $agentList2 = AgentService::getAgentList(2);
         $agentList3 = AgentService::getAgentList(3);
 
+        $gameList = RGame::find()->asArray()->all();
+        $gameList = array_column($gameList,'name','id');
         return $this->render('create',[
             'title' => $title,
             'moduleTitle' => $this->moduleTitle,
             'agentList1' => $agentList1,
             'agentList2' => $agentList2,
             'agentList3' => $agentList3,
+            'gameList' => $gameList,
         ]);
     }
 
@@ -94,6 +97,12 @@ class UserController extends BaseController
         $agentList2 = AgentService::getAgentList(2);
         $agentList3 = AgentService::getAgentList(3);
 
+        $gameList = RGame::find()->asArray()->all();
+        $gameList = array_column($gameList,'name','id');
+
+        $userGame = RUserGame::find()->where(['user_id'=>$id])->asArray()->all();
+        $userGame = array_column($userGame,'game_account','game_id');
+
         return $this->render('edit', [
             'data' => $data,
             'title' => $title,
@@ -101,6 +110,9 @@ class UserController extends BaseController
             'agentList1' => $agentList1,
             'agentList2' => $agentList2,
             'agentList3' => $agentList3,
+            'gameList' => $gameList,
+            'userGame' => $userGame
+
         ]);
     }
 

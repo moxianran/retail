@@ -2,7 +2,9 @@
 namespace backend\services;
 
 use app\models\RAdmin;
+use app\models\RGame;
 use app\models\RUser;
+use app\models\RUserGame;
 use app\models\RUserLoginRecord;
 
 class UserService {
@@ -277,6 +279,22 @@ class UserService {
         $user->status = 1;
         $user->is_stop = $params['is_stop'];
         $res = $user->insert();
+
+        $game_account = $params['game'];
+        foreach ($game_account as $k=>$v) {
+
+            if(empty($v)){
+                $game = new RUserGame();
+                $game->user_id = $user['id'];
+                $game->game_id = $k;
+                $game->game_account = $v;
+                $game->create_time = time();
+                $game->create_person = $adminInfo['id'];
+                $game->insert();
+            }
+        }
+
+
         if($res) {
 
             $content = '创建了序号为'.$user->id."的会员";
@@ -341,6 +359,23 @@ class UserService {
         $update_data['agent_id'] = $agent_id;
 
         $res = RUser::updateAll($update_data,'id = '.$params['id']);
+
+        $user_game = RUserGame::find()->where(['user_id'=>$params['id']])->asArray()->all();
+        $user_game = array_column($user_game,'game_account','game_id');
+
+        $game_account = $params['game'];
+        foreach ($game_account as $k => $v) {
+
+            if(empty($v)){
+                $update_data_game = [
+                    'game_account' => $v,
+                    'update_time' => time(),
+                    'update_person' => $adminInfo['id'],
+                ];
+                RUserGame::updateAll($update_data_game,'id = '.$params['id']);
+            }
+        }
+
         if($res) {
 
             $content = '编辑了序号为' . $params['id'] . "的会员:";
@@ -364,12 +399,23 @@ class UserService {
                     if($k == 'pwd' || $k == 'money_pwd') {
                         $editContent.= $v.'修改为'.base64_decode($update_data[$k]).",";
                     } else if ($k == 'is_stop'){
-                        $is_stop = $update_data[$k] == 1 ? '正常' : '停用';
+                        $is_stop = $update_data[$k] == 1 ? '停用' : '正常';
                         $editContent.= $v.'修改为'.$is_stop.",";
                     } else {
                         $editContent.= $v.'修改为'.$update_data[$k].",";
                     }
                 }
+            }
+
+            $game = RGame::find()->asArray()->all();
+            $game = array_column($game,'name','id');
+
+
+            foreach ($game as $k => $v) {
+                if(!empty($game_account[$k])) {
+                    $editContent.= $v.'修改为'.$game_account[$k].",";
+                }
+
             }
 
             LogService::writeLog($content.$editContent);
@@ -432,7 +478,7 @@ class UserService {
         $res = RUser::updateAll($update_data,'id = '.$id);
         if($res) {
 
-            $status = $isStop == 1 ? '正常' : '禁用';
+            $status = $isStop == 1 ? '禁用' : '正常';
             $content = '修改了序号为' . $params['id'] . "的会员:状态修改为".$status;
             LogService::writeLog($content);
 
