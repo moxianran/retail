@@ -347,7 +347,7 @@ class UserService {
 
             $updateText = [
                 'account' => '会员账号',
-                'pwd' => '会员密码',
+                'pwd' => '登录密码',
                 'money_pwd' => '取款密码',
                 'real_name' => '真实姓名',
                 'phone' => '手机号码',

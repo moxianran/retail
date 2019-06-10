@@ -301,7 +301,6 @@ class AgentService {
 
             $content = '编辑了序号为' . $params['id'] . "的代理:";
 
-
             $updateText = [
                 'account' => '代理账号',
                 'pwd' => '登录密码',

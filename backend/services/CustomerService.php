@@ -1,6 +1,7 @@
 <?php
 namespace backend\services;
 use app\models\RAdmin;
+use app\models\RUserLoginRecord;
 
 class CustomerService
 {
@@ -63,7 +64,6 @@ class CustomerService
         ];
     }
 
-
     /**
      * 创建客服
      * @param $params
@@ -89,6 +89,9 @@ class CustomerService
         $admin->create_person = $adminInfo['id'];
         $res = $admin->insert();
         if($res) {
+            $content = '创建了序号为'.$admin->id."的客服";
+            LogService::writeLog($content);
+
             return ['type'=>'success','msg' => '操作成功'];
         } else {
             return ['type'=>'fail','msg' => '操作失败'];
@@ -114,6 +117,8 @@ class CustomerService
             $stop_login_end = 0;
         }
 
+        $customerInfo = RAdmin::findOne($params['id']);
+
         $update_data = [
             'account' => $params['account'],
             'pwd' => base64_encode($params['pwd']),
@@ -129,6 +134,37 @@ class CustomerService
         ];
         $res = RAdmin::updateAll($update_data, 'id = ' . $params['id']);
         if ($res) {
+
+
+            $content = '编辑了序号为' . $params['id'] . "的客服:";
+
+            $updateText = [
+                'account' => '客服账号',
+                'pwd' => '登录密码',
+                'real_name' => '真实姓名',
+                'phone' => '手机号码',
+                'email' => '电子邮箱',
+                'qq' => 'QQ',
+                'wechat' => '微信',
+                'stop_login_start' => '限制登录开始时间',
+                'stop_login_end' => '限制登录结束时间',
+            ];
+
+            $editContent = '';
+            foreach ($updateText as $k => $v) {
+                if($customerInfo[$k] != $update_data[$k]) {
+                    if($k == 'pwd') {
+                        $editContent.= $v.'修改为'.base64_decode($update_data[$k]).",";
+                    } else if ($k == 'stop_login_start' || $k == 'stop_login_end'){
+                        $editContent.= $v.'修改为'.date('Y-m-d',$update_data[$k]).",";
+                    } else {
+                        $editContent.= $v.'修改为'.$update_data[$k].",";
+                    }
+                }
+            }
+
+            LogService::writeLog($content.$editContent);
+
             return ['type' => 'success', 'msg' => '操作成功'];
         } else {
             return ['type' => 'fail', 'msg' => '操作失败'];
@@ -167,6 +203,9 @@ class CustomerService
         ];
         $res = RAdmin::updateAll($update_data, 'id = ' . $id);
         if ($res) {
+            $status = $status == 1 ? '正常' : '停用';
+            $content = '修改了序号为' . $params['id'] . "的客服:状态修改为".$status;
+            LogService::writeLog($content);
             return ['type' => 'success', 'msg' => '操作成功'];
         } else {
             return ['type' => 'fail', 'msg' => '操作失败'];
