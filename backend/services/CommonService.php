@@ -254,7 +254,7 @@ class CommonService
             $returnList = [];
             foreach ($data as $k => $v) {
                 $returnList[$k]['id'] = $v['id'];
-                $returnList[$k]['game'] = $game[$v['game_type']] ?? '暂无';
+                $returnList[$k]['game'] = $game[$v['game_id']] ?? '暂无';
                 $returnList[$k]['settlement_type'] = $settlementTypeArr[$v['type']] ?? '暂无';
                 $returnList[$k]['userName'] = $userName[$v['user_id']] ?? '暂无';
                 $returnList[$k]['agentName'] = $agent[$upAgentIds[$v['user_id']]] ?? '暂无';
@@ -281,7 +281,7 @@ class CommonService
             '2' => '彩票'
         ];
 
-        $field = 'id,game_type,user_id,money,bet_times,success_times,bet_money,success_money,all_clear_code_num,success_clear_code_num,';
+        $field = 'id,game_id,user_id,money,bet_times,success_times,bet_money,success_money,all_clear_code_num,success_clear_code_num,';
         $field .= 'clear_code_type,clear_code_money,clear_code_lv,person_money,company_money';
         $data = RResult::find()->select($field)->asArray()->all();
 
@@ -289,7 +289,7 @@ class CommonService
         $user = array_column($user, 'account', 'id');
         if ($data) {
             foreach ($data as $k => $v) {
-                $data[$k]['game_type'] = $gameTypeArr[$v['game_type']] ?? '暂无';
+                $data[$k]['game_id'] = $gameTypeArr[$v['game_id']] ?? '暂无';
                 $data[$k]['user_id'] = $user[$v['user_id']] ?? '暂无';
             }
         }
