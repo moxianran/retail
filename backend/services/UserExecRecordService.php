@@ -1,6 +1,7 @@
 <?php
 namespace backend\services;
 
+use app\models\RAdmin;
 use app\models\RUser;
 use app\models\RUserExecRecord;
 
@@ -42,10 +43,12 @@ class UserExecRecordService {
         $list = $query->orderBy('id desc')->offset($offset)->limit($pageSize)->asArray()->all();
 
         foreach ($list as $k => $v) {
-            $user = RUser::find()->where(['id' => $v['user_id']])->asArray()->one();
+            if($v['type'] == 2) {
+                $user = RUser::find()->where(['id' => $v['user_id']])->asArray()->one();
+            } else {
+                $user = RAdmin::find()->where(['id' => $v['user_id']])->asArray()->one();
+            }
             $list[$k]['account'] = $user['account'];
-
-
         }
 
         return [

@@ -150,7 +150,7 @@ $adminInfo = Yii::$app->session->get('adminInfo');
             }
         });
     }
-    setInterval("checkTime()","5000");
+    // setInterval("checkTime()","5000");
 </script>
 
 </body>
