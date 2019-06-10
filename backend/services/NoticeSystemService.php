@@ -6,7 +6,6 @@ use app\models\RNoticeSystem;
 
 class NoticeSystemService
 {
-
     /**
      * 获取列表
      * @param $params
@@ -144,10 +143,5 @@ class NoticeSystemService
             return ['type' => 'fail', 'msg' => '操作失败'];
         }
     }
-
-
-
-
-
 
 }

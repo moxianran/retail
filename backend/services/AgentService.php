@@ -184,6 +184,9 @@ class AgentService {
 
         $res = $admin->insert();
         if($res) {
+            $content = '创建了序号为' . $admin->id . "的代理";
+            LogService::writeLog($content);
+
             return ['type'=>'success','msg' => '操作成功'];
         } else {
             return ['type'=>'fail','msg' => '操作失败'];
@@ -210,6 +213,11 @@ class AgentService {
         ];
         $res = RAdmin::updateAll($update_data, 'id = ' . $id);
         if ($res) {
+
+            $status = $status == 1 ? '正常' : '停用';
+            $content = '修改了序号为' . $params['id'] . "的代理:状态修改为".$status;
+            LogService::writeLog($content);
+
             return ['type' => 'success', 'msg' => '操作成功'];
         } else {
             return ['type' => 'fail', 'msg' => '操作失败'];
@@ -235,6 +243,8 @@ class AgentService {
         ];
         $res = RAdmin::updateAll($update_data, 'id = ' . $id);
         if ($res) {
+            $content = '删除了序号为' . $params['id'] . "的代理";
+            LogService::writeLog($content);
             return ['type' => 'success', 'msg' => '操作成功'];
         } else {
             return ['type' => 'fail', 'msg' => '操作失败'];
@@ -267,6 +277,9 @@ class AgentService {
             }
         }
 
+        $agentInfo = RAdmin::findOne($params['id']);
+
+
         $update_data = [
             'account' => $params['account'],
             'pwd' => base64_encode($params['pwd']),
@@ -285,6 +298,39 @@ class AgentService {
 
         $res = RAdmin::updateAll($update_data, 'id = ' . $params['id']);
         if ($res) {
+
+            $content = '编辑了序号为' . $params['id'] . "的代理:";
+
+
+            $updateText = [
+                'account' => '代理账号',
+                'pwd' => '登录密码',
+                'real_name' => '真实姓名',
+                'phone' => '手机号码',
+                'email' => '电子邮箱',
+                'qq' => 'QQ',
+                'wechat' => '微信',
+                'bank_id' => '银行卡号',
+                'domain' => '注册域名',
+                'up_agent_id' => '上级代理',
+            ];
+
+            $editContent = '';
+            foreach ($updateText as $k => $v) {
+                if($agentInfo[$k] != $update_data[$k]) {
+                    if($k == 'pwd') {
+                        $editContent.= $v.'修改为'.base64_decode($update_data[$k]).",";
+                    } else if ($k == 'up_agent_id'){
+                        $agent_accout = RAdmin::find()->where(['id'=>$update_data[$k]])->asArray()->one();
+
+                        $editContent.= $v.'修改为'.$agent_accout['account'].",";
+                    } else {
+                        $editContent.= $v.'修改为'.$update_data[$k].",";
+                    }
+                }
+            }
+            LogService::writeLog($content.$editContent);
+
             return ['type' => 'success', 'msg' => '操作成功'];
         } else {
             return ['type' => 'fail', 'msg' => '操作失败'];
@@ -322,6 +368,9 @@ class AgentService {
         ];
         $res = RAdmin::updateAll($update_data, 'id = ' . $id);
         if ($res) {
+            $status = $status == 2 ? '通过' : '不通过';
+            $content = '审核了序号为' . $params['id'] . "的代理:审核状态修改为".$status;
+            LogService::writeLog($content);
             return ['type' => 'success', 'msg' => '操作成功'];
         } else {
             return ['type' => 'fail', 'msg' => '操作失败'];

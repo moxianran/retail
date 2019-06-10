@@ -351,9 +351,9 @@ class UserService {
                 'money_pwd' => '取款密码',
                 'real_name' => '真实姓名',
                 'phone' => '手机号码',
-                'email' => '邮箱',
+                'email' => '电子邮箱',
                 'qq' => '社交账号',
-                'bank_id' => '银行账号',
+                'bank_id' => '银行卡号',
                 'domain' => '域名',
                 'is_stop' => '状态',
             ];
@@ -442,6 +442,11 @@ class UserService {
         }
     }
 
+    /**
+     * 删除用户
+     * @param $params
+     * @return array
+     */
     public static function del($params)
     {
         $session = \Yii::$app->session;
@@ -476,7 +481,6 @@ class UserService {
         $data['money_pwd'] = base64_decode($data['money_pwd']);
         return $data;
     }
-
 
     /**
      * 会员新增记录
@@ -612,6 +616,5 @@ class UserService {
             'type' => $type,
         ];
     }
-
 
 }

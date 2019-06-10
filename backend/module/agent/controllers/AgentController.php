@@ -7,7 +7,6 @@ use backend\services\AgentService;
 use backend\services\CommonService;
 use yii\data\Pagination;
 
-
 class AgentController extends BaseController
 {
     public $enableCsrfValidation = false;
@@ -65,7 +64,6 @@ class AgentController extends BaseController
             return $this->asJson($json);
         }
     }
-
 
     /**
      * 新增
