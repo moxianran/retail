@@ -187,7 +187,7 @@ class MemberController extends Controller
 
         if ($recharge) {
             foreach ($recharge as $k => $v) {
-                $recharge[$k]['account'] = $userGame[$v['game_type']] ?? '--';
+                $recharge[$k]['account'] = $userGame[$v['game_id']] ?? '--';
             }
         }
         $totalPage = ceil($count / 10);
