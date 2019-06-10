@@ -1,7 +1,6 @@
 <?php
 namespace backend\services;
 use app\models\RAdmin;
-use app\models\RUserLoginRecord;
 
 class CustomerService
 {
