@@ -7,7 +7,7 @@ use yii\helpers\Url;
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>INSPINIA | Login</title>
+    <title>财神娱乐-后台管理</title>
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <link href="/font-awesome/css/font-awesome.css" rel="stylesheet">
     <link href="/css/animate.css" rel="stylesheet">
@@ -20,7 +20,7 @@ use yii\helpers\Url;
         <div>
             <h1 class="logo-name">R</h1>
         </div>
-        <h3>欢迎来到后台</h3>
+        <h3>欢迎来到财神娱乐-后台管理</h3>
         <form class="m-t" role="form" id="saveForm">
             <div class="form-group">
                 <input type="email" class="form-control" name="account" required="" placeholder="请输入账号" autocomplete="off">
