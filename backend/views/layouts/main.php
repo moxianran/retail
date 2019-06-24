@@ -44,8 +44,14 @@ $adminInfo = Yii::$app->session->get('adminInfo');
                         <img alt="image" class="rounded-circle" src="/img/profile_small.jpg"/>
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                             <span class="block m-t-xs font-bold"><?php echo $adminInfo['real_name']; ?></span>
-                            <span class="text-muted text-xs block"><?php echo $adminInfo['positionName']; ?></span>
+                            <span class="text-muted text-xs block"><?php echo $adminInfo['positionName']; ?><b class="caret"></b></span>
                         </a>
+                        <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                            <li><a class="dropdown-item" href="<?php echo Url::toRoute(['/center/info/info']); ?>">个人中心</a></li>
+                            <li><a class="dropdown-item" href="<?php echo Url::toRoute(['/center/notice/list']); ?>">消息通知</a></li>
+                            <li class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="<?php echo Url::toRoute(['/login/login/logout']); ?>">登出</a></li>
+                        </ul>
                     </div>
                     <div class="logo-element">
                         IN+
@@ -56,7 +62,7 @@ $adminInfo = Yii::$app->session->get('adminInfo');
                     $list = $this->params['menu'];
                     $power_ids = $this->params['power_id'] ;
                     foreach ($list as $k => $v) {
-                        if ($v['pid'] == 0 && (in_array($v['id'],$power_ids) || $adminInfo['position_id'] == 1)) {
+                        if ($v['id'] != 146 && $v['pid'] == 0 && (in_array($v['id'],$power_ids) || $adminInfo['position_id'] == 1)) {
                 ?>
                         <li <?php if($this->context->module->id == $v['module']) { echo ' class="active"';} ?>>
                             <a href="">
@@ -89,6 +95,7 @@ $adminInfo = Yii::$app->session->get('adminInfo');
         <div class="row border-bottom">
             <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
                 <div class="navbar-header"></div>
+
                 <ul class="nav navbar-top-links navbar-right">
                     <li>
                         <a href="<?php echo Url::toRoute(['/login/login/logout']); ?>">
@@ -120,8 +127,8 @@ $adminInfo = Yii::$app->session->get('adminInfo');
 
 <?php $this->endBody() ?>
 <script src="/js/jquery-3.1.1.min.js"></script>
-<script src="/js/popper.min.js"></script>
-<script src="/js/bootstrap.js"></script>
+<!--<script src="/js/popper.min.js"></script>-->
+<!--<script src="/js/bootstrap.js"></script>-->
 <script src="/js/plugins/metisMenu/jquery.metisMenu.js"></script>
 <script src="/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 
@@ -150,7 +157,7 @@ $adminInfo = Yii::$app->session->get('adminInfo');
             }
         });
     }
-    setInterval("checkTime()","5000");
+    // setInterval("checkTime()","5000");
 </script>
 
 </body>

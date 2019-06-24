@@ -176,6 +176,11 @@ use yii\helpers\Url;
                                             ?>
 
 
+                                            <button class="btn btn-sm btn-primary m-t-n-xs" type="button"
+                                                    onclick="showUser(<?php echo $v['id'] ?>)">
+                                                <strong>下级用户</strong>
+                                            </button>
+
                                         </td>
                                     </tr>
                                     <?php
@@ -217,6 +222,7 @@ use yii\helpers\Url;
 
 <!-- iCheck -->
 
+<script src="/js/layer/layer.js"></script>
 
 <script>
 
@@ -281,5 +287,19 @@ use yii\helpers\Url;
             }
         });
     }
+
+    function showUser (id)
+    {
+        layer.open({
+            type: 2,
+            title: '下级用户',
+            maxmin: true,
+            shadeClose: true, //点击遮罩关闭层
+            area : ['30%' , '90%'],
+            content: '/login/login/user-list?id='+id
+        });
+    }
+
+
 </script>
 

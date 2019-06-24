@@ -2,8 +2,11 @@
 
 namespace backend\module\login\controllers;
 
-use yii\web\Controller;
+use app\models\RUser;
 use backend\services\LoginService;
+use yii\data\Pagination;
+use yii\web\Controller;
+
 
 class LoginController extends Controller
 {
@@ -78,5 +81,38 @@ class LoginController extends Controller
             }
         }
         return ($ip ? $ip : $_SERVER['REMOTE_ADDR']);
+    }
+
+
+    public function actionUserList()
+    {
+        $title = '用户列表';
+        $get = \Yii::$app->request->get();
+
+//        $pageSize = 10;
+//
+//        if (isset($params['page']) && !empty($params['page'])) {
+//            $page = (int)$params['page'];
+//        } else {
+//            $page = 1;
+//        }
+//        $offset = ($page - 1) * $pageSize;
+
+        $query = RUser::find()->where(['agent_id' => $get['id']]);
+        $count = $query->count();
+
+
+        $list = $query->asArray()->all();
+
+
+//        $pagination = new Pagination(['totalCount' => $count, 'pageSize' => $pageSize]);
+
+        return $this->render('userList', [
+            'list' => $list,
+//            'pagination' => $pagination,
+            'title' => $title,
+            'get' => $get,
+        ]);
+
     }
 }
