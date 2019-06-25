@@ -2,6 +2,7 @@
 
 namespace backend\module\agent\controllers;
 
+use app\models\RAdmin;
 use backend\module\BaseController;
 use backend\services\AgentService;
 use backend\services\CommonService;
@@ -82,13 +83,11 @@ class AgentController extends BaseController
 
         //代理列表
         $agentList1 = AgentService::getAgentList(1);
-        $agentList2 = AgentService::getAgentList(2);
 
         return $this->render('create',[
             'title' => $title,
             'moduleTitle' => $this->moduleTitle,
             'agentList1' => $agentList1,
-            'agentList2' => $agentList2,
         ]);
     }
 
@@ -108,17 +107,18 @@ class AgentController extends BaseController
 
         //代理列表
         $agentList1 = AgentService::getAgentList(1);
-        $agentList2 = AgentService::getAgentList(2);
 
         $id = $request = \Yii::$app->request->get('id');
         $data = AgentService::getOne($id);
+
+        $up_agent_info = RAdmin::find()->where(['id'=>$data['up_agent_id']])->asArray()->one();
 
         return $this->render('edit', [
             'data' => $data,
             'title' => $title,
             'moduleTitle' => $this->moduleTitle,
             'agentList1' => $agentList1,
-            'agentList2' => $agentList2,
+            'up_agent_info' => $up_agent_info,
         ]);
     }
 
@@ -150,4 +150,28 @@ class AgentController extends BaseController
         }
         return ($ip ? $ip : $_SERVER['REMOTE_ADDR']);
     }
+
+    public function actionAgentSelect()
+    {
+        if (\Yii::$app->request->isPost) {
+            $post = \Yii::$app->request->post();
+            $id = $post['id'];
+            $agent_level = $post['agent_level'];
+            if(count($id) != 1) {
+                $json = ['result' => 'fail','info'=>'操作失败'];
+                return $this->asJson($json);
+            }
+
+            $where = [
+                'up_agent_id' => $id['0'],
+                'agent_level' => $agent_level,
+            ];
+
+            $agent = RAdmin::find()->where($where)->asArray()->all();
+            $json = ['result' => 'success','info'=>$agent];
+            return $this->asJson($json);
+        }
+    }
+
+
 }

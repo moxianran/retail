@@ -88,34 +88,39 @@ use yii\helpers\Url;
                         </div>
                         <div class="hr-line-dashed"></div>
 
-                        <div class="form-group row"><label class="col-sm-2 col-form-label">上级代理</label>
-                            <div class="col-sm-3">
-                                <select class="form-control m-b" name="up_agent_id1">
-                                    <option value="0">暂无</option>
-                                    <?php
-                                    if (isset($agentList1) && $agentList1) {
-                                        foreach ($agentList1 as $k => $v) {
-                                            ?>
-                                            <option value="<?php echo $v['id'] ?>"><?php echo $v['real_name'] ?></option>
-                                            <?php
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">上级代理</label>
+
+                            <div class="col-sm-10">
+
+                                <input type="hidden" class="form-control" name="agent_id" autocomplete="off" id="agent_id">
+                                <input type="text" class="form-control" name="agent_name" autocomplete="off" id="check_agent">
+                                <div class="col-lg-4 m-l-n check_agent_div1" style="float:left;display: none;">
+                                    <select class="form-control check_agent_select1" multiple="">
+                                        <option value="0">暂无</option>
+                                        <?php
+                                        if (isset($agentList1) && $agentList1) {
+                                            foreach ($agentList1 as $k => $v) {
+                                                ?>
+                                                <option value="<?php echo $v['id'] ?>"><?php echo $v['real_name'] ?></option>
+                                                <?php
+                                            }
                                         }
-                                    }
-                                    ?>
-                                </select>
-                            </div>
-                            <div class="col-sm-3">
-                                <select class="form-control m-b" name="up_agent_id2">
-                                    <option value="0">暂无</option>
-                                    <?php
-                                    if (isset($agentList2) && $agentList2) {
-                                        foreach ($agentList2 as $k => $v) {
-                                            ?>
-                                            <option value="<?php echo $v['id'] ?>"><?php echo $v['real_name'] ?></option>
-                                            <?php
-                                        }
-                                    }
-                                    ?>
-                                </select>
+                                        ?>
+                                    </select>
+                                </div>
+
+                                <div class="col-lg-4 m-l-n check_agent_div2" style="float:left;display: none;">
+                                    <select class="form-control check_agent_select2" multiple="">
+
+                                    </select>
+                                </div>
+
+                                <div class="col-lg-4 m-l-n check_agent_div3" style="float:left;display: none;">
+                                    <select class="form-control check_agent_select3" multiple="">
+
+                                    </select>
+                                </div>
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
@@ -171,4 +176,88 @@ use yii\helpers\Url;
             });
         })
     })
+
+    //下拉
+    $(function(){
+
+        $("#check_agent").click(function(){
+            $(".check_agent_div1").show();
+        })
+
+        $(".check_agent_select1").change(function(){
+
+            var agent_id = $(this).val();
+            var text = $(this).find("option:selected").text();
+
+            $("#agent_id").val(agent_id);
+            $("#check_agent").val(text);
+
+            $.ajax({
+                url:"<?php echo Url::toRoute(['/agent/agent/agent-select']); ?>",
+                type:"post",
+                data:{
+                    id:agent_id,
+                    agent_level:2
+                },
+                dataType: 'json',
+                success:function(data){
+
+                    var option2 = '';
+                    for ( var i = 0; i <data.info.length; i++){
+                        console.log(data.info[i].id);
+                        option2 += '<option value="'+ data.info[i].id +'">'+  data.info[i].real_name +'</option>';
+                    }
+                    $(".check_agent_select2").html(option2);
+                }
+            });
+
+            $(".check_agent_div2").show();
+            $(".check_agent_div3").hide();
+
+        });
+
+        $(".check_agent_select2").change(function(){
+
+            var agent_id = $(this).val();
+            var text = $(this).find("option:selected").text();
+
+            $("#agent_id").val(agent_id);
+            $("#check_agent").val(text);
+
+
+            $.ajax({
+                url:"<?php echo Url::toRoute(['/agent/agent/agent-select']); ?>",
+                type:"post",
+                data:{
+                    id:agent_id,
+                    agent_level:3
+                },
+                dataType: 'json',
+                success:function(data){
+
+                    var option3 = '';
+                    for ( var i = 0; i <data.info.length; i++){
+                        console.log(data.info[i].id);
+                        option3 += '<option value="'+ data.info[i].id +'">'+  data.info[i].real_name +'</option>';
+                    }
+                    $(".check_agent_select3").html(option3);
+                }
+            });
+
+            $(".check_agent_div3").show();
+        });
+
+        $(".check_agent_select3").change(function(){
+
+            var agent_id = $(this).val();
+            var text = $(this).find("option:selected").text();
+
+            $("#agent_id").val(agent_id);
+            $("#check_agent").val(text);
+
+        });
+
+    })
+
+
 </script>

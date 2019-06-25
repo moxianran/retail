@@ -143,21 +143,7 @@ class AgentService {
         $session = \Yii::$app->session;
         $adminInfo = $session->get('adminInfo');
 
-        $agent_id = 0;
-        if($params['up_agent_id1'] != 0 && $params['up_agent_id2'] != 0) {
-            return ['type'=>'fail','msg' => '上级代理只能选一个'];
-        }
-
-        if($params['up_agent_id1'] == 0 && $params['up_agent_id2'] == 0) {
-            $agent_id = 0;
-        } else {
-            if($params['up_agent_id1'] != 0) {
-                $agent_id = $params['up_agent_id1'];
-            } else if($params['up_agent_id2'] != 0) {
-                $agent_id = $params['up_agent_id2'];
-            }
-        }
-
+        $agent_id = $params['agent_id'];
         if($agent_id > 0) {
             $upAgent = RAdmin::find()->where(['id'=>$agent_id])->asArray()->one();
             $agent_level = $upAgent['agent_level'] + 1;
@@ -261,24 +247,8 @@ class AgentService {
         $session = \Yii::$app->session;
         $adminInfo = $session->get('adminInfo');
 
-        $agent_id = 0;
-
-        if($params['up_agent_id1'] != 0 && $params['up_agent_id2'] != 0) {
-            return ['type'=>'fail','msg' => '上级代理只能选一个'];
-        }
-
-        if($params['up_agent_id1'] == 0 && $params['up_agent_id2'] == 0) {
-            $agent_id = 0;
-        } else {
-            if($params['up_agent_id1'] != 0) {
-                $agent_id = $params['up_agent_id1'];
-            } else if($params['up_agent_id2'] != 0) {
-                $agent_id = $params['up_agent_id2'];
-            }
-        }
-
+        $agent_id = $params['agent_id'];
         $agentInfo = RAdmin::findOne($params['id']);
-
 
         $update_data = [
             'account' => $params['account'],
@@ -292,9 +262,8 @@ class AgentService {
             'domain' => $params['domain'],
             'update_time' => time(),
             'update_person' => $adminInfo['id'],
+            'up_agent_id' => $agent_id
         ];
-
-        $update_data['up_agent_id'] = $agent_id;
 
         $res = RAdmin::updateAll($update_data, 'id = ' . $params['id']);
         if ($res) {
