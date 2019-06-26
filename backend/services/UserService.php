@@ -236,30 +236,6 @@ class UserService {
         $session = \Yii::$app->session;
         $adminInfo = $session->get('adminInfo');
 
-        $agent_id = 0;
-
-        if($params['agent_id1'] != 0 && $params['agent_id2'] != 0) {
-            return ['type'=>'fail','msg' => '上级代理只能选一个'];
-        }
-        if($params['agent_id2'] != 0 && $params['agent_id3'] != 0) {
-            return ['type'=>'fail','msg' => '上级代理只能选一个'];
-        }
-        if($params['agent_id1'] != 0 && $params['agent_id3'] != 0) {
-            return ['type'=>'fail','msg' => '上级代理只能选一个'];
-        }
-
-        if($params['agent_id1'] == 0 && $params['agent_id2'] == 0 && $params['agent_id3'] == 0) {
-            $agent_id = 0;
-        } else {
-            if($params['agent_id1'] != 0) {
-                $agent_id = $params['agent_id1'];
-            } else if($params['agent_id2'] != 0) {
-                $agent_id = $params['agent_id2'];
-            } else if($params['agent_id3'] != 0) {
-                $agent_id = $params['agent_id3'];
-            }
-        }
-
         $user = new RUser();
         $user->account = $params['account'];
         $user->pwd = base64_encode($params['pwd']);
@@ -269,7 +245,7 @@ class UserService {
         $user->email = $params['email'];
         $user->qq = $params['qq'];
         $user->bank_id = $params['bank_id'];
-        $user->agent_id = $agent_id;
+        $user->agent_id = $params['agent_id'];
         $user->domain = $params['domain'];
         $user->create_ip = $params['create_ip'];
         $user->create_time = time();
@@ -280,20 +256,21 @@ class UserService {
         $user->is_stop = $params['is_stop'];
         $res = $user->insert();
 
-        $game_account = $params['game'];
-        foreach ($game_account as $k=>$v) {
+        if($res) {
+            $game_account = $params['game'];
+            foreach ($game_account as $k=>$v) {
 
-            if(empty($v)){
-                $game = new RUserGame();
-                $game->user_id = $user['id'];
-                $game->game_id = $k;
-                $game->game_account = $v;
-                $game->create_time = time();
-                $game->create_person = $adminInfo['id'];
-                $game->insert();
+                if(empty($v)){
+                    $game = new RUserGame();
+                    $game->user_id = $user['id'];
+                    $game->game_id = $k;
+                    $game->game_account = $v;
+                    $game->create_time = time();
+                    $game->create_person = $adminInfo['id'];
+                    $game->insert();
+                }
             }
         }
-
 
         if($res) {
 
@@ -331,32 +308,9 @@ class UserService {
             'is_stop' => $params['is_stop'],
             'update_time' => time(),
             'update_person' => $adminInfo['id'],
+            'agent_id' => $params['agent_id']
         ];
 
-        $agent_id = 0;
-
-        if($params['agent_id1'] != 0 && $params['agent_id2'] != 0) {
-            return ['type'=>'fail','msg' => '上级代理只能选一个'];
-        }
-        if($params['agent_id2'] != 0 && $params['agent_id3'] != 0) {
-            return ['type'=>'fail','msg' => '上级代理只能选一个'];
-        }
-        if($params['agent_id1'] != 0 && $params['agent_id3'] != 0) {
-            return ['type'=>'fail','msg' => '上级代理只能选一个'];
-        }
-
-        if($params['agent_id1'] == 0 && $params['agent_id2'] == 0 && $params['agent_id3'] == 0) {
-            $agent_id = 0;
-        } else {
-            if($params['agent_id1'] != 0) {
-                $agent_id = $params['agent_id1'];
-            } else if($params['agent_id2'] != 0) {
-                $agent_id = $params['agent_id2'];
-            } else if($params['agent_id3'] != 0) {
-                $agent_id = $params['agent_id3'];
-            }
-        }
-        $update_data['agent_id'] = $agent_id;
 
         $res = RUser::updateAll($update_data,'id = '.$params['id']);
 

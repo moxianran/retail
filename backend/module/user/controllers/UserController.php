@@ -3,6 +3,7 @@
 namespace backend\module\user\controllers;
 
 use app\models\RGame;
+use app\models\RAdmin;
 use app\models\RUserGame;
 use backend\module\BaseController;
 use backend\services\AgentService;
@@ -59,8 +60,6 @@ class UserController extends BaseController
 
         //代理列表
         $agentList1 = AgentService::getAgentList(1);
-        $agentList2 = AgentService::getAgentList(2);
-        $agentList3 = AgentService::getAgentList(3);
 
         $gameList = RGame::find()->asArray()->all();
         $gameList = array_column($gameList,'name','id');
@@ -68,8 +67,6 @@ class UserController extends BaseController
             'title' => $title,
             'moduleTitle' => $this->moduleTitle,
             'agentList1' => $agentList1,
-            'agentList2' => $agentList2,
-            'agentList3' => $agentList3,
             'gameList' => $gameList,
         ]);
     }
@@ -94,8 +91,6 @@ class UserController extends BaseController
 
         //获取代理列表
         $agentList1 = AgentService::getAgentList(1);
-        $agentList2 = AgentService::getAgentList(2);
-        $agentList3 = AgentService::getAgentList(3);
 
         $gameList = RGame::find()->asArray()->all();
         $gameList = array_column($gameList,'name','id');
@@ -103,15 +98,18 @@ class UserController extends BaseController
         $userGame = RUserGame::find()->where(['user_id'=>$id])->asArray()->all();
         $userGame = array_column($userGame,'game_account','game_id');
 
+        $up_agent_info = RAdmin::find()->where(['id'=>$data['agent_id']])->asArray()->one();
+
+
         return $this->render('edit', [
             'data' => $data,
             'title' => $title,
             'moduleTitle' => $this->moduleTitle,
             'agentList1' => $agentList1,
-            'agentList2' => $agentList2,
-            'agentList3' => $agentList3,
             'gameList' => $gameList,
-            'userGame' => $userGame
+            'userGame' => $userGame,
+            'up_agent_info' => $up_agent_info,
+
 
         ]);
     }
