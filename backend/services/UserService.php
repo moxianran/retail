@@ -257,10 +257,12 @@ class UserService {
         $res = $user->insert();
 
         if($res) {
+
             $game_account = $params['game'];
+
             foreach ($game_account as $k=>$v) {
 
-                if(empty($v)){
+                if(!empty($v)){
                     $game = new RUserGame();
                     $game->user_id = $user['id'];
                     $game->game_id = $k;
@@ -318,15 +320,21 @@ class UserService {
         $user_game = array_column($user_game,'game_account','game_id');
 
         $game_account = $params['game'];
+
         foreach ($game_account as $k => $v) {
 
-            if(empty($v)){
+            if(!empty($v)){
                 $update_data_game = [
                     'game_account' => $v,
                     'update_time' => time(),
                     'update_person' => $adminInfo['id'],
                 ];
-                RUserGame::updateAll($update_data_game,'id = '.$params['id']);
+                $where = [
+                    'user_id' => $params['id'],
+                    'game_id' => $k,
+                ];
+
+                RUserGame::updateAll($update_data_game,$where);
             }
         }
 
