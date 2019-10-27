@@ -196,6 +196,7 @@ class SiteController extends Controller
             $user->phone = trim($post['phone']);
             $user->qq = trim($post['qq']);
             $user->create_time = time();
+            $user->create_ip = $this->getRealIp();
             $res = $user->insert();
 
             if($res) {
@@ -326,6 +327,10 @@ class SiteController extends Controller
 
         //账号
         $account = trim($post['account']);
+        if(strlen($post['account']) < 4) {
+            $json = ['result'=>'success','info' => '账号太短啦，请再多输入几个字吧!'];
+        }
+
         RUser::find()->where(['account' => $account, 'is_delete' => 0])->asArray()->one();
 
         if (empty($account)) {
