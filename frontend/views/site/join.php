@@ -1,5 +1,7 @@
 <?php
+
 use yii\helpers\Url;
+
 ?>
 <!-- 轮播图 Start! -->
 <div id="banner" class="page-banner join-banner">
@@ -258,6 +260,9 @@ use yii\helpers\Url;
             dataType: 'json',
             success:function(data){
                 if(data.result=="success"){
+
+                    $("#saveForm input").val("");
+
                     //禁用提交按钮。防止点击起来没完
                     $('#register_btn').attr('disabled',true);
                     alert("注册成功，请等待审核");

@@ -206,6 +206,9 @@ use yii\helpers\Url;
                 dataType: 'json',
                 success:function(data){
                     if(data.result=="success"){
+
+                        $("#saveForm input").val("");
+
                         //禁用提交按钮。防止点击起来没完
                         $('#register_btn').attr('disabled',false);
                         $('.reg-success').fadeIn();
