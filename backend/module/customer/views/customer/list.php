@@ -154,6 +154,19 @@ use yii\helpers\Url;
                                         <?php
                                     }
                                         ?>
+
+
+                                            <?php
+                                            if($this->params['position_id'] == 1 || in_array(154,$this->params['power_id'])) {
+                                                ?>
+                                                <button class="btn btn-sm btn-primary m-t-n-xs" type="button"
+                                                        onclick="goDel(<?php echo $v['id'] ?>)">
+                                                    <strong>删除</strong>
+                                                </button>
+
+                                                <?php
+                                            }
+                                            ?>
                                         </td>
                                     </tr>
                                     <?php
@@ -222,6 +235,28 @@ use yii\helpers\Url;
             data:{
                 id:id,
                 status:status,
+            },
+            dataType: 'json',
+            success:function(data){
+                if(data.result=="success"){
+                    //禁用提交按钮。防止点击起来没完
+                    $('#formSubmit').attr('disabled',true);
+                    window.location.href = "<?php echo Url::toRoute(['/customer/customer/list']); ?>";
+                }else{
+                    //禁用提交按钮。防止点击起来没完
+                    $('#formSubmit').attr('disabled',true);
+                }
+            }
+        });
+    }
+
+    function goDel(id)
+    {
+        $.ajax({
+            url:"<?php echo Url::toRoute(['/customer/customer/del']); ?>",
+            type:"post",
+            data:{
+                id:id,
             },
             dataType: 'json',
             success:function(data){

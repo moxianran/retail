@@ -211,4 +211,31 @@ class CustomerService
             return ['type' => 'fail', 'msg' => '操作失败'];
         }
     }
+
+    /**
+     * 删除客服
+     * @param $params
+     * @return array
+     */
+    public static function del($params)
+    {
+        $session = \Yii::$app->session;
+        $adminInfo = $session->get('adminInfo');
+        $id = $params['id'];
+
+        $update_data = [
+            'is_delete' => 1,
+            'update_time' => time(),
+            'update_person' => $adminInfo['id'],
+        ];
+        $res = RAdmin::updateAll($update_data, 'id = ' . $id);
+        if ($res) {
+            $content = '删除了序号为' . $params['id'] . "的客服";
+            LogService::writeLog($content);
+
+            return ['type' => 'success', 'msg' => '操作成功'];
+        } else {
+            return ['type' => 'fail', 'msg' => '操作失败'];
+        }
+    }
 }
