@@ -4,6 +4,7 @@ namespace frontend\controllers;
 use app\models\RAdmin;
 use app\models\RNotice;
 use app\models\RNoticeGame;
+use app\models\RNoticeWebsite;
 use app\models\RUser;
 use app\models\RUserLoginRecord;
 use yii\web\Controller;
@@ -164,7 +165,7 @@ class SiteController extends Controller
      */
     private function getGameNotice()
     {
-        $gameNotice = RNoticeGame::find()->where(['status' => 1])->orderBy('id desc')->asArray()->one();
+        $gameNotice = RNoticeWebsite::find()->where(['status' => 1])->orderBy('id desc')->asArray()->one();
         if($gameNotice) {
             return $gameNotice['content'];
         } else {
