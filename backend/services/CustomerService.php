@@ -84,6 +84,7 @@ class CustomerService
         $admin->wechat = $params['wechat'];
         $admin->create_ip = $params['create_ip'];
         $admin->create_time = time();
+        $admin->examine_status = 2;
         $admin->position_id = 4;
         $admin->create_person = $adminInfo['id'];
         $res = $admin->insert();
@@ -153,7 +154,7 @@ class CustomerService
             foreach ($updateText as $k => $v) {
                 if($customerInfo[$k] != $update_data[$k]) {
                     if($k == 'pwd') {
-                        $editContent.= $v.'修改为'.base64_decode($update_data[$k]).",";
+//                        $editContent.= $v.'修改为'.base64_decode($update_data[$k]).",";
                     } else if ($k == 'stop_login_start' || $k == 'stop_login_end'){
                         $editContent.= $v.'修改为'.date('Y-m-d',$update_data[$k]).",";
                     } else {

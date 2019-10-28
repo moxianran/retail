@@ -84,6 +84,7 @@ class DirectorService
         $admin->create_ip = $params['create_ip'];
         $admin->create_time = time();
         $admin->position_id = 5;
+        $admin->examine_status = 2;
         $res = $admin->insert();
         if($res) {
             $content = '创建了序号为'.$admin->id."的主管";
@@ -134,7 +135,7 @@ class DirectorService
             foreach ($updateText as $k => $v) {
                 if($directorInfo[$k] != $update_data[$k]) {
                     if($k == 'pwd') {
-                        $editContent.= $v.'修改为'.base64_decode($update_data[$k]).",";
+//                        $editContent.= $v.'修改为'.base64_decode($update_data[$k]).",";
                     } else {
                         $editContent.= $v.'修改为'.$update_data[$k].",";
                     }

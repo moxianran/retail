@@ -287,7 +287,8 @@ class AgentService {
             foreach ($updateText as $k => $v) {
                 if($agentInfo[$k] != $update_data[$k]) {
                     if($k == 'pwd') {
-                        $editContent.= $v.'修改为'.base64_decode($update_data[$k]).",";
+//                        $editContent.= $v.'修改为'.base64_decode($update_data[$k]).",";
+//                        $editContent.= $v.'修改为'.base64_decode($update_data[$k]).",";
                     } else if ($k == 'up_agent_id'){
                         $agent_accout = RAdmin::find()->where(['id'=>$update_data[$k]])->asArray()->one();
 

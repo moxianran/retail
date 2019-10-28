@@ -359,7 +359,7 @@ class UserService {
             foreach ($updateText as $k => $v) {
                 if($userInfo[$k] != $update_data[$k]) {
                     if($k == 'pwd' || $k == 'money_pwd') {
-                        $editContent.= $v.'修改为'.base64_decode($update_data[$k]).",";
+//                        $editContent.= $v.'修改为'.base64_decode($update_data[$k]).",";
                     } else if ($k == 'is_stop'){
                         $is_stop = $update_data[$k] == 1 ? '停用' : '正常';
                         $editContent.= $v.'修改为'.$is_stop.",";

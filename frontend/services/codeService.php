@@ -92,8 +92,12 @@ class codeService{
         $width = ceil($this->width / $this->number);
         for ($i=0; $i< $this->number;$i++){
             $x = mt_rand($i*$width+5, ($i+1)*$width-10);
-            $y = mt_rand(0, $this->height -15);
-            imagechar($this->image, 5, $x, $y, $this->code[$i], $this->darkColor());
+            $y = mt_rand(4, $this->height -15);
+//            $y = 30;
+            imagechar($this->image, 10, $x, $y, $this->code[$i], $this->darkColor());
+//            imagestring($this->image, 5, $x, $y, $this->code[$i], $this->darkColor());
+//            imagettftext($im, $font_size, $wing, $left,$high, $grey, $font, $text);
+
         }
     }
     protected function drawLine(){
