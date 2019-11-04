@@ -252,7 +252,6 @@ class AgentService {
 
         $update_data = [
             'account' => $params['account'],
-            'pwd' => base64_encode($params['pwd']),
             'real_name' => $params['real_name'],
             'phone' => $params['phone'],
             'email' => $params['email'],
@@ -264,6 +263,10 @@ class AgentService {
             'update_person' => $adminInfo['id'],
             'up_agent_id' => $agent_id
         ];
+
+        if(isset($params['pwd']) && !empty(trim($params['pwd']))) {
+            $update_data['pwd'] = base64_encode(trim($params['pwd']));
+        }
 
         $res = RAdmin::updateAll($update_data, 'id = ' . $params['id']);
         if ($res) {

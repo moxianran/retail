@@ -10,7 +10,7 @@ use yii\helpers\Url;
     <div class="public-page container">
         <?= $this->render('_fl') ?>
         <div class="public-con fr">
-            <div class="public-page-title"><span>账户管理</span></div>
+            <div class="public-page-title"><span>账户管理</span><span class="logout_btn">退出登录</span></div>
             <div class="account">
                 <div class="info-box">
                     <ul class="row">
@@ -48,8 +48,7 @@ use yii\helpers\Url;
                         </li>
                         <li class="col-md-6">
                             <img src="/images/aicon7.png">
-                            <span>会员密码：<b><?php echo base64_decode($user['pwd']); ?></b>
-
+                            <span>会员密码：<b>******</b>
                             <input type="text" data-field="pwd" class="iptEdit" value="<?php echo base64_decode($user['pwd']); ?>" style="display: none;"/>
                             </span>
                             <a href="javascript:;" class="edit-btn"></a>
@@ -57,8 +56,8 @@ use yii\helpers\Url;
                         <li class="col-md-6">
                             <img src="/images/aicon8.png">
                             <span>取款密码：
-                                <b><?php echo base64_decode($user['money_pwd']); ?></b>
-                            <input type="text" data-field="money_pwd" class="iptEdit" value="<?php echo base64_decode($user['money_pwd']); ?>" style="display: none;"/>
+                                <b>******</b>
+                                                            <input type="text" data-field="money_pwd" class="iptEdit" value="<?php echo base64_decode($user['money_pwd']); ?>" style="display: none;"/>
                             </span>
                             <a href="javascript:;" class="edit-btn"></a>
                         </li>
@@ -124,11 +123,11 @@ use yii\helpers\Url;
                 $('#formSubmit').attr('disabled',true);
 
                 if(data.result=="success"){
-                    a.prev().html(newVal);
+                    a.prev().html("******");
                 }else{
 
                     a.val(oldVal);
-                    a.prev().html(oldVal);
+                    a.prev().html("******");
 
 
 
