@@ -314,6 +314,17 @@ class SiteController extends Controller
     }
 
     /**
+     * 退出登录
+     * @return \yii\web\Response
+     */
+    public function actionLogout()
+    {
+        $session = \Yii::$app->session;
+        $session->remove('userInfo');
+        return $this->asJson(['result'=>'success','info'=>'退出登录成功']);
+    }
+
+    /**
      * 注册验证数据
      * @param $post
      * @return array

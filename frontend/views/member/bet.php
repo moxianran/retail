@@ -12,7 +12,7 @@ use yii\helpers\Url;
         <div class="public-con fr">
             <div class="account">
                 <div class="record">
-                    <h4>投注记录</h4>
+                    <h4>投注记录<span class="logout_btn" style="float:right;cursor: pointer">退出登录</span></h4>
                     <form class="date-form row" action="">
                         <div class="input col-sm-5">
                             <span>从</span>
@@ -132,5 +132,19 @@ use yii\helpers\Url;
 
         });
 
+        $(".logout_btn").click(function(){
+            $.ajax({
+                url:"<?php echo Url::toRoute(['/site/logout']); ?>",
+                type:"get",
+                data:{},
+                dataType: 'json',
+                success:function(data){
+                    window.location.href = "<?php echo Url::toRoute(['/']); ?>";
+                }
+            });
+        })
+
     });
+
+
 </script>

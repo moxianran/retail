@@ -12,7 +12,7 @@ use yii\helpers\Url;
         <div class="public-con fr">
             <div class="account">
                 <div class="record">
-                    <h4>公告信息</h4>
+                    <h4>公告信息<span class="logout_btn" style="float:right;cursor: pointer">退出登录</span></h4>
                     <div class="table-wrapper">
                         <table class="record-table2">
                             <thead>
@@ -57,3 +57,25 @@ use yii\helpers\Url;
     </div>
 </div>
 <!-- 内容 End! -->
+
+<script type="text/javascript">
+
+    $(function () {
+
+
+        $(".logout_btn").click(function(){
+            $.ajax({
+                url:"<?php echo Url::toRoute(['/site/logout']); ?>",
+                type:"get",
+                data:{},
+                dataType: 'json',
+                success:function(data){
+                    window.location.href = "<?php echo Url::toRoute(['/']); ?>";
+                }
+            });
+        })
+
+    });
+
+
+</script>

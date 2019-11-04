@@ -10,7 +10,7 @@ use yii\helpers\Url;
     <div class="public-page container">
         <?= $this->render('_fl') ?>
         <div class="public-con fr">
-            <div class="public-page-title"><span>账户管理</span><span class="logout_btn">退出登录</span></div>
+            <div class="public-page-title"><span>账户管理</span><span class="logout_btn" style="float:right;cursor: pointer">退出登录</span></div>
             <div class="account">
                 <div class="info-box">
                     <ul class="row">
@@ -129,8 +129,6 @@ use yii\helpers\Url;
                     a.val(oldVal);
                     a.prev().html("******");
 
-
-
                     layui.use('layer', function(){
                         var layer = layui.layer;
                         layer.msg('操作失败');
@@ -143,4 +141,17 @@ use yii\helpers\Url;
 
         $(this).hide()
     });
+
+    $(".logout_btn").click(function(){
+        $.ajax({
+            url:"<?php echo Url::toRoute(['/site/logout']); ?>",
+            type:"get",
+            data:{},
+            dataType: 'json',
+            success:function(data){
+                window.location.href = "<?php echo Url::toRoute(['/']); ?>";
+            }
+        });
+    })
+
 </script>
