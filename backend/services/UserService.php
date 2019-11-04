@@ -299,8 +299,6 @@ class UserService {
 
         $update_data = [
             'account' => $params['account'],
-            'pwd' => base64_encode($params['pwd']),
-            'money_pwd' => base64_encode($params['money_pwd']),
             'real_name' => $params['real_name'],
             'phone' => $params['phone'],
             'email' => $params['email'],
@@ -313,6 +311,12 @@ class UserService {
             'agent_id' => $params['agent_id']
         ];
 
+        if (isset($params['pwd']) && !empty(trim($params['pwd']))) {
+            $update_data['pwd'] = base64_encode(trim($params['pwd']));
+        }
+        if (isset($params['money_pwd']) && !empty(trim($params['money_pwd']))) {
+            $update_data['money_pwd'] = base64_encode(trim($params['money_pwd']));
+        }
 
         $res = RUser::updateAll($update_data,'id = '.$params['id']);
 

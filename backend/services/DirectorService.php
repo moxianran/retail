@@ -108,7 +108,6 @@ class DirectorService
 
         $update_data = [
             'account' => $params['account'],
-            'pwd' => base64_encode($params['pwd']),
             'real_name' => $params['real_name'],
             'phone' => $params['phone'],
             'email' => $params['email'],
@@ -116,6 +115,10 @@ class DirectorService
             'wechat' => $params['wechat'],
             'update_time' => time(),
         ];
+
+        if (isset($params['pwd']) && !empty(trim($params['pwd']))) {
+            $update_data['pwd'] = base64_encode(trim($params['pwd']));
+        }
         $res = RAdmin::updateAll($update_data, 'id = ' . $params['id']);
         if ($res) {
 

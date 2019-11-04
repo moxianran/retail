@@ -121,7 +121,6 @@ class CustomerService
 
         $update_data = [
             'account' => $params['account'],
-            'pwd' => base64_encode($params['pwd']),
             'real_name' => $params['real_name'],
             'phone' => $params['phone'],
             'email' => $params['email'],
@@ -132,6 +131,11 @@ class CustomerService
             'stop_login_start' => $stop_login_start,
             'stop_login_end' => $stop_login_end,
         ];
+        if (isset($params['pwd']) && !empty(trim($params['pwd']))) {
+            $update_data['pwd'] = base64_encode(trim($params['pwd']));
+        }
+
+
         $res = RAdmin::updateAll($update_data, 'id = ' . $params['id']);
         if ($res) {
 
