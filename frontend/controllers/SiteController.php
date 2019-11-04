@@ -320,6 +320,7 @@ class SiteController extends Controller
      */
     private function checkRegister($post)
     {
+
         $res = ['result' => 'success'];
 
         if (!isset($post['agree'])) {
@@ -382,6 +383,8 @@ class SiteController extends Controller
         }
         $session = \Yii::$app->session;
         $code = $session->get('code');
+
+
         if($code != $post['code']) {
             return ['result' => 'fail', 'info' => '验证码错误'];
         }
@@ -398,11 +401,12 @@ class SiteController extends Controller
             unset($session['code']);
         }
 
-        $codeService = new codeService();
-        $code = $codeService->getCode();
-        $session->set('code',$code);
-        $aa = $codeService->outImage();
-        print_r($aa);
+//        $codeService = new codeService();
+        codeService::toCaptcha();
+//        $code = $codeService->getCode();
+//        $session->set('code',$code);
+//        $aa = $codeService->outImage();
+//        print_r($aa);
     }
     /**
      * 获取ip

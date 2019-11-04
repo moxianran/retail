@@ -15,6 +15,7 @@ use yii\helpers\Url;
 </head>
 
 <body class="gray-bg">
+
 <div class="middle-box text-center loginscreen animated fadeInDown">
     <div>
         <div>
@@ -42,6 +43,9 @@ use yii\helpers\Url;
 <script src="/js/artDialog/plugins/iframeTools.js"></script>
 
 <script>
+
+    // var utterThis = new window.SpeechSynthesisUtterance("你好，欢迎存车");
+    // window.speechSynthesis.speak(utterThis);
 
     $(function(){
         $("#submit_btn").click(function(){
